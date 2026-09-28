@@ -1,0 +1,1368 @@
+{
+  "@@locale": "en",
+  "appTitle": "Padel Platform",
+  "navHome": "Home",
+  "navTournaments": "Tournaments",
+  "navRankings": "Rankings",
+  "navCasual": "Casual",
+  "navProfile": "Profile",
+  "actionRetry": "Retry",
+  "actionCancel": "Cancel",
+  "actionSend": "Send",
+  "actionCreate": "Create",
+  "actionCreateOne": "Create one",
+  "filterAll": "All",
+  "premiumLabel": "Premium",
+  "tieBreakLabel": "TIE-BREAK",
+  "ptsLabel": "pts",
+  "settingsTitle": "Settings",
+  "settingsLanguage": "Language",
+  "settingsLanguageArabic": "Arabic",
+  "settingsLanguageEnglish": "English",
+  "settingsAppearance": "Appearance",
+  "themeSystem": "System default",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsLogOut": "Log out",
+  "homeWelcomeBack": "Welcome back, {name}",
+  "@homeWelcomeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUnranked": "Unranked",
+  "homeLevelPoints": "{level} • {points} season pts",
+  "@homeLevelPoints": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      },
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "homeLiveNow": "Live now",
+  "homeSeeAll": "See all",
+  "homeNoLiveTournaments": "No tournaments live right now.",
+  "fieldPassword": "Password",
+  "errorPasswordRequired": "Password is required",
+  "actionLogIn": "Log in",
+  "fieldFullName": "Full name",
+  "errorNameRequired": "Name is required",
+  "fieldPhoneOptional": "Phone (optional)",
+  "errorPasswordLength": "At least 8 characters",
+  "fieldConfirmPassword": "Confirm password",
+  "errorPasswordsMismatch": "Passwords do not match",
+  "notificationsTitle": "Notifications",
+  "emptyNotificationsTitle": "No notifications yet",
+  "emptyNotificationsMessage": "You're all caught up — new notifications will show up here.",
+  "casualMatchesTitle": "Casual matches",
+  "casualFilterLookingForMatch": "Looking for a match",
+  "casualFilterLookingForPartner": "Looking for a partner",
+  "casualFilterNeed1": "Need 1 more",
+  "casualFilterNeed2": "Need 2 more",
+  "casualFilterNeed3": "Need 3 more",
+  "emptyCasualTitle": "No casual matches nearby",
+  "emptyCasualMessage": "Be the first to set one up and invite players to join.",
+  "joinRequestSent": "Join request sent.",
+  "statusClosed": "Closed",
+  "labelLevel": "Level {level}",
+  "@labelLevel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "labelSide": "Side: {side}",
+  "@labelSide": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "byCreator": "By {name}",
+  "@byCreator": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "actionRequested": "Requested",
+  "actionJoin": "Join",
+  "createMatchTitle": "Create a casual match",
+  "fieldMatchType": "Match type",
+  "fieldDateTime": "Date & time",
+  "selectFutureDateTime": "Select a future date & time",
+  "errorPickFutureDateTime": "Pick a date and time in the future",
+  "fieldRequiredLevelOptional": "Required level (optional)",
+  "fieldPreferredSideOptional": "Preferred side (optional)",
+  "fieldNotesOptional": "Notes (optional)",
+  "actionCreateMatch": "Create match",
+  "coachesTitle": "Coaches",
+  "emptyCoachesTitle": "No coaches available",
+  "emptyCoachesMessage": "Check back soon for available coaches.",
+  "coachPricePerHourLong": "{price} / hour",
+  "@coachPricePerHourLong": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "coachPricePerHourShort": "{price}/hr",
+  "@coachPricePerHourShort": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "statusUnavailable": "Unavailable",
+  "sectionAbout": "About",
+  "sectionSpecialties": "Specialties",
+  "rankingsTitle": "Rankings",
+  "emptyRankingsTitle": "No rankings yet",
+  "emptyRankingsMessage": "Rankings will appear here once players start earning points.",
+  "liveMatchTitle": "Live match",
+  "vsLabel": "vs",
+  "currentGame": "Current game",
+  "gamesScore": "{teamOne} - {teamTwo} games",
+  "@gamesScore": {
+    "placeholders": {
+      "teamOne": {
+        "type": "int"
+      },
+      "teamTwo": {
+        "type": "int"
+      }
+    }
+  },
+  "setsScore": "{teamOne} - {teamTwo} sets",
+  "@setsScore": {
+    "placeholders": {
+      "teamOne": {
+        "type": "int"
+      },
+      "teamTwo": {
+        "type": "int"
+      }
+    }
+  },
+  "matchCompleted": "Match completed",
+  "teamWon": "{team} won",
+  "@teamWon": {
+    "placeholders": {
+      "team": {
+        "type": "String"
+      }
+    }
+  },
+  "rankingEligible": "Ranking eligible",
+  "venueTba": "Venue TBA",
+  "categoriesSection": "Categories",
+  "teamsCount": "{active}/{max} teams",
+  "@teamsCount": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "feeSuffix": " • {fee} fee",
+  "@feeSuffix": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "statusFull": "Full",
+  "tournamentsTitle": "Tournaments",
+  "filterOpen": "Open",
+  "filterLive": "Live",
+  "filterCompleted": "Completed",
+  "emptyTournamentsTitle": "No tournaments here",
+  "emptyTournamentsMessage": "Try a different filter or check back soon.",
+  "statusDraft": "Draft",
+  "statusRegistrationOpen": "Registration open",
+  "statusRegistrationClosed": "Registration closed",
+  "statusOngoing": "Ongoing",
+  "statusCompleted": "Completed",
+  "statusCancelled": "Cancelled",
+  "achievementsSection": "Achievements",
+  "statLevel": "Level",
+  "statRating": "Rating",
+  "statSeasonPts": "Season pts",
+  "statXp": "XP",
+  "actionFollowing": "Following",
+  "actionFollow": "Follow",
+  "tooltipRespect": "Respect",
+  "tooltipChallenge": "Challenge",
+  "challengeSentTo": "Challenge sent to {name}",
+  "@challengeSentTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeTitle": "Challenge {name}",
+  "@challengeTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hintAddMessage": "Add a message (optional)",
+  "failureSessionExpired": "Session expired.",
+  "failureNoInternet": "No internet connection.",
+  "failureServerError": "Something went wrong on our end.",
+  "failureUnknown": "An unexpected error occurred.",
+  "failureRequestCancelled": "Request cancelled.",
+  "failureSecureConnectionFailed": "Secure connection failed.",
+  "failureValidationFailed": "Validation failed.",
+  "failureRequestFailed": "Request failed.",
+  "failureInvalidCredentials": "Wrong email or password.",
+  "failurePremiumRequired": "This is a Premium feature.",
+  "failureCoachOnly": "Only coach accounts can do this.",
+  "failurePlayerProfileRequired": "This needs a player profile.",
+  "failureStaffOnly": "Only tournament staff can do this.",
+  "failureForbidden": "You don't have access to this.",
+  "failureAccountInactive": "This account is inactive.",
+  "failureNotFound": "We couldn't find that.",
+  "failureRateLimited": "Too many attempts. Try again in a moment.",
+  "failureProviderUnavailable": "Not available yet.",
+  "actionClose": "Close",
+  "actionConfirm": "Confirm",
+  "actionSave": "Save",
+  "actionEdit": "Edit",
+  "actionDelete": "Delete",
+  "actionAccept": "Accept",
+  "actionDecline": "Decline",
+  "actionRefresh": "Refresh",
+  "actionViewAll": "View all",
+  "actionLearnMore": "Learn more",
+  "actionGoPremium": "Go Premium",
+  "actionBack": "Back",
+  "actionSearch": "Search",
+  "actionApply": "Apply",
+  "actionReset": "Reset",
+  "actionContinue": "Continue",
+  "actionLeave": "Leave",
+  "actionOpen": "Open",
+  "stateEmptyTitle": "Nothing here yet",
+  "stateOfflineTitle": "You're offline",
+  "stateOfflineMessage": "Check your connection and try again.",
+  "stateOfflineBanner": "Offline — showing what we have",
+  "stateErrorTitle": "Something went wrong",
+  "stateComingSoonTitle": "Coming soon",
+  "stateComingSoonPayments": "Online payments are coming soon. Nothing was charged.",
+  "stateComingSoon3d": "3D identity generation isn't available yet. We'll let you know when it is.",
+  "stateInsufficientDataTitle": "Not enough data yet",
+  "statePremiumTitle": "Unlock with Premium",
+  "statePremiumMessage": "Premium adds insights and analytics. It never affects your rating or ranking.",
+  "progressOf": "{current}/{target}",
+  "@progressOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "valueDash": "—",
+  "liveBadge": "LIVE",
+  "liveRealtime": "Live · realtime",
+  "liveUpdatingEvery": "Live · updating every {seconds} s",
+  "@liveUpdatingEvery": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "correctedToast": "Score corrected by the scorekeeper",
+  "metricSkillRating": "Skill Rating",
+  "metricSeasonPoints": "Season Points",
+  "metricXp": "XP",
+  "metricPosition": "#{position}",
+  "@metricPosition": {
+    "placeholders": {
+      "position": {
+        "type": "int"
+      }
+    }
+  },
+  "metricLevel": "Level",
+  "metricUnranked": "Unranked",
+  "movementUp": "Up {n}",
+  "@movementUp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "movementDown": "Down {n}",
+  "@movementDown": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "movementSame": "No change",
+  "competitionRanked": "VERIFIED · RANKED",
+  "competitionCertified": "OFFICIAL",
+  "competitionSocial": "SOCIAL",
+  "officialNote": "Only verified results from ranked tournaments move your Skill Rating and Season Ranking.",
+  "casualNote": "Casual play never affects your rating or ranking.",
+  "rarityCommon": "Common",
+  "rarityRare": "Rare",
+  "rarityEpic": "Epic",
+  "rarityLegendary": "Legendary",
+  "xpReward": "+{xp} XP",
+  "@xpReward": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "newCoach": "New coach",
+  "reviewsCount": "{count, plural, =1{1 review} other{{count} reviews}}",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeNow": "now",
+  "timeInMinutes": "in {n}m",
+  "@timeInMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeMinutesAgo": "{n}m ago",
+  "@timeMinutesAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeInHours": "in {n}h",
+  "@timeInHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeHoursAgo": "{n}h ago",
+  "@timeHoursAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeInDays": "in {n}d",
+  "@timeInDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeDaysAgo": "{n}d ago",
+  "@timeDaysAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dayToday": "Today",
+  "dayYesterday": "Yesterday",
+  "navCompete": "Compete",
+  "navPlay": "Play",
+  "homeGreeting": "Hi, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLiveYouAreIn": "You're on court",
+  "homeNextMatch": "Your next match",
+  "homeLiveFollowing": "Players you follow",
+  "homeMyTournaments": "My tournaments",
+  "homeYourSeason": "Your season",
+  "homeStats": "Your numbers",
+  "homeLatestAchievement": "Latest achievement",
+  "homeRecommendedTournaments": "Tournaments for you",
+  "homeCasualOpportunities": "Games looking for players",
+  "homeRecommendedPartner": "Suggested partner",
+  "homeRecommendedCoach": "Coach for you",
+  "homeUpcomingTraining": "Upcoming training",
+  "homePendingRequests": "{count, plural, =1{1 partner request waiting} other{{count} partner requests waiting}}",
+  "@homePendingRequests": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeReviewRequests": "Review",
+  "homeAiDailyBrief": "Daily brief",
+  "homePremiumTeaserTitle": "Your game, explained",
+  "homePremiumTeaserBody": "Daily briefs, advanced analytics and a 3D athlete identity — built only from your real matches.",
+  "homeInsufficientRanking": "Play verified ranked matches to appear on the season board.",
+  "homeInsufficientGeneric": "We'll fill this in once there's enough real data.",
+  "homeEmptyTitle": "Your season starts here",
+  "homeEmptyMessage": "Join a tournament or a casual game to fill your feed.",
+  "homeFindTournament": "Find a tournament",
+  "matchVs": "vs",
+  "matchTbd": "To be decided",
+  "matchBye": "Bye",
+  "matchCourt": "Court {name}",
+  "@matchCourt": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "matchSetLabel": "Set {n}",
+  "@matchSetLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "matchWinner": "Winner",
+  "matchScheduled": "Scheduled",
+  "matchStartsAt": "Starts {time}",
+  "@matchStartsAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "matchWalkover": "Walkover",
+  "matchPendingVerification": "Pending verification",
+  "matchVerified": "Verified",
+  "matchServing": "Serving",
+  "matchGames": "Games",
+  "matchPoints": "Points",
+  "tournamentSpotsLeft": "{count, plural, =0{Full} =1{1 spot left} other{{count} spots left}}",
+  "@tournamentSpotsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tournamentLiveCount": "{count} live",
+  "@tournamentLiveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tournamentFree": "Free",
+  "tournamentFee": "Fee {amount}",
+  "@tournamentFee": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "reasonComplementarySide": "Complementary side",
+  "reasonSimilarRating": "Similar Skill Rating",
+  "reasonPreviousPartnership": "Played together",
+  "reasonActiveRecently": "Active recently",
+  "reasonSameCountry": "Same country",
+  "coachPerHour": "{price} / hour",
+  "@coachPerHour": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "coachNextAvailable": "Next: {time}",
+  "@coachNextAvailable": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "coachYearsExperience": "{count, plural, =1{1 year} other{{count} years}}",
+  "@coachYearsExperience": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "casualSpotsLeft": "{count, plural, =0{Full} =1{1 spot left} other{{count} spots left}}",
+  "@casualSpotsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "casualRequestPending": "Request pending",
+  "casualYouAreIn": "You're in",
+  "casualYourGame": "Your game",
+  "bookingWith": "with {name}",
+  "@bookingWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "achievementLocked": "Locked",
+  "achievementUnlockedOn": "Unlocked {date}",
+  "@achievementUnlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statMatches": "Matches",
+  "statWins": "Wins",
+  "statLosses": "Losses",
+  "statWinRate": "Win rate",
+  "statStreak": "Streak",
+  "statTitles": "Titles",
+  "statFinals": "Finals",
+  "statTournaments": "Tournaments",
+  "statSets": "Sets won–lost",
+  "statGames": "Games won–lost",
+  "statBestStreak": "Best win streak",
+  "statWalkovers": "Walkovers W–L",
+  "streakWins": "{n}W",
+  "@streakWins": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "streakLosses": "{n}L",
+  "@streakLosses": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "statLastPlayed": "Last played {date}",
+  "@statLastPlayed": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "partnerMain": "Main partner",
+  "partnerBestHistorical": "Best historical partner",
+  "partnerMostPlayed": "Most played with",
+  "partnerRecommended": "Recommended partners",
+  "partnerNotSet": "No main partner yet",
+  "partnerNotSetHint": "Send a request — it becomes official when they accept.",
+  "partnerUnlockHint": "Play {count} verified matches with the same partner to unlock this.",
+  "@partnerUnlockHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "partnerNoHistory": "No verified matches with a partner yet.",
+  "partnerRecord": "{won} W · {played} played",
+  "@partnerRecord": {
+    "placeholders": {
+      "won": {
+        "type": "int"
+      },
+      "played": {
+        "type": "int"
+      }
+    }
+  },
+  "partnerHistory": "Partnership history",
+  "partnerRequestAsMain": "Request as main partner",
+  "partnerRequestSent": "Partner request sent",
+  "partnerRemoveMain": "End partnership",
+  "partnerRemoveMainConfirm": "They'll stop being your main partner. You can send a new request later.",
+  "partnerRequestsTitle": "Partner requests",
+  "partnerRequestsIncoming": "Received",
+  "partnerRequestsOutgoing": "Sent",
+  "partnerRequestsEmpty": "No partner requests right now.",
+  "partnerRequestFrom": "{name} wants you as main partner",
+  "@partnerRequestFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "partnerRequestTo": "Waiting for {name}",
+  "@partnerRequestTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "partnerRequestAccepted": "You're now main partners",
+  "partnerRecommendedEmpty": "Play a few verified matches and we'll suggest partners that fit your game.",
+  "partnerRecommendedBasis": "Based on your rating {rating} and {matches} verified matches",
+  "@partnerRecommendedBasis": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "matches": {
+        "type": "int"
+      }
+    }
+  },
+  "factRatingDiff": "Rating gap {value}",
+  "@factRatingDiff": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "factTogether": "{wins}/{matches} wins together",
+  "@factTogether": {
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "matches": {
+        "type": "int"
+      }
+    }
+  },
+  "factVerifiedMatches": "{count} verified matches",
+  "@factVerifiedMatches": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "factWinRate": "Win rate {value}",
+  "@factWinRate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "factLastPlayed": "Played {when}",
+  "@factLastPlayed": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "profileTabOverview": "Overview",
+  "profileTabResults": "Results",
+  "profileTabAchievements": "Achievements",
+  "profileTabPartners": "Partners",
+  "profileTabStats": "Stats",
+  "profileMemberSince": "Member since {date}",
+  "@profileMemberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "profileFollowers": "Followers",
+  "profileFollowing": "Following",
+  "profileRespects": "Respects",
+  "profileEdit": "Edit profile",
+  "profileContact": "Contact (only you can see this)",
+  "profileRecentResults": "Recent results",
+  "profileTournamentHistory": "Tournament history",
+  "profileNoResults": "No verified results yet",
+  "profileNoResultsHint": "Official results appear here once staff verify them.",
+  "profile3dIdentity": "3D identity",
+  "profileRatingHistory": "Rating history",
+  "profileSeasonHistory": "Season points",
+  "profileRespectSent": "Respect sent",
+  "resultWon": "W",
+  "resultLost": "L",
+  "resultRanked": "Ranked",
+  "resultUnranked": "Unranked",
+  "resultWithPartner": "with {name}",
+  "@resultWithPartner": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placementChampion": "Champion",
+  "placementFinalist": "Finalist",
+  "achievementsTitle": "Achievements",
+  "achievementsProgress": "{unlocked} of {total} unlocked",
+  "@achievementsProgress": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "achievementsCompetitive": "Competitive",
+  "achievementsSocial": "Social",
+  "achievementsPremiumShelf": "Premium badges",
+  "achievementsPremiumNote": "Premium badges are cosmetic — they never affect rating or ranking.",
+  "achievementsEmpty": "No achievements yet",
+  "achievementAutomatic": "Unlocks automatically",
+  "statsAdvanced": "Advanced analytics",
+  "statsByStage": "By stage",
+  "statsGroupStage": "Group stage",
+  "statsKnockout": "Knockout",
+  "statsDecidingSets": "Deciding sets",
+  "statsByCompetition": "Ranked vs unranked",
+  "statsPointAnalytics": "Point analytics",
+  "statsCoverage": "Coverage {value}",
+  "@statsCoverage": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLimitedData": "Limited data",
+  "statsWinnersByShot": "Winners by shot",
+  "statsErrorsByType": "Errors by type",
+  "statsRatingTimeline": "Rating timeline",
+  "statsAdvancedLocked": "Advanced analytics are available to Premium members on their own profile.",
+  "statsRecord": "{wins}/{matches}",
+  "@statsRecord": {
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "matches": {
+        "type": "int"
+      }
+    }
+  },
+  "followersTitle": "Followers",
+  "followingTitle": "Following",
+  "followersEmpty": "Nobody here yet",
+  "ratingHistoryTitle": "Rating history",
+  "ratingReasonOfficial": "Official result",
+  "ratingReasonCorrection": "Correction reversal",
+  "ratingReasonInactivity": "Inactivity",
+  "ratingBreakdown": "How it was calculated",
+  "ratingExpected": "Expected score",
+  "ratingKFactor": "Effective K",
+  "ratingOwnStrength": "Your team strength",
+  "ratingOpponentStrength": "Opponent strength",
+  "ratingUpset": "Upset",
+  "ratingStage": "Stage",
+  "ratingHistoryEmpty": "No rating changes yet",
+  "seasonPointsTitle": "Season points",
+  "seasonBestStageNote": "Each category counts once — the best stage you reached.",
+  "challengesTitle": "Challenges",
+  "challengesIncoming": "Received",
+  "challengesOutgoing": "Sent",
+  "challengesEmpty": "No challenges",
+  "challengeFrom": "{name} challenged you",
+  "@challengeFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeTo": "You challenged {name}",
+  "@challengeTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "searchPlayersTitle": "Find players",
+  "searchPlayersHint": "Name or Player ID",
+  "searchPlayersEmpty": "No players match your search",
+  "editProfileTitle": "Edit profile",
+  "editProfileCompetitiveNote": "Rating, level, points and XP come from verified results and can't be edited.",
+  "editProfilePhoto": "Change photo",
+  "editProfilePhotoHint": "JPG, PNG or WebP · up to 4 MB. Also used for your 3D identity.",
+  "editProfileSaved": "Profile saved",
+  "fieldBio": "Bio",
+  "fieldDateOfBirth": "Date of birth",
+  "fieldGender": "Gender",
+  "fieldSide": "Playing side",
+  "changePasswordTitle": "Change password",
+  "fieldCurrentPassword": "Current password",
+  "fieldNewPassword": "New password",
+  "passwordChanged": "Password changed. Other sessions were signed out.",
+  "premiumTitle": "Premium",
+  "premiumHeadline": "Train smarter. Compete the same.",
+  "premiumSubhead": "Insights and analytics built only from your real, verified matches.",
+  "premiumNeverAffects": "Premium never affects your {items}.",
+  "@premiumNeverAffects": {
+    "placeholders": {
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumNeverAffectsDefault": "Premium never affects your Skill Rating, Season Ranking, seeding or eligibility.",
+  "neverSkillRating": "Skill Rating",
+  "neverSeasonRanking": "Season Ranking",
+  "neverSeeding": "seeding",
+  "neverEligibility": "tournament eligibility",
+  "neverOfficialResults": "official results",
+  "premiumFeatureAi": "AI insights",
+  "premiumFeatureAiBody": "Daily briefs, performance summaries and recommendations.",
+  "premiumFeatureAnalytics": "Advanced analytics",
+  "premiumFeatureAnalyticsBody": "Stage splits, deciding sets, shot and error breakdowns.",
+  "premiumFeature3d": "3D athlete identity",
+  "premiumFeature3dBody": "A rotating 3D avatar generated from your profile photo.",
+  "premiumFeatureBadges": "Premium badges",
+  "premiumFeatureBadgesBody": "Cosmetic badges, clearly separate from competitive medals.",
+  "premiumPlansTitle": "Choose a plan",
+  "premiumPlanMonths": "{count, plural, =1{1 month} other{{count} months}}",
+  "@premiumPlanMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "premiumPlansUnavailable": "Plans will appear here once pricing is published.",
+  "premiumCheckoutSoon": "Online payments coming soon",
+  "premiumSubscribe": "Continue to payment",
+  "premiumActive": "You're Premium",
+  "premiumActiveUntil": "Active until {date}",
+  "@premiumActiveUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumOpenAi": "Open AI insights",
+  "premiumOpen3d": "Open 3D identity",
+  "paymentsTitle": "Payments",
+  "paymentsEmpty": "No payments yet",
+  "paymentStatusTitle": "Payment status",
+  "paymentWaiting": "Waiting for confirmation from the payment provider…",
+  "paymentOpenCheckout": "Open checkout",
+  "paymentSucceeded": "Payment confirmed",
+  "paymentFailedTitle": "Payment didn't go through",
+  "paymentReference": "Reference {ref}",
+  "@paymentReference": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentOnlyBackend": "We only mark a payment as paid once the server confirms it.",
+  "aiTitle": "AI insights",
+  "aiGenerate": "Generate",
+  "aiRefresh": "Refresh",
+  "aiWorking": "Analysing your matches…",
+  "aiFailed": "Couldn't generate this insight.",
+  "aiNotGenerated": "Not generated yet",
+  "aiCoverage": "Data coverage: {level}",
+  "@aiCoverage": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "aiCoverageNone": "none",
+  "aiCoverageLow": "low",
+  "aiCoverageMedium": "medium",
+  "aiCoverageHigh": "high",
+  "aiMatchesUsed": "{count} matches used",
+  "@aiMatchesUsed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiHighlights": "Highlights",
+  "aiRecommendations": "Recommendations",
+  "aiFacts": "The facts",
+  "aiGeneratedAt": "Generated {when}",
+  "@aiGeneratedAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "aiTypePlayerInsights": "Player insights",
+  "aiTypePerformanceSummary": "Performance summary",
+  "aiTypePartnerRecommendation": "Partner recommendation",
+  "aiTypeTournamentRecommendation": "Tournament recommendation",
+  "aiTypeCoachRecommendation": "Coach recommendation",
+  "aiTypeDevelopmentRecommendation": "Development plan",
+  "aiTypeDailyBrief": "Daily brief",
+  "threeDTitle": "3D identity",
+  "threeDGenerate": "Generate my 3D identity",
+  "threeDRegenerate": "Generate again",
+  "threeDProcessing": "Building your 3D identity. This can take a few minutes.",
+  "threeDNeedsPhoto": "Upload a profile photo first — your 3D identity is generated from it.",
+  "threeDUploadPhoto": "Upload photo",
+  "threeDFailed": "Generation failed. You can try again.",
+  "threeDEmpty": "No 3D identity yet",
+  "bookingStatus": "Status",
+  "bookingPrice": "Price",
+  "bookingDuration": "Duration",
+  "bookingLocation": "Location",
+  "bookingTrainingType": "Training type",
+  "bookingNotes": "Notes",
+  "bookingFeedback": "Coach feedback",
+  "bookingXpAwarded": "+{xp} XP earned",
+  "@bookingXpAwarded": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingCancel": "Cancel booking",
+  "bookingCancelReason": "Reason (optional)",
+  "bookingCancelled": "Booking cancelled",
+  "bookingCancelWindow": "Confirmed bookings can be cancelled up to 24 hours before the start.",
+  "bookingReview": "Rate this session",
+  "bookingReviewComment": "Comment (optional)",
+  "bookingReviewThanks": "Thanks for the review",
+  "bookingYourReview": "Your review",
+  "bookingRejectedReason": "Rejected: {reason}",
+  "@bookingRejectedReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelledBy": "Cancelled by {who}",
+  "@bookingCancelledBy": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingByPlayer": "player",
+  "bookingByCoach": "coach",
+  "bookingProgressRecorded": "Progress recorded",
+  "bookingDetailTitle": "Training session",
+  "competeTitle": "Compete",
+  "competeTabTournaments": "Tournaments",
+  "competeTabLive": "Live now",
+  "competeSearchHint": "Search tournaments",
+  "filterRanked": "Ranked",
+  "filterCertified": "Official",
+  "filterSocial": "Social",
+  "filterUpcoming": "Upcoming",
+  "liveNowEmptyTitle": "No matches on court right now",
+  "liveNowEmptyMessage": "Live matches appear here the moment a scorekeeper starts one.",
+  "tournamentTabOverview": "Overview",
+  "tournamentTabLive": "Live",
+  "tournamentTabSchedule": "Schedule",
+  "tournamentTabResults": "Results",
+  "tournamentRules": "Rules",
+  "tournamentAbout": "About",
+  "tournamentOpenMap": "Open in maps",
+  "tournamentRegistrationWindow": "Registration {from} – {to}",
+  "@tournamentRegistrationWindow": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "tournamentChampion": "Champion",
+  "tournamentNoLive": "No live matches in this tournament right now.",
+  "tournamentNoSchedule": "The schedule hasn't been published yet.",
+  "tournamentNoResults": "No verified results yet.",
+  "tournamentRankedNote": "Verified results here move Skill Rating and Season Points.",
+  "tournamentUnrankedNote": "Results here don't affect Skill Rating or Season Ranking.",
+  "categoryRegister": "Register",
+  "categoryJoinWaitlist": "Join waitlist",
+  "categoryRegistered": "Registered",
+  "categoryView": "Teams, groups & bracket",
+  "categoryWaitlist": "{count} on waitlist",
+  "@categoryWaitlist": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryTabTeams": "Teams",
+  "categoryTabGroups": "Groups",
+  "categoryTabBracket": "Bracket",
+  "categoryNoTeams": "No teams yet",
+  "categoryNoGroups": "Groups will appear once the draw is made.",
+  "categoryNoBracket": "The bracket is generated after the group stage.",
+  "teamWithdrawn": "Withdrawn",
+  "teamDisqualified": "Disqualified",
+  "teamSeed": "Seed {seed}",
+  "@teamSeed": {
+    "placeholders": {
+      "seed": {
+        "type": "int"
+      }
+    }
+  },
+  "standingsPlayed": "P",
+  "standingsWins": "W",
+  "standingsLosses": "L",
+  "standingsSetDiff": "SD",
+  "standingsGameDiff": "GD",
+  "standingsPoints": "Pts",
+  "standingsTeam": "Team",
+  "groupFinished": "Finished",
+  "registerTitle2": "Register for {category}",
+  "@registerTitle2": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "registerPartner": "Partner",
+  "registerPickPartner": "Choose a partner",
+  "registerChangePartner": "Change partner",
+  "registerCheckEligibility": "Checking eligibility…",
+  "registerEligible": "You're eligible",
+  "registerYourIssues": "You",
+  "registerPartnerIssues": "Your partner",
+  "registerClosed": "Registration is closed",
+  "registerFullWaitlist": "This category is full — you'll join the waiting list and be promoted automatically if a spot opens.",
+  "registerFeeNote": "Registration fee {amount}. Payment is confirmed by the organizer's system.",
+  "@registerFeeNote": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "registerSubmit": "Confirm registration",
+  "registerDone": "You're registered",
+  "registerWaitlisted": "You're on the waiting list",
+  "myRegistrationsTitle": "My registrations",
+  "myRegistrationsEmpty": "You haven't registered for a tournament yet",
+  "registrationCancel": "Cancel registration",
+  "registrationCancelConfirm": "Your spot will be released.",
+  "registrationCancelled": "Registration cancelled",
+  "registrationPay": "Pay now",
+  "registrationPartnerChanged": "Partner updated",
+  "registrationPromoted": "Promoted from waitlist {date}",
+  "@registrationPromoted": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "liveTitle": "Match centre",
+  "livePointFeed": "Point by point",
+  "livePointFeedEmpty": "No points recorded yet.",
+  "liveTiebreak": "Tie-break",
+  "liveMatchOver": "Match over",
+  "liveWinnerTitle": "{team} win!",
+  "@liveWinnerTitle": {
+    "placeholders": {
+      "team": {
+        "type": "String"
+      }
+    }
+  },
+  "liveResultPending": "Result pending staff verification",
+  "livePartialDetail": "Partial detail",
+  "livePointBy": "Point to {team}",
+  "@livePointBy": {
+    "placeholders": {
+      "team": {
+        "type": "String"
+      }
+    }
+  },
+  "liveNotStarted": "Not started",
+  "liveCorrected": "Corrected",
+  "rankingsTabSeason": "Season",
+  "rankingsTabSkill": "Skill",
+  "rankingsTabXp": "XP",
+  "rankingsYou": "You",
+  "rankingsSeasonPicker": "Season",
+  "rankingsSearchHint": "Search the board",
+  "rankingsXpNote": "XP rewards activity. It never affects ranking or seeding.",
+  "rankingsSkillNote": "Skill Rating moves only with verified results from ranked tournaments.",
+  "rankingsSeasonNote": "Season points count your best stage per category.",
+  "rankingsLevelPosition": "#{position} in {level}",
+  "@rankingsLevelPosition": {
+    "placeholders": {
+      "position": {
+        "type": "int"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "playTitle": "Play",
+  "playTabCasual": "Casual",
+  "playTabCoaches": "Coaches",
+  "casualMyMatches": "My games",
+  "casualCreated": "Created",
+  "casualJoined": "Joined",
+  "casualDetailTitle": "Casual game",
+  "casualParticipants": "Players",
+  "casualRequests": "Join requests",
+  "casualNoRequests": "No pending requests",
+  "casualLeave": "Leave game",
+  "casualCancelGame": "Cancel game",
+  "casualCancelConfirm": "Everyone who joined will be notified.",
+  "casualLeft": "You left the game",
+  "casualCancelled": "Game cancelled",
+  "fieldVenue": "Venue (optional)",
+  "fieldCourt": "Court (optional)",
+  "venueAny": "Any venue",
+  "courtAny": "Any court",
+  "venuesTitle": "Venues",
+  "venueCourts": "{count, plural, =1{1 court} other{{count} courts}}",
+  "@venueCourts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "venueUpcoming": "Upcoming tournaments",
+  "venuesEmpty": "No venues found",
+  "coachesFilterAll": "All",
+  "coachesSortRating": "Top rated",
+  "coachesSortPrice": "Price",
+  "coachesSortName": "Name",
+  "coachesSearchHint": "Search coaches or city",
+  "coachLanguages": "Languages",
+  "coachExperience": "Experience",
+  "coachTrainingTypes": "Training types",
+  "coachAvailability": "Availability",
+  "coachNoSlots": "No open slots this day",
+  "coachReviews": "Reviews",
+  "coachNoReviews": "No reviews yet — be the first after your session.",
+  "coachBook": "Book a session",
+  "coachBookSlot": "Book {time}",
+  "@coachBookSlot": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingSheetTitle": "Confirm booking",
+  "bookingPickSlot": "Pick a time slot first",
+  "bookingSummary": "Summary",
+  "bookingTotal": "Total",
+  "bookingConfirm": "Request booking",
+  "bookingRequested": "Booking requested — the coach will confirm it.",
+  "bookingSlotTaken": "That slot was just taken. Here's the latest availability.",
+  "myBookingsTitle": "My training",
+  "myBookingsUpcoming": "Upcoming",
+  "myBookingsPast": "Past",
+  "myBookingsEmpty": "No sessions here",
+  "trainingProgressTitle": "Training progress",
+  "trainingProgressEmpty": "Your coach's skill assessments will appear here after sessions.",
+  "trainingLatest": "Latest {score}/10",
+  "@trainingLatest": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "trainingAssessments": "{count, plural, =1{1 assessment} other{{count} assessments}}",
+  "@trainingAssessments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachPortalTitle": "Coach portal",
+  "coachPortalToday": "Next sessions",
+  "coachPortalPending": "Requests to answer",
+  "coachPortalAvailability": "Availability",
+  "coachPortalBookings": "Bookings",
+  "coachPortalProfile": "Coach profile",
+  "coachPortalSwitchToPlayer": "Player app",
+  "coachPortalOpen": "Coach portal",
+  "slotAdd": "Add slots",
+  "slotDate": "Date",
+  "slotStart": "Start",
+  "slotEnd": "End",
+  "slotRepeat": "Repeat weekly",
+  "slotRepeatWeeks": "{count, plural, =0{Don't repeat} =1{For 1 more week} other{For {count} more weeks}}",
+  "@slotRepeatWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "slotActive": "Bookable",
+  "slotBooked": "Booked",
+  "slotDeleteConfirm": "Delete this slot?",
+  "slotsCreated": "Slots added",
+  "slotsEmptyDay": "No slots on this day",
+  "bookingConfirmAction": "Confirm",
+  "bookingRejectAction": "Reject",
+  "bookingCompleteAction": "Mark completed",
+  "bookingFeedbackAction": "Send feedback",
+  "bookingProgressAction": "Record progress",
+  "bookingReasonOptional": "Reason (optional)",
+  "bookingFeedbackHint": "What went well, what to work on",
+  "bookingUpdated": "Booking updated",
+  "progressSkill": "Skill",
+  "progressScore": "Score (1–10)",
+  "progressAddSkill": "Add skill",
+  "progressSaved": "Progress saved",
+  "coachFieldCity": "City",
+  "coachFieldPrice": "Price per hour",
+  "coachFieldYears": "Years of experience",
+  "coachFieldSpecialties": "Specialties",
+  "coachFieldLanguages": "Languages (comma separated)",
+  "coachProfileSaved": "Coach profile saved",
+  "notificationsMarkAllRead": "Mark all read",
+  "notificationsFilterUnread": "Unread",
+  "notificationsFilterAll": "All",
+  "settingsNotifications": "Notifications",
+  "settingsPushEnabled": "Push notifications are on",
+  "settingsPushDisabled": "Push notifications are off",
+  "settingsPushUnavailable": "Push isn't configured on this build",
+  "settingsPushEnable": "Enable",
+  "settingsAccount": "Account",
+  "settingsPremium": "Premium",
+  "settingsPayments": "Payments",
+  "settingsMyTraining": "My training",
+  "settingsStaff": "Staff scorekeeping",
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLogOutConfirm": "You'll need to sign in again.",
+  "scorekeeperTitle": "Scorekeeper",
+  "scorekeeperLogin": "Staff login",
+  "scorekeeperLoginField": "Staff login",
+  "scorekeeperMatches": "Assigned matches",
+  "scorekeeperNoMatches": "No matches assigned right now.",
+  "scorekeeperPointTo": "Point",
+  "scorekeeperUndo": "Undo last point",
+  "scorekeeperAddDetail": "Add detail",
+  "scorekeeperDetailOptional": "Optional — the score is already recorded.",
+  "scorekeeperEndingType": "How it ended",
+  "scorekeeperShot": "Shot",
+  "scorekeeperError": "Error",
+  "scorekeeperServe": "Serve",
+  "scorekeeperPlayer": "Player",
+  "scorekeeperSaved": "Detail saved",
+  "scorekeeperLogout": "Leave scorekeeper mode",
+  "pmPhoneKicker": "Welcome to the community",
+  "pmPhoneTitle": "Step onto the court",
+  "pmPhoneSubtitle": "Sign in with your phone number and start building your sports identity.",
+  "pmPhoneLabel": "Phone number",
+  "pmPhoneHint": "We'll send you a verification code by SMS",
+  "pmPhoneInvalid": "The number must start with 77, 78 or 79",
+  "pmContinue": "Continue",
+  "pmOrContinueWith": "Or continue with",
+  "pmLegalPrefix": "By continuing you agree to the ",
+  "pmLegalTerms": "Terms of Use",
+  "pmLegalAnd": " and ",
+  "pmLegalPrivacy": "Privacy Policy",
+  "pmStaffSignIn": "Scorekeeper login",
+  "pmBack": "Back",
+  "pmOtpKicker": "Last step",
+  "pmOtpTitle": "Enter the verification code",
+  "pmOtpSentTo": "We sent a 6-digit code to",
+  "pmOtpEdit": "Edit",
+  "pmOtpLabel": "Verification code",
+  "pmOtpNotReceived": "Didn't get the code?",
+  "pmOtpResend": "Resend",
+  "pmOtpConfirm": "Confirm and sign in",
+  "pmWelcomeTitle": "Your identity is ready",
+  "pmWelcomeSubtitle": "Welcome to Playmaker — the court awaits",
+  "failureInvalidPhone": "Enter a valid Jordanian mobile number.",
+  "failureOtpExpired": "The code has expired. Request a new one.",
+  "failureOtpSessionInvalid": "This verification is no longer valid. Request a new code.",
+  "failureOtpResendTooSoon": "Please wait a moment before requesting a new code.",
+  "failureOtpResendLimit": "You've reached the resend limit. Try again later.",
+  "failureOtpTooManyAttempts": "Too many incorrect attempts. Request a new code.",
+  "failureOtpProviderUnavailable": "SMS service is temporarily unavailable. Try again shortly.",
+  "failureSocialTokenInvalid": "We couldn't verify your account. Please try again.",
+  "failureSocialUnavailable": "This sign-in option isn't available right now.",
+  "fieldCountry": "Country",
+  "partnerEnded": "Partnership ended",
+  "duo3dTitle": "Duo 3D identity",
+  "duo3dBody": "A 3D scene of you and your partner together on court.",
+  "duo3dGenerate": "Create our scene",
+  "duo3dRegenerate": "Create a new one",
+  "duo3dProcessing": "Creating your duo scene… this can take a few minutes.",
+  "duo3dFailed": "The last attempt failed. Try again.",
+  "duo3dNeedsPhotos": "You and your partner both need a profile photo first.",
+  "duo3dComingSoon": "Duo scenes are coming soon.",
+  "duo3dPremium": "Duo scenes are part of Premium."
+}

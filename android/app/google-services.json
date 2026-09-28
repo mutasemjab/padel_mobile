@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "911164975994",
+    "project_id": "padel-3a8cb",
+    "storage_bucket": "padel-3a8cb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911164975994:android:98f0f1a3c547629f4a84c3",
+        "android_client_info": {
+          "package_name": "com.padel.hamza"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK_ZcvWXhehRhko9JBV0NZZH7vD3mkHs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
