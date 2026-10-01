@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -121,19 +122,21 @@ class _LoginPhoneStepState extends State<LoginPhoneStep> {
         // .socials
         Row(
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: SocialSignInButton(
-                  label: 'Apple',
-                  svg: LoginSvgs.apple,
-                  cream: true,
-                  onTap: widget.onApple,
-                  loading: widget.socialLoading == SocialProvider.apple,
+            if (defaultTargetPlatform == TargetPlatform.iOS) ...[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SocialSignInButton(
+                    label: 'Apple',
+                    svg: LoginSvgs.apple,
+                    cream: true,
+                    onTap: widget.onApple,
+                    loading: widget.socialLoading == SocialProvider.apple,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
+              const SizedBox(width: 10),
+            ],
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),

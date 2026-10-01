@@ -39,21 +39,25 @@ class PlayerProfilePage extends StatelessWidget {
         body: BlocBuilder<PlayerProfileCubit, PlayerProfileState>(
           builder: (context, state) {
             return switch (state) {
-              PlayerProfileInitial() || PlayerProfileLoading() => const _ProfileSkeleton(),
+              PlayerProfileInitial() ||
+              PlayerProfileLoading() => const _ProfileSkeleton(),
               PlayerProfileError(:final failure) => SafeArea(
-                  child: Column(
-                    children: [
-                      const _BackRow(),
-                      Expanded(
-                        child: ErrorState(
-                          failure: failure,
-                          onRetry: () => context.read<PlayerProfileCubit>().load(playerId),
-                        ),
+                child: Column(
+                  children: [
+                    const _BackRow(),
+                    Expanded(
+                      child: ErrorState(
+                        failure: failure,
+                        onRetry: () =>
+                            context.read<PlayerProfileCubit>().load(playerId),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              PlayerProfileLoaded(:final profile) => _ProfileContent(profile: profile),
+              ),
+              PlayerProfileLoaded(:final profile) => _ProfileContent(
+                profile: profile,
+              ),
             };
           },
         ),
@@ -69,7 +73,9 @@ class _BackRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional.centerStart,
-      child: context.canPop() ? const BackButton() : const SizedBox(height: kToolbarHeight),
+      child: context.canPop()
+          ? const BackButton()
+          : const SizedBox(height: kToolbarHeight),
     );
   }
 }
@@ -98,11 +104,13 @@ class _ProfileContent extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             pinned: true,
-            stretch: true,
-            expandedHeight: 0,
             // Matches the top of the court gradient so the hero reads as one surface.
-            backgroundColor: innerBoxIsScrolled ? context.tokens.background : AppColors.primaryDeep,
-            foregroundColor: innerBoxIsScrolled ? context.tokens.textPrimary : AppColors.white,
+            backgroundColor: innerBoxIsScrolled
+                ? context.tokens.background
+                : AppColors.primaryDeep,
+            foregroundColor: innerBoxIsScrolled
+                ? context.tokens.textPrimary
+                : AppColors.white,
             title: innerBoxIsScrolled ? Text(player.name) : null,
             actions: [
               if (isOwner) ...[
@@ -111,7 +119,12 @@ class _ProfileContent extends StatelessWidget {
                   icon: const Icon(Icons.edit_rounded),
                   onPressed: () async {
                     await context.push(AppRoutes.editProfile);
-                    if (context.mounted) context.read<PlayerProfileCubit>().load(player.playerId, silent: true);
+                    if (context.mounted) {
+                      context.read<PlayerProfileCubit>().load(
+                        player.playerId,
+                        silent: true,
+                      );
+                    }
                   },
                 ),
                 IconButton(
@@ -125,7 +138,9 @@ class _ProfileContent extends StatelessWidget {
           SliverToBoxAdapter(
             child: AthleteHeader(
               profile: profile,
-              actions: isOwner ? const _OwnerActions() : _VisitorActions(profile: profile),
+              actions: isOwner
+                  ? const _OwnerActions()
+                  : _VisitorActions(profile: profile),
             ),
           ),
           SliverPersistentHeader(
@@ -133,8 +148,13 @@ class _ProfileContent extends StatelessWidget {
             delegate: _TabBarDelegate(
               TabBar(
                 isScrollable: true,
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-                labelPadding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.lg),
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
+                ),
+                labelPadding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.lg,
+                ),
                 tabs: [for (final t in tabs) Tab(text: t, height: 38)],
               ),
               color: context.tokens.background,
@@ -165,7 +185,10 @@ class _OwnerActions extends StatelessWidget {
       children: [
         Expanded(
           child: OutlinedButton.icon(
-            style: OutlinedButton.styleFrom(foregroundColor: AppColors.white, side: const BorderSide(color: AppColors.textMuted)),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppColors.white,
+              side: const BorderSide(color: AppColors.textMuted),
+            ),
             onPressed: () => context.push(AppRoutes.partnerRequests),
             icon: const Icon(Icons.handshake_rounded),
             label: Text(l10n.partnerRequestsTitle),
@@ -177,7 +200,10 @@ class _OwnerActions extends StatelessWidget {
           style: IconButton.styleFrom(
             backgroundColor: AppColors.white.withValues(alpha: 0.12),
             foregroundColor: AppColors.white,
-            minimumSize: const Size(AppSizes.buttonHeight, AppSizes.buttonHeight),
+            minimumSize: const Size(
+              AppSizes.buttonHeight,
+              AppSizes.buttonHeight,
+            ),
           ),
           onPressed: () => context.push(AppRoutes.challenges),
           icon: const Icon(Icons.sports_tennis_rounded),
@@ -199,7 +225,11 @@ class _VisitorActions extends StatelessWidget {
     return BlocListener<PartnerActionCubit, ActionState>(
       listener: (context, state) {
         if (state is ActionSuccess) {
-          showAppSnack(context, l10n.partnerRequestSent, icon: Icons.handshake_rounded);
+          showAppSnack(
+            context,
+            l10n.partnerRequestSent,
+            icon: Icons.handshake_rounded,
+          );
         } else if (state is ActionFailure) {
           showFailure(context, state.failure);
         }
@@ -208,20 +238,33 @@ class _VisitorActions extends StatelessWidget {
         isFollowing: profile.social.isFollowing,
         hasRespected: profile.social.hasRespected,
         onFollowToggle: () async {
-          final failure = await context.read<PlayerProfileCubit>().toggleFollow();
+          final failure = await context
+              .read<PlayerProfileCubit>()
+              .toggleFollow();
           if (failure != null && context.mounted) showFailure(context, failure);
         },
         onRespect: () async {
-          final failure = await context.read<PlayerProfileCubit>().sendRespect();
+          final failure = await context
+              .read<PlayerProfileCubit>()
+              .sendRespect();
           if (!context.mounted) return;
           if (failure != null) {
             showFailure(context, failure);
           } else {
-            showAppSnack(context, l10n.profileRespectSent, icon: Icons.thumb_up_alt_rounded);
+            showAppSnack(
+              context,
+              l10n.profileRespectSent,
+              icon: Icons.thumb_up_alt_rounded,
+            );
           }
         },
-        onChallenge: () => showChallengeDialog(context, playerId: player.playerId, playerName: player.name),
-        onRequestPartner: () => context.read<PartnerActionCubit>().send(player.playerId),
+        onChallenge: () => showChallengeDialog(
+          context,
+          playerId: player.playerId,
+          playerName: player.name,
+        ),
+        onRequestPartner: () =>
+            context.read<PartnerActionCubit>().send(player.playerId),
       ),
     );
   }
@@ -234,14 +277,19 @@ class _TabBarDelegate extends SliverPersistentHeaderDelegate {
   _TabBarDelegate(this.tabBar, {required this.color});
 
   @override
-  double get minExtent => tabBar.preferredSize.height + AppSpacing.md;
+  double get minExtent => tabBar.preferredSize.height;
 
   @override
-  double get maxExtent => minExtent;
+  double get maxExtent => tabBar.preferredSize.height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) =>
-      ColoredBox(color: color, child: tabBar);
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => SizedBox.expand(
+    child: ColoredBox(color: color, child: tabBar),
+  );
 
   @override
   bool shouldRebuild(covariant _TabBarDelegate oldDelegate) =>
@@ -267,7 +315,11 @@ class _ProfileSkeleton extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [ShimmerBox(width: 180, height: 28), Gap.sm, ShimmerBox(width: 110, height: 16)],
+                    children: [
+                      ShimmerBox(width: 180, height: 28),
+                      Gap.sm,
+                      ShimmerBox(width: 110, height: 16),
+                    ],
                   ),
                 ),
               ],
@@ -277,11 +329,17 @@ class _ProfileSkeleton extends StatelessWidget {
             Gap.lg,
             Row(
               children: [
-                Expanded(child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll)),
+                Expanded(
+                  child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll),
+                ),
                 Gap.sm,
-                Expanded(child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll)),
+                Expanded(
+                  child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll),
+                ),
                 Gap.sm,
-                Expanded(child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll)),
+                Expanded(
+                  child: ShimmerBox(height: 110, borderRadius: AppRadius.lgAll),
+                ),
               ],
             ),
           ],

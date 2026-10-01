@@ -14,8 +14,17 @@
 class SocialAuthConfig {
   const SocialAuthConfig._();
 
-  static const googleServerClientId = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
-  static const googleIosClientId = String.fromEnvironment('GOOGLE_IOS_CLIENT_ID');
+  static const googleServerClientId = String.fromEnvironment(
+    'GOOGLE_SERVER_CLIENT_ID',
+    defaultValue: '911164975994-86ctgv020t0lqg87rsjqrjsiepphim6f.apps.googleusercontent.com',
+  );
+  static const googleIosClientId = String.fromEnvironment(
+    'GOOGLE_IOS_CLIENT_ID',
+    defaultValue: '911164975994-9atool2ig6m2loepo65p9a8phcso5g4b.apps.googleusercontent.com',
+  );
   static const appleServiceId = String.fromEnvironment('APPLE_SERVICE_ID');
-  static const appleRedirectUri = String.fromEnvironment('APPLE_REDIRECT_URI');
+  static const appleRedirectUri = String.fromEnvironment(
+    'APPLE_REDIRECT_URI',
+    defaultValue: 'https://padel.mutasemjaber.online/api/v1/auth/social/apple/callback',
+  );
 }

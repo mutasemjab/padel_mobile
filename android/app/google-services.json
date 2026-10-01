@@ -12,7 +12,28 @@
           "package_name": "com.padel.hamza"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "911164975994-4fbtbii7u9pj5tavo3cnqtjdoc9tc8oo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.padel.hamza",
+            "certificate_hash": "7d76831b3d41563c730977cea57913d70b4c32f0"
+          }
+        },
+        {
+          "client_id": "911164975994-jhvcbmdosp7dg1egt7dg8c7bpin8k4ok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.padel.hamza",
+            "certificate_hash": "314cb4727b696fb6a1469c7a42ac35959e7ac1a3"
+          }
+        },
+        {
+          "client_id": "911164975994-86ctgv020t0lqg87rsjqrjsiepphim6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBK_ZcvWXhehRhko9JBV0NZZH7vD3mkHs0"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911164975994-86ctgv020t0lqg87rsjqrjsiepphim6f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911164975994-9atool2ig6m2loepo65p9a8phcso5g4b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.padel.hamza"
+              }
+            }
+          ]
         }
       }
     }

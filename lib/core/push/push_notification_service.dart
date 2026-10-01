@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:padel/firebase_options.dart';
 
 import '../constants/api_endpoints.dart';
 import 'device_token_provider.dart';
@@ -26,9 +27,12 @@ class PushNotificationService implements DeviceTokenProvider {
     importance: Importance.high,
   );
 
-  final FlutterLocalNotificationsPlugin _local = FlutterLocalNotificationsPlugin();
-  final StreamController<Map<String, dynamic>> _taps = StreamController.broadcast();
-  final StreamController<Map<String, dynamic>> _foreground = StreamController.broadcast();
+  final FlutterLocalNotificationsPlugin _local =
+      FlutterLocalNotificationsPlugin();
+  final StreamController<Map<String, dynamic>> _taps =
+      StreamController.broadcast();
+  final StreamController<Map<String, dynamic>> _foreground =
+      StreamController.broadcast();
 
   bool _available = false;
   StreamSubscription<String>? _refreshSub;
@@ -51,7 +55,9 @@ class PushNotificationService implements DeviceTokenProvider {
 
   Future<void> init() async {
     try {
-      await Firebase.initializeApp();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
       _available = true;
     } catch (e) {
       if (kDebugMode) debugPrint('Push disabled: Firebase not configured ($e)');
@@ -76,7 +82,9 @@ class PushNotificationService implements DeviceTokenProvider {
       },
     );
     await _local
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(_channel);
 
     FirebaseMessaging.onMessage.listen(_showForeground);
@@ -96,7 +104,9 @@ class PushNotificationService implements DeviceTokenProvider {
     if (!_available) return false;
     final settings = await FirebaseMessaging.instance.requestPermission();
     await _local
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.requestNotificationsPermission();
     return settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional;
@@ -104,7 +114,8 @@ class PushNotificationService implements DeviceTokenProvider {
 
   Future<AuthorizationStatus?> permissionStatus() async {
     if (!_available) return null;
-    return (await FirebaseMessaging.instance.getNotificationSettings()).authorizationStatus;
+    return (await FirebaseMessaging.instance.getNotificationSettings())
+        .authorizationStatus;
   }
 
   @override
@@ -137,7 +148,11 @@ class PushNotificationService implements DeviceTokenProvider {
     try {
       await dio.post(
         ApiEndpoints.deviceTokens,
-        data: {'token': token, 'platform': platform, 'device_name': defaultTargetPlatform.name},
+        data: {
+          'token': token,
+          'platform': platform,
+          'device_name': defaultTargetPlatform.name,
+        },
       );
     } catch (e) {
       if (kDebugMode) debugPrint('Device token registration failed: $e');
@@ -174,7 +189,11 @@ class PushNotificationService implements DeviceTokenProvider {
           priority: Priority.high,
           icon: '@mipmap/launcher_icon',
         ),
-        iOS: const DarwinNotificationDetails(presentAlert: true, presentBadge: true, presentSound: true),
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
       ),
       payload: jsonEncode(message.data),
     );

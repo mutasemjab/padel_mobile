@@ -18,43 +18,54 @@ abstract class SocialAuthDataSource {
 }
 
 class SocialAuthDataSourceImpl implements SocialAuthDataSource {
-  bool _googleReady = false;
-
-  static const _notConfigured = ProviderUnavailableFailure('Not available yet.', ApiErrorCodes.socialNotConfigured);
+  static const _notConfigured = ProviderUnavailableFailure(
+    'Not available yet.',
+    ApiErrorCodes.socialNotConfigured,
+  );
 
   @override
-  Future<SocialCredential?> signIn(SocialProvider provider) => switch (provider) {
-    SocialProvider.google => _google(),
-    SocialProvider.apple => _apple(),
-  };
+  Future<SocialCredential?> signIn(SocialProvider provider) =>
+      switch (provider) {
+        SocialProvider.google => _googleAuth(),
+        SocialProvider.apple => _apple(),
+      };
 
-  Future<SocialCredential?> _google() async {
-    if (SocialAuthConfig.googleServerClientId.isEmpty) throw _notConfigured;
-    final google = GoogleSignIn.instance;
-    if (!_googleReady) {
-      await google.initialize(
-        serverClientId: SocialAuthConfig.googleServerClientId,
+  GoogleSignIn? _googleSignIn;
+
+  GoogleSignIn get _google => _googleSignIn ??= GoogleSignIn(
+        serverClientId: SocialAuthConfig.googleServerClientId.isNotEmpty
+            ? SocialAuthConfig.googleServerClientId
+            : null,
         clientId: Platform.isIOS && SocialAuthConfig.googleIosClientId.isNotEmpty
             ? SocialAuthConfig.googleIosClientId
             : null,
+        scopes: const ['email', 'profile'],
       );
-      _googleReady = true;
-    }
-    if (!google.supportsAuthenticate()) throw _notConfigured;
+
+  Future<SocialCredential?> _googleAuth() async {
+    if (SocialAuthConfig.googleServerClientId.isEmpty) throw _notConfigured;
     try {
-      final account = await google.authenticate();
-      final idToken = account.authentication.idToken;
+      final account = await _google.signIn();
+      if (account == null) return null;
+
+      final auth = await account.authentication;
+      final idToken = auth.idToken;
       if (idToken == null) throw _notConfigured;
-      return SocialCredential(provider: SocialProvider.google, idToken: idToken);
-    } on GoogleSignInException catch (e) {
-      if (e.code == GoogleSignInExceptionCode.canceled) return null;
+
+      return SocialCredential(
+        provider: SocialProvider.google,
+        idToken: idToken,
+      );
+    } catch (e) {
       rethrow;
     }
   }
 
   Future<SocialCredential?> _apple() async {
     final web = Platform.isAndroid;
-    if (web && (SocialAuthConfig.appleServiceId.isEmpty || SocialAuthConfig.appleRedirectUri.isEmpty)) {
+    if (web &&
+        (SocialAuthConfig.appleServiceId.isEmpty ||
+            SocialAuthConfig.appleRedirectUri.isEmpty)) {
       throw _notConfigured;
     }
     if (!web && !await SignInWithApple.isAvailable()) throw _notConfigured;
@@ -64,7 +75,10 @@ class SocialAuthDataSourceImpl implements SocialAuthDataSource {
     final nonce = _randomNonce();
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
-        scopes: const [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
+        scopes: const [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
         nonce: sha256.convert(utf8.encode(nonce)).toString(),
         webAuthenticationOptions: web
             ? WebAuthenticationOptions(
@@ -90,8 +104,12 @@ class SocialAuthDataSourceImpl implements SocialAuthDataSource {
   }
 
   static String _randomNonce([int length = 32]) {
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    const chars =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
     final random = Random.secure();
-    return List.generate(length, (_) => chars[random.nextInt(chars.length)]).join();
+    return List.generate(
+      length,
+      (_) => chars[random.nextInt(chars.length)],
+    ).join();
   }
 }
