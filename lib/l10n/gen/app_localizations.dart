@@ -242,6 +242,30 @@ abstract class AppLocalizations {
   /// **'Log out'**
   String get settingsLogOut;
 
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to permanently delete your account? This action is immediate and cannot be undone, and all your data and matches will be deleted.'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted successfully.'**
+  String get deleteAccountSuccess;
+
+  /// No description provided for @deleteAccountLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting account...'**
+  String get deleteAccountLoading;
+
   /// No description provided for @homeWelcomeBack.
   ///
   /// In en, this message translates to:

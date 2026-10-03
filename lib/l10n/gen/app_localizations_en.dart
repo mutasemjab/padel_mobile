@@ -81,6 +81,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLogOut => 'Log out';
 
   @override
+  String get deleteAccountTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountConfirm =>
+      'Are you sure you want to permanently delete your account? This action is immediate and cannot be undone, and all your data and matches will be deleted.';
+
+  @override
+  String get deleteAccountSuccess =>
+      'Your account has been deleted successfully.';
+
+  @override
+  String get deleteAccountLoading => 'Deleting account...';
+
+  @override
   String homeWelcomeBack(String name) {
     return 'Welcome back, $name';
   }

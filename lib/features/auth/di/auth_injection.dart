@@ -7,6 +7,7 @@ import '../data/datasources/auth_remote_data_source.dart';
 import '../data/datasources/social_auth_data_source.dart';
 import '../data/repositories/auth_repository_impl.dart';
 import '../domain/repositories/auth_repository.dart';
+import '../domain/usecases/delete_account_usecase.dart';
 import '../domain/usecases/get_current_player_usecase.dart';
 import '../domain/usecases/logout_usecase.dart';
 import '../domain/usecases/sign_in_usecases.dart';
@@ -21,6 +22,7 @@ void registerAuthDependencies(GetIt sl) {
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl(), sl(), sl(), sl()));
 
   sl.registerFactory(() => LogoutUseCase(sl()));
+  sl.registerFactory(() => DeleteAccountUseCase(sl()));
   sl.registerFactory(() => GetCurrentPlayerUseCase(sl()));
   sl.registerFactory(() => RestoreSessionUseCase(sl()));
   sl.registerFactory(() => UpdateProfileUseCase(sl()));

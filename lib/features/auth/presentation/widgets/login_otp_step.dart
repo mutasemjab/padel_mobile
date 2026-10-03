@@ -55,7 +55,7 @@ class LoginOtpStep extends StatefulWidget {
     required this.onResend,
   });
 
-  static const length = 6;
+  static const length = 4;
 
   @override
   State<LoginOtpStep> createState() => _LoginOtpStepState();
@@ -78,7 +78,8 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
 
   void _rebuild() => setState(() {});
 
-  static String _clock(int s) => '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+  static String _clock(int s) =>
+      '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +109,14 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                   borderRadius: BorderRadius.circular(13),
                   border: Border.all(color: AppColors.cream15),
                 ),
-                child: Transform.flip(flipX: !rtl, child: SvgPicture.string(LoginSvgs.chevron, width: 18, height: 18)),
+                child: Transform.flip(
+                  flipX: !rtl,
+                  child: SvgPicture.string(
+                    LoginSvgs.chevron,
+                    width: 18,
+                    height: 18,
+                  ),
+                ),
               ),
             ),
           ),
@@ -130,12 +138,21 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                     children: [
                       Directionality(
                         textDirection: TextDirection.ltr,
-                        child: Text(widget.phoneDisplay, style: AppFonts.numeral(size: 15)),
+                        child: Text(
+                          widget.phoneDisplay,
+                          style: AppFonts.numeral(size: 15),
+                        ),
                       ),
                       const SizedBox(width: 8),
                       GestureDetector(
                         onTap: widget.onBack,
-                        child: Text(l10n.pmOtpEdit, style: AppFonts.body(size: 12.5, color: AppColors.goldSoft)),
+                        child: Text(
+                          l10n.pmOtpEdit,
+                          style: AppFonts.body(
+                            size: 12.5,
+                            color: AppColors.goldSoft,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -162,7 +179,8 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                           active:
                               focused &&
                               code.length < LoginOtpStep.length &&
-                              i == code.length.clamp(0, LoginOtpStep.length - 1),
+                              i ==
+                                  code.length.clamp(0, LoginOtpStep.length - 1),
                           done: widget.done,
                           error: widget.error,
                         ),
@@ -188,7 +206,10 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                     ],
                     showCursor: false,
                     enableInteractiveSelection: false,
-                    style: const TextStyle(fontSize: 16, color: Colors.transparent),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.transparent,
+                    ),
                     decoration: bareInputDecoration(),
                     expands: true,
                     maxLines: null,
@@ -210,12 +231,16 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
-                    onTap: widget.resendIn > 0 || widget.resendBusy ? null : widget.onResend,
+                    onTap: widget.resendIn > 0 || widget.resendBusy
+                        ? null
+                        : widget.onResend,
                     child: Text(
                       l10n.pmOtpResend,
                       style: AppFonts.body(
                         size: 12.5,
-                        color: widget.resendIn > 0 || widget.resendBusy ? AppColors.cream15 : AppColors.goldSoft,
+                        color: widget.resendIn > 0 || widget.resendBusy
+                            ? AppColors.cream15
+                            : AppColors.goldSoft,
                       ),
                     ),
                   ),
@@ -223,7 +248,13 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
                     const Text(' '),
                     Directionality(
                       textDirection: TextDirection.ltr,
-                      child: Text(_clock(widget.resendIn), style: AppFonts.numeral(size: 14, color: AppColors.cream70)),
+                      child: Text(
+                        _clock(widget.resendIn),
+                        style: AppFonts.numeral(
+                          size: 14,
+                          color: AppColors.cream70,
+                        ),
+                      ),
                     ),
                   ],
                 ],
@@ -243,7 +274,11 @@ class _LoginOtpStepState extends State<LoginOtpStep> {
           Text(
             widget.message!,
             textAlign: TextAlign.center,
-            style: AppFonts.body(size: 11, height: 1.7, color: AppColors.danger),
+            style: AppFonts.body(
+              size: 11,
+              height: 1.7,
+              color: AppColors.danger,
+            ),
           ),
         ],
       ],
@@ -258,7 +293,12 @@ class _OtpBox extends StatefulWidget {
   final bool done;
   final bool error;
 
-  const _OtpBox({required this.digit, required this.active, required this.done, required this.error});
+  const _OtpBox({
+    required this.digit,
+    required this.active,
+    required this.done,
+    required this.error,
+  });
 
   @override
   State<_OtpBox> createState() => _OtpBoxState();
@@ -271,11 +311,26 @@ class _OtpBoxState extends State<_OtpBox> with TickerProviderStateMixin {
     duration: const Duration(milliseconds: 300),
     value: 1,
   );
-  late final AnimationController _blink = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+  late final AnimationController _blink = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 1),
+  );
 
   static final _tickScale = TweenSequence<double>([
-    TweenSequenceItem(tween: Tween(begin: .9, end: 1.06).chain(CurveTween(curve: AppMotion.ease)), weight: 60),
-    TweenSequenceItem(tween: Tween(begin: 1.06, end: 1.0).chain(CurveTween(curve: AppMotion.ease)), weight: 40),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: .9,
+        end: 1.06,
+      ).chain(CurveTween(curve: AppMotion.ease)),
+      weight: 60,
+    ),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 1.06,
+        end: 1.0,
+      ).chain(CurveTween(curve: AppMotion.ease)),
+      weight: 40,
+    ),
   ]);
 
   @override
@@ -335,24 +390,38 @@ class _OtpBoxState extends State<_OtpBox> with TickerProviderStateMixin {
         height: 62,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: widget.done ? const Color.fromRGBO(223, 240, 90, .1) : const Color.fromRGBO(4, 28, 22, .55),
+          color: widget.done
+              ? const Color.fromRGBO(223, 240, 90, .1)
+              : const Color.fromRGBO(4, 28, 22, .55),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: border),
           boxShadow: widget.active
-              ? const [BoxShadow(color: Color.fromRGBO(201, 168, 106, .12), spreadRadius: 4)]
+              ? const [
+                  BoxShadow(
+                    color: Color.fromRGBO(201, 168, 106, .12),
+                    spreadRadius: 4,
+                  ),
+                ]
               : null,
         ),
         child: filled
             ? Text(
                 widget.digit,
-                style: AppFonts.numeral(size: 26, color: widget.done ? AppColors.ball : AppColors.cream),
+                style: AppFonts.numeral(
+                  size: 26,
+                  color: widget.done ? AppColors.ball : AppColors.cream,
+                ),
               )
             : widget.active
             ? AnimatedBuilder(
                 animation: _blink,
                 builder: (_, _) => Opacity(
                   opacity: _blink.value < .5 ? 1 : 0,
-                  child: Container(width: 2, height: 26, color: AppColors.goldSoft),
+                  child: Container(
+                    width: 2,
+                    height: 26,
+                    color: AppColors.goldSoft,
+                  ),
                 ),
               )
             : null,

@@ -42,6 +42,10 @@ abstract class AuthRepository {
     required String passwordConfirmation,
   });
 
+  /// Permanently deletes the account (`DELETE auth/me`), unregisters device token,
+  /// and clears local session.
+  ApiResult<void> deleteAccount();
+
   /// True when a token is present locally (not verified against the backend).
   Future<bool> hasStoredSession();
 }

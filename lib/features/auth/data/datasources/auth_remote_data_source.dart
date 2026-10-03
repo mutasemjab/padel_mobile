@@ -42,6 +42,9 @@ abstract class AuthRemoteDataSource {
     required String password,
     required String passwordConfirmation,
   });
+
+  /// `DELETE auth/me` — permanently deletes the account.
+  Future<void> deleteAccount();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -139,5 +142,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       ApiEndpoints.password,
       data: {'current_password': currentPassword, 'password': password, 'password_confirmation': passwordConfirmation},
     );
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    await dio.delete(ApiEndpoints.me);
   }
 }

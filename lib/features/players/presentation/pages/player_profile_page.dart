@@ -14,6 +14,7 @@ import '../../../../core/widgets/state_views.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../../partners/presentation/bloc/partners_cubits.dart';
 import '../../domain/entities/player_profile.dart';
+import '../../../auth/presentation/widgets/delete_account_dialog.dart';
 import '../bloc/player_profile_cubit.dart';
 import '../bloc/player_profile_state.dart';
 import '../widgets/athlete_header.dart';
@@ -131,6 +132,11 @@ class _ProfileContent extends StatelessWidget {
                   tooltip: l10n.settingsTitle,
                   icon: const Icon(Icons.settings_rounded),
                   onPressed: () => context.push(AppRoutes.settings),
+                ),
+                IconButton(
+                  tooltip: l10n.deleteAccountTitle,
+                  icon: const Icon(Icons.delete_outline_rounded, color: AppColors.danger),
+                  onPressed: () => showDeleteAccountDialog(context),
                 ),
               ],
             ],

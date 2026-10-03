@@ -7,6 +7,7 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/meta/enum_labels.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/state/view_state.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
@@ -21,6 +22,7 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../bloc/edit_profile_cubit.dart';
 import '../widgets/auth_text_field.dart';
+import '../widgets/delete_account_dialog.dart';
 
 /// Personal fields only — competitive fields are never editable.
 class EditProfilePage extends StatelessWidget {
@@ -245,6 +247,13 @@ class _EditProfileViewState extends State<_EditProfileView> {
                   onPressed: () => showChangePasswordSheet(context),
                   icon: const Icon(Icons.lock_reset_rounded),
                   label: Text(l10n.changePasswordTitle),
+                ),
+                Gap.sm,
+                TextButton.icon(
+                  style: TextButton.styleFrom(foregroundColor: AppColors.danger),
+                  onPressed: () => showDeleteAccountDialog(context),
+                  icon: const Icon(Icons.delete_forever_rounded),
+                  label: Text(l10n.deleteAccountTitle),
                 ),
               ],
             ),

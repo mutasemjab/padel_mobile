@@ -81,6 +81,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsLogOut => 'تسجيل الخروج';
 
   @override
+  String get deleteAccountTitle => 'حذف الحساب';
+
+  @override
+  String get deleteAccountConfirm =>
+      'هل أنت متأكد من رغبتك في حذف حسابك نهائياً؟ هذا الإجراء فوري ولا يمكن التراجع عنه، وسيتم حذف جميع بياناتك ومبارياتك.';
+
+  @override
+  String get deleteAccountSuccess => 'تم حذف حسابك بنجاح.';
+
+  @override
+  String get deleteAccountLoading => 'جاري حذف الحساب...';
+
+  @override
   String homeWelcomeBack(String name) {
     return 'أهلاً بعودتك، $name';
   }

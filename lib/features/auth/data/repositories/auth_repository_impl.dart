@@ -163,6 +163,23 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  ApiResult<void> deleteAccount() async {
+    try {
+      final token = await _safeDeviceToken();
+      if (token != null) {
+        try {
+          await deviceTokens.unregister();
+        } catch (_) {}
+      }
+      await remote.deleteAccount();
+      await local.clear();
+      return const Right(null);
+    } catch (e, s) {
+      return Left(ExceptionMapper.map(e, s));
+    }
+  }
+
+  @override
   Future<bool> hasStoredSession() async {
     final token = await local.readToken();
     return token != null && token.isNotEmpty;

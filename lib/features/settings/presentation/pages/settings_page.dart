@@ -20,6 +20,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../auth/presentation/pages/edit_profile_page.dart';
+import '../../../auth/presentation/widgets/delete_account_dialog.dart';
 
 /// Language, theme, notifications, account shortcuts and logout.
 class SettingsPage extends StatelessWidget {
@@ -81,6 +82,7 @@ class SettingsPage extends StatelessWidget {
                   _Link(icon: Icons.sports_rounded, label: l10n.coachPortalOpen, color: AppColors.info, onTap: () => context.go(AppRoutes.coachPortal)),
                 _Link(icon: Icons.lock_reset_rounded, label: l10n.changePasswordTitle, onTap: () => showChangePasswordSheet(context)),
                 _Link(icon: Icons.scoreboard_rounded, label: l10n.settingsStaff, onTap: () => context.push(AppRoutes.scorekeeperLogin)),
+                _Link(icon: Icons.delete_forever_rounded, label: l10n.deleteAccountTitle, color: AppColors.danger, onTap: () => showDeleteAccountDialog(context)),
               ],
             ),
           ),
@@ -100,6 +102,13 @@ class SettingsPage extends StatelessWidget {
             },
             icon: const Icon(Icons.logout_rounded),
             label: Text(l10n.settingsLogOut),
+          ),
+          Gap.sm,
+          TextButton.icon(
+            style: TextButton.styleFrom(foregroundColor: AppColors.danger),
+            onPressed: () => showDeleteAccountDialog(context),
+            icon: const Icon(Icons.delete_forever_rounded, size: 20),
+            label: Text(l10n.deleteAccountTitle),
           ),
           Gap.lg,
           Center(child: Text(l10n.settingsVersion('1.0.0'), style: context.text.labelSmall)),

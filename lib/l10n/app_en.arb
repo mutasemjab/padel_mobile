@@ -24,6 +24,10 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "settingsLogOut": "Log out",
+  "deleteAccountTitle": "Delete Account",
+  "deleteAccountConfirm": "Are you sure you want to permanently delete your account? This action is immediate and cannot be undone, and all your data and matches will be deleted.",
+  "deleteAccountSuccess": "Your account has been deleted successfully.",
+  "deleteAccountLoading": "Deleting account...",
   "homeWelcomeBack": "Welcome back, {name}",
   "@homeWelcomeBack": {
     "placeholders": {
