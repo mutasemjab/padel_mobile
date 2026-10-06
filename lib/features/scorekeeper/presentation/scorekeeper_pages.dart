@@ -18,6 +18,7 @@ import '../../../core/widgets/state_builders.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../auth/presentation/widgets/auth_text_field.dart';
 import '../../live_match/presentation/widgets/live_scoreboard.dart';
+import '../../tournaments/domain/entities/live_payload.dart';
 import '../../tournaments/domain/entities/match.dart';
 import '../../tournaments/presentation/widgets/live_match_card.dart';
 import '../data/scorekeeper_repository.dart';
@@ -129,8 +130,8 @@ class ScorekeeperMatchesPage extends StatelessWidget {
   }
 }
 
-/// Two big buttons record the point instantly. Detail is optional, added
-/// afterwards, and never blocks the score.
+/// Tapping a team opens the reason sheet; the point is sent only once its
+/// mandatory structured reason is complete (the server rejects it otherwise).
 class ScoringPage extends StatelessWidget {
   final Match match;
 
@@ -149,6 +150,11 @@ class ScoringPage extends StatelessWidget {
           builder: (context, state) {
             final cubit = context.read<ScoringCubit>();
             final m = state.match;
+            Future<void> recordFor(int teamId) async {
+              final input = await _showReasonSheet(context, m, winningTeamId: teamId);
+              if (input != null) await cubit.point(input);
+            }
+
             return SafeArea(
               child: Padding(
                 padding: AppSpacing.page,
@@ -160,9 +166,9 @@ class ScoringPage extends StatelessWidget {
                     Expanded(
                       child: Row(
                         children: [
-                          Expanded(child: _PointButton(team: m.teamOne, color: AppColors.primary, busy: state.sending, onTap: cubit.point)),
+                          Expanded(child: _PointButton(team: m.teamOne, color: AppColors.primary, busy: state.sending, onTap: recordFor)),
                           Gap.md,
-                          Expanded(child: _PointButton(team: m.teamTwo, color: AppColors.info, busy: state.sending, onTap: cubit.point)),
+                          Expanded(child: _PointButton(team: m.teamTwo, color: AppColors.info, busy: state.sending, onTap: recordFor)),
                         ],
                       ),
                     ),
@@ -179,9 +185,17 @@ class ScoringPage extends StatelessWidget {
                         Gap.sm,
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: state.lastPoint == null || state.sending ? null : () => _showDetailSheet(context, m),
+                            onPressed: state.lastPoint?.winningTeamId == null || state.sending
+                                ? null
+                                : () async {
+                                    final last = state.lastPoint!;
+                                    final input = await _showReasonSheet(context, m, winningTeamId: last.winningTeamId!, initial: last);
+                                    if (input == null) return;
+                                    await cubit.details(input);
+                                    if (context.mounted && cubit.state.failure == null) showAppSnack(context, l10n.scorekeeperSaved);
+                                  },
                             icon: const Icon(Icons.edit_note_rounded),
-                            label: Text(l10n.scorekeeperAddDetail),
+                            label: Text(l10n.scorekeeperEditLastPoint),
                           ),
                         ),
                       ],
@@ -196,13 +210,12 @@ class ScoringPage extends StatelessWidget {
     );
   }
 
-  Future<void> _showDetailSheet(BuildContext context, Match m) {
-    final cubit = context.read<ScoringCubit>();
-    return showModalBottomSheet<void>(
+  Future<PointInput?> _showReasonSheet(BuildContext context, Match m, {required int winningTeamId, PointEvent? initial}) {
+    return showModalBottomSheet<PointInput>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      builder: (_) => BlocProvider.value(value: cubit, child: _DetailSheet(match: m)),
+      builder: (_) => _PointReasonSheet(match: m, winningTeamId: winningTeamId, initial: initial),
     );
   }
 }
@@ -249,27 +262,69 @@ class _PointButton extends StatelessWidget {
   }
 }
 
-class _DetailSheet extends StatefulWidget {
+/// The mandatory reason for one point. The ending type decides which fields
+/// are required, whose player is named and which values are allowed — read
+/// from `meta/enums` (with the server's current rules as an offline fallback).
+class _PointReasonSheet extends StatefulWidget {
   final Match match;
+  final int winningTeamId;
+  final PointEvent? initial;
 
-  const _DetailSheet({required this.match});
+  const _PointReasonSheet({required this.match, required this.winningTeamId, this.initial});
 
   @override
-  State<_DetailSheet> createState() => _DetailSheetState();
+  State<_PointReasonSheet> createState() => _PointReasonSheetState();
 }
 
-class _DetailSheetState extends State<_DetailSheet> {
+class _PointReasonSheetState extends State<_PointReasonSheet> {
+  static const _shot = 'shot_type';
+  static const _error = 'error_type';
+  static const _serve = 'serve_outcome';
+  static const _player = 'primary_player_id';
+
+  /// Same rules the server enforces; used only until `meta/enums` has loaded.
+  static const _fallback = <String, PointEndingRule>{
+    'winner': PointEndingRule(requires: [_player, _shot], playerTeam: 'winning'),
+    'forced_error': PointEndingRule(requires: [_player, _error], playerTeam: 'losing'),
+    'unforced_error': PointEndingRule(requires: [_player, _error], playerTeam: 'losing'),
+    'ace': PointEndingRule(requires: [_player, _serve], playerTeam: 'winning', options: {_serve: ['first_serve', 'second_serve']}),
+    'double_fault': PointEndingRule(requires: [_player, _serve], playerTeam: 'losing', options: {_serve: ['fault_net', 'fault_out', 'foot_fault']}),
+    'penalty': PointEndingRule(),
+  };
+
   String? _ending;
-  String? _shot;
-  String? _error;
-  String? _serve;
-  String? _player;
+  final Map<String, String?> _values = {};
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.initial;
+    if (p != null && _fallback.containsKey(p.endingType)) {
+      _ending = p.endingType;
+      _values[_player] = p.primaryPlayerId;
+      _values[_shot] = p.shotType;
+      _values[_error] = p.errorType;
+      _values[_serve] = p.serveOutcome;
+    }
+  }
+
+  PointEndingRule? _rule(BuildContext context, String? ending) =>
+      ending == null ? null : (context.enums.endingRule(ending) ?? _fallback[ending]);
+
+  MatchTeam? get _winning => widget.match.teamOne?.id == widget.winningTeamId ? widget.match.teamOne : widget.match.teamTwo;
+  MatchTeam? get _losing => widget.match.teamOne?.id == widget.winningTeamId ? widget.match.teamTwo : widget.match.teamOne;
+
+  bool _complete(PointEndingRule? rule) =>
+      rule != null && rule.requires.every((field) => (_values[field] ?? '').isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final players = [...?widget.match.teamOne?.players, ...?widget.match.teamTwo?.players];
-    Widget group(String title, String enumGroup, String? value, ValueChanged<String?> onChanged) => Column(
+    final rule = _rule(context, _ending);
+    final endings = context.enums.options(EnumGroup.pointEndingTypes).where((o) => _rule(context, o.value) != null).toList();
+    final endingChoices = endings.isNotEmpty ? endings : [for (final e in _fallback.keys) EnumOption(e, EnumsService.humanize(e))];
+
+    Widget chips(String title, List<EnumOption> options, String field) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gap.md,
@@ -279,59 +334,75 @@ class _DetailSheetState extends State<_DetailSheet> {
               spacing: AppSpacing.sm,
               runSpacing: AppSpacing.sm,
               children: [
-                for (final o in context.enums.options(enumGroup))
+                for (final o in options)
                   ChoiceChip(
                     label: Text(o.label),
-                    selected: value == o.value,
-                    onSelected: (on) => onChanged(on ? o.value : null),
+                    selected: _values[field] == o.value,
+                    onSelected: (on) => setState(() => _values[field] = on ? o.value : null),
                   ),
               ],
             ),
           ],
         );
+
+    List<EnumOption> optionsFor(String group, String field) {
+      final allowed = rule?.allowed(field) ?? const [];
+      final all = context.enums.options(group);
+      final source = all.isNotEmpty ? all : [for (final v in allowed) EnumOption(v, EnumsService.humanize(v))];
+      return allowed.isEmpty ? source : source.where((o) => allowed.contains(o.value)).toList();
+    }
+
+    final playerTeam = rule?.playerTeam == 'winning' ? _winning : (rule?.playerTeam == 'losing' ? _losing : null);
+
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.xl, 0, AppSpacing.xl, AppSpacing.xl),
+      padding: EdgeInsetsDirectional.fromSTEB(AppSpacing.xl, 0, AppSpacing.xl, AppSpacing.xl + MediaQuery.viewInsetsOf(context).bottom),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n.scorekeeperAddDetail, style: context.text.titleLarge),
-            Text(l10n.scorekeeperDetailOptional, style: context.text.bodySmall),
-            group(l10n.scorekeeperEndingType, EnumGroup.pointEndingTypes, _ending, (v) => setState(() => _ending = v)),
-            group(l10n.scorekeeperShot, EnumGroup.shotTypes, _shot, (v) => setState(() => _shot = v)),
-            group(l10n.scorekeeperError, EnumGroup.errorTypes, _error, (v) => setState(() => _error = v)),
-            group(l10n.scorekeeperServe, EnumGroup.serveOutcomes, _serve, (v) => setState(() => _serve = v)),
+            Text('${l10n.scorekeeperPointTo}: ${_winning?.label ?? ''}', style: context.text.titleLarge),
+            Text(l10n.scorekeeperReasonHelp, style: context.text.bodySmall),
             Gap.md,
-            Text(l10n.scorekeeperPlayer, style: context.text.titleSmall),
+            Text(l10n.scorekeeperEndingType, style: context.text.titleSmall),
             Gap.sm,
             Wrap(
               spacing: AppSpacing.sm,
               runSpacing: AppSpacing.sm,
               children: [
-                for (final p in players)
+                for (final o in endingChoices)
                   ChoiceChip(
-                    label: Text(p.name),
-                    selected: _player == p.playerId,
-                    onSelected: (on) => setState(() => _player = on ? p.playerId : null),
+                    label: Text(o.label),
+                    selected: _ending == o.value,
+                    onSelected: (on) => setState(() {
+                      _ending = on ? o.value : null;
+                      _values.clear(); // fields of the previous ending no longer apply
+                    }),
                   ),
               ],
             ),
+            if (playerTeam != null && rule!.requiresField(_player))
+              chips(
+                rule.playerTeam == 'winning' ? l10n.scorekeeperPlayerWinning : l10n.scorekeeperPlayerLosing,
+                [for (final p in playerTeam.players) EnumOption(p.playerId, p.name)],
+                _player,
+              ),
+            if (rule?.requiresField(_shot) ?? false) chips(l10n.scorekeeperShot, optionsFor(EnumGroup.shotTypes, _shot), _shot),
+            if (rule?.requiresField(_error) ?? false) chips(l10n.scorekeeperError, optionsFor(EnumGroup.errorTypes, _error), _error),
+            if (rule?.requiresField(_serve) ?? false) chips(l10n.scorekeeperServe, optionsFor(EnumGroup.serveOutcomes, _serve), _serve),
             Gap.xl,
             FilledButton(
-              onPressed: () async {
-                await context.read<ScoringCubit>().details(PointInput(
-                      endingType: _ending,
-                      shotType: _shot,
-                      errorType: _error,
-                      serveOutcome: _serve,
-                      primaryPlayerId: _player,
-                    ));
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                  showAppSnack(context, l10n.scorekeeperSaved);
-                }
-              },
-              child: Text(l10n.actionSave),
+              onPressed: !_complete(rule)
+                  ? null
+                  : () => Navigator.of(context).pop(PointInput(
+                        winningTeamId: widget.winningTeamId,
+                        endingType: _ending,
+                        primaryPlayerId: rule!.requiresField(_player) ? _values[_player] : null,
+                        shotType: rule.requiresField(_shot) ? _values[_shot] : null,
+                        errorType: rule.requiresField(_error) ? _values[_error] : null,
+                        serveOutcome: rule.requiresField(_serve) ? _values[_serve] : null,
+                        recordedAt: widget.initial == null ? DateTime.now() : null,
+                      )),
+              child: Text(widget.initial == null ? l10n.scorekeeperRecordPoint : l10n.actionSave),
             ),
           ],
         ),

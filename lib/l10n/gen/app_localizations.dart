@@ -4214,6 +4214,36 @@ abstract class AppLocalizations {
   /// **'Detail saved'**
   String get scorekeeperSaved;
 
+  /// No description provided for @scorekeeperRecordPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Record point'**
+  String get scorekeeperRecordPoint;
+
+  /// No description provided for @scorekeeperEditLastPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit last point'**
+  String get scorekeeperEditLastPoint;
+
+  /// No description provided for @scorekeeperReasonHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how the point ended and the required details.'**
+  String get scorekeeperReasonHelp;
+
+  /// No description provided for @scorekeeperPlayerWinning.
+  ///
+  /// In en, this message translates to:
+  /// **'Player (team that won the point)'**
+  String get scorekeeperPlayerWinning;
+
+  /// No description provided for @scorekeeperPlayerLosing.
+  ///
+  /// In en, this message translates to:
+  /// **'Player (team that lost the point)'**
+  String get scorekeeperPlayerLosing;
+
   /// No description provided for @scorekeeperLogout.
   ///
   /// In en, this message translates to:

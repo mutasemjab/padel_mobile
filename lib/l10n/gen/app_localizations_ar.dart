@@ -2368,6 +2368,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scorekeeperSaved => 'تم حفظ التفاصيل';
 
   @override
+  String get scorekeeperRecordPoint => 'تسجيل النقطة';
+
+  @override
+  String get scorekeeperEditLastPoint => 'تعديل آخر نقطة';
+
+  @override
+  String get scorekeeperReasonHelp =>
+      'اختر كيف انتهت النقطة والتفاصيل المطلوبة.';
+
+  @override
+  String get scorekeeperPlayerWinning => 'اللاعب (الفريق الفائز بالنقطة)';
+
+  @override
+  String get scorekeeperPlayerLosing => 'اللاعب (الفريق الخاسر للنقطة)';
+
+  @override
   String get scorekeeperLogout => 'الخروج من وضع التسجيل';
 
   @override

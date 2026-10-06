@@ -12,6 +12,22 @@ class EnumOption {
   const EnumOption(this.value, this.label);
 }
 
+/// What a point ending type demands, from `meta/enums.point_ending_types[]`:
+/// the fields that must be sent, whose player it names (`winning`, `losing`
+/// or null for a team-level ending) and the allowed values per field.
+class PointEndingRule {
+  final List<String> requires;
+  final String? playerTeam;
+  final Map<String, List<String>> options;
+
+  const PointEndingRule({this.requires = const [], this.playerTeam, this.options = const {}});
+
+  bool requiresField(String field) => requires.contains(field);
+
+  /// Allowed values for [field]; empty = no restriction known.
+  List<String> allowed(String field) => options[field] ?? const [];
+}
+
 /// Enum groups exposed by `GET meta/enums`.
 class EnumGroup {
   const EnumGroup._();
@@ -58,6 +74,7 @@ class EnumsService extends ChangeNotifier {
   }
 
   Map<String, List<EnumOption>> _groups = const {};
+  Map<String, PointEndingRule> _endingRules = const {};
   bool _loading = false;
 
   bool get isLoaded => _groups.isNotEmpty;
@@ -69,6 +86,25 @@ class EnumsService extends ChangeNotifier {
       final response = await dio.get(ApiEndpoints.metaEnums);
       final data = ApiEnvelope.map(response);
       final parsed = <String, List<EnumOption>>{};
+      final rules = <String, PointEndingRule>{};
+      final endings = data[EnumGroup.pointEndingTypes];
+      if (endings is List) {
+        for (final item in endings) {
+          if (item is! Map || item['value'] == null) continue;
+          final options = <String, List<String>>{};
+          final rawOptions = item['options'];
+          if (rawOptions is Map) {
+            rawOptions.forEach((k, v) {
+              if (v is List) options[k.toString()] = [for (final o in v) o.toString()];
+            });
+          }
+          rules[item['value'].toString()] = PointEndingRule(
+            requires: [for (final r in (item['requires'] as List? ?? const [])) r.toString()],
+            playerTeam: item['player_team']?.toString(),
+            options: options,
+          );
+        }
+      }
       data.forEach((group, raw) {
         if (raw is List) {
           parsed[group] = [
@@ -79,6 +115,7 @@ class EnumsService extends ChangeNotifier {
         }
       });
       _groups = parsed;
+      _endingRules = rules;
       notifyListeners();
     } catch (e) {
       // Labels degrade to humanized raw values; nothing else depends on this.
@@ -89,6 +126,9 @@ class EnumsService extends ChangeNotifier {
   }
 
   List<EnumOption> options(String group) => _groups[group] ?? const [];
+
+  /// Rule for a point ending type, or null when `meta/enums` has not loaded.
+  PointEndingRule? endingRule(String endingType) => _endingRules[endingType];
 
   String label(String group, String? value) {
     if (value == null || value.isEmpty) return '';

@@ -2347,6 +2347,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scorekeeperSaved => 'Detail saved';
 
   @override
+  String get scorekeeperRecordPoint => 'Record point';
+
+  @override
+  String get scorekeeperEditLastPoint => 'Edit last point';
+
+  @override
+  String get scorekeeperReasonHelp =>
+      'Choose how the point ended and the required details.';
+
+  @override
+  String get scorekeeperPlayerWinning => 'Player (team that won the point)';
+
+  @override
+  String get scorekeeperPlayerLosing => 'Player (team that lost the point)';
+
+  @override
   String get scorekeeperLogout => 'Leave scorekeeper mode';
 
   @override

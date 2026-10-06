@@ -42,8 +42,8 @@ class ScoringState {
       );
 }
 
-/// Records points instantly (team only); detail is attached afterwards and
-/// never blocks the score.
+/// Records each point together with its mandatory structured reason; the
+/// last point's reason can be corrected afterwards (the score never changes).
 class ScoringCubit extends Cubit<ScoringState> {
   final ScorekeeperRepository repository;
 
@@ -57,7 +57,7 @@ class ScoringCubit extends Cubit<ScoringState> {
     emit(ScoringState(match: payload.applyTo(state.match), lastPoint: payload.lastPoint ?? state.lastPoint));
   }
 
-  Future<void> point(int winningTeamId) => _send(() => repository.recordPoint(state.match.id, PointInput(winningTeamId: winningTeamId)));
+  Future<void> point(PointInput input) => _send(() => repository.recordPoint(state.match.id, input));
 
   Future<void> undo() => _send(() => repository.undo(state.match.id));
 

@@ -11,8 +11,9 @@ class ScorekeeperSession extends Equatable {
   List<Object?> get props => [token, staffName, staff];
 }
 
-/// A point to record. Only [winningTeamId] is required — detail never blocks
-/// the score and can be attached afterwards.
+/// A point to record. The server requires the structured reason with every
+/// point: [endingType] plus the fields that ending demands (see
+/// `meta/enums.point_ending_types[].requires`).
 class PointInput extends Equatable {
   final int? winningTeamId;
   final String? endingType;
@@ -23,6 +24,9 @@ class PointInput extends Equatable {
   final String? errorType;
   final String? serveOutcome;
 
+  /// Device time of the point, used by the server to order points for analysis.
+  final DateTime? recordedAt;
+
   const PointInput({
     this.winningTeamId,
     this.endingType,
@@ -30,10 +34,21 @@ class PointInput extends Equatable {
     this.shotType,
     this.errorType,
     this.serveOutcome,
+    this.recordedAt,
   });
 
   bool get hasDetail =>
       endingType != null || primaryPlayerId != null || shotType != null || errorType != null || serveOutcome != null;
+
+  PointInput withWinner(int teamId) => PointInput(
+        winningTeamId: teamId,
+        endingType: endingType,
+        primaryPlayerId: primaryPlayerId,
+        shotType: shotType,
+        errorType: errorType,
+        serveOutcome: serveOutcome,
+        recordedAt: recordedAt,
+      );
 
   Map<String, dynamic> toJson() => {
         'winning_team_id': ?winningTeamId,
@@ -42,8 +57,9 @@ class PointInput extends Equatable {
         'shot_type': ?shotType,
         'error_type': ?errorType,
         'serve_outcome': ?serveOutcome,
+        'recorded_at': ?recordedAt?.toUtc().toIso8601String(),
       };
 
   @override
-  List<Object?> get props => [winningTeamId, endingType, primaryPlayerId, shotType, errorType, serveOutcome];
+  List<Object?> get props => [winningTeamId, endingType, primaryPlayerId, shotType, errorType, serveOutcome, recordedAt];
 }
