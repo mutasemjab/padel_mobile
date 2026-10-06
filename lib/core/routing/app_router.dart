@@ -25,6 +25,7 @@ import '../../features/players/presentation/pages/rating_history_page.dart';
 import '../../features/premium/presentation/pages/premium_pages.dart';
 import '../../features/rankings/presentation/pages/rankings_page.dart';
 import '../../features/scorekeeper/presentation/scorekeeper_pages.dart';
+import '../../features/settings/presentation/pages/notification_settings_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../features/tournaments/presentation/pages/category_detail_page.dart';
 import '../../features/tournaments/presentation/pages/my_registrations_page.dart';
@@ -172,6 +173,8 @@ GoRouter buildAppRouter(AuthBloc authBloc, {GlobalKey<NavigatorState>? navigator
       GoRoute(path: AppRoutes.challenges, builder: (_, _) => const ChallengesPage()),
       GoRoute(path: AppRoutes.myRegistrations, builder: (_, _) => const MyRegistrationsPage()),
       GoRoute(path: AppRoutes.myCasualMatches, builder: (_, _) => const MyCasualMatchesPage()),
+      GoRoute(path: '/casual/:id', builder: (_, s) => CasualMatchDetailPage(id: _id(s, 'id'))),
+      GoRoute(path: AppRoutes.notificationSettings, builder: (_, _) => const NotificationSettingsPage()),
       GoRoute(path: AppRoutes.myBookings, builder: (_, _) => const MyBookingsPage()),
       GoRoute(
         path: '/me/bookings/:id',

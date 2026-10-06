@@ -4513,6 +4513,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Duo scenes are part of Premium.'**
   String get duo3dPremium;
+
+  /// No description provided for @casualMatchName.
+  ///
+  /// In en, this message translates to:
+  /// **'Match name (optional)'**
+  String get casualMatchName;
+
+  /// No description provided for @casualMatchNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Friday evening padel'**
+  String get casualMatchNameHint;
+
+  /// No description provided for @casualEditMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit match'**
+  String get casualEditMatch;
+
+  /// No description provided for @casualEditHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Players are notified when you change the time or the court.'**
+  String get casualEditHint;
+
+  /// No description provided for @casualInvitePlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a player'**
+  String get casualInvitePlayer;
+
+  /// No description provided for @casualInviteSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or player ID'**
+  String get casualInviteSearchHint;
+
+  /// No description provided for @casualInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get casualInvite;
+
+  /// No description provided for @casualInvitationSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation sent'**
+  String get casualInvitationSent;
+
+  /// No description provided for @casualCancelledNotFull.
+  ///
+  /// In en, this message translates to:
+  /// **'This match was cancelled automatically: it did not have enough players 2 hours before the start.'**
+  String get casualCancelledNotFull;
+
+  /// No description provided for @casualCancelledByCreator.
+  ///
+  /// In en, this message translates to:
+  /// **'This match was cancelled by the organizer.'**
+  String get casualCancelledByCreator;
+
+  /// No description provided for @casualUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Match updated'**
+  String get casualUpdated;
+
+  /// No description provided for @casualInvitedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Invited'**
+  String get casualInvitedStatus;
+
+  /// No description provided for @casualYouAreInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} invited you to this match'**
+  String casualYouAreInvited(String name);
+
+  /// No description provided for @casualInvitationAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re in! See you on court.'**
+  String get casualInvitationAccepted;
+
+  /// No description provided for @notificationSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get notificationSettingsTitle;
+
+  /// No description provided for @notificationSettingsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which notifications you receive. Platform announcements are always delivered.'**
+  String get notificationSettingsHint;
+
+  /// No description provided for @myRegistrationsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'My registrations'**
+  String get myRegistrationsShort;
+
+  /// No description provided for @myTrainingsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'My trainings'**
+  String get myTrainingsShort;
+
+  /// No description provided for @registrationOrganizerNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizer\'s note'**
+  String get registrationOrganizerNote;
+
+  /// No description provided for @registrationChangesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your registration (e.g. change partner) and it goes back to review.'**
+  String get registrationChangesHint;
+
+  /// No description provided for @openInGoogleMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Google Maps'**
+  String get openInGoogleMaps;
+
+  /// No description provided for @premiumPlanMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get premiumPlanMonthly;
+
+  /// No description provided for @premiumPlanYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get premiumPlanYearly;
+
+  /// No description provided for @premiumDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days left'**
+  String premiumDaysLeft(int count);
 }
 
 class _AppLocalizationsDelegate

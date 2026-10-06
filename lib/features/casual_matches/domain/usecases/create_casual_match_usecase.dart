@@ -7,6 +7,7 @@ class CreateCasualMatchUseCase {
   CreateCasualMatchUseCase(this.repository);
 
   ApiResult<void> call({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -16,6 +17,7 @@ class CreateCasualMatchUseCase {
     String? notes,
   }) =>
       repository.createCasualMatch(
+        title: title,
         venueId: venueId,
         courtId: courtId,
         matchType: matchType,

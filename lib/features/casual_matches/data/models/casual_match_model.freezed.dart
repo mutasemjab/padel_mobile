@@ -308,7 +308,7 @@ $PlayerSummaryModelCopyWith<$Res>? get player {
 /// @nodoc
 mixin _$CasualMatchModel {
 
- int get id; PlayerSummaryModel get creator; VenueModel? get venue; CourtModel? get court;@JsonKey(name: 'match_type') String get matchType;@JsonKey(name: 'scheduled_at') DateTime get scheduledAt;@JsonKey(name: 'required_level') String? get requiredLevel;@JsonKey(name: 'preferred_side') String? get preferredSide;@JsonKey(name: 'players_needed') int get playersNeeded;@JsonKey(name: 'accepted_count') int get acceptedCount;@JsonKey(name: 'spots_left') int? get spotsLeft; String get status; String? get notes;@JsonKey(name: 'is_creator') bool get isCreator;@JsonKey(name: 'my_participation') CasualParticipantModel? get myParticipation; List<CasualParticipantModel> get participants;
+ int get id; PlayerSummaryModel get creator; VenueModel? get venue; CourtModel? get court; String? get title;@JsonKey(name: 'has_custom_title') bool get hasCustomTitle;@JsonKey(name: 'cancel_reason') String? get cancelReason;@JsonKey(name: 'match_type') String get matchType;@JsonKey(name: 'scheduled_at') DateTime get scheduledAt;@JsonKey(name: 'required_level') String? get requiredLevel;@JsonKey(name: 'preferred_side') String? get preferredSide;@JsonKey(name: 'players_needed') int get playersNeeded;@JsonKey(name: 'accepted_count') int get acceptedCount;@JsonKey(name: 'spots_left') int? get spotsLeft; String get status; String? get notes;@JsonKey(name: 'is_creator') bool get isCreator;@JsonKey(name: 'my_participation') CasualParticipantModel? get myParticipation; List<CasualParticipantModel> get participants;
 /// Create a copy of CasualMatchModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -321,16 +321,16 @@ $CasualMatchModelCopyWith<CasualMatchModel> get copyWith => _$CasualMatchModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CasualMatchModel&&(identical(other.id, id) || other.id == id)&&(identical(other.creator, creator) || other.creator == creator)&&(identical(other.venue, venue) || other.venue == venue)&&(identical(other.court, court) || other.court == court)&&(identical(other.matchType, matchType) || other.matchType == matchType)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt)&&(identical(other.requiredLevel, requiredLevel) || other.requiredLevel == requiredLevel)&&(identical(other.preferredSide, preferredSide) || other.preferredSide == preferredSide)&&(identical(other.playersNeeded, playersNeeded) || other.playersNeeded == playersNeeded)&&(identical(other.acceptedCount, acceptedCount) || other.acceptedCount == acceptedCount)&&(identical(other.spotsLeft, spotsLeft) || other.spotsLeft == spotsLeft)&&(identical(other.status, status) || other.status == status)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.isCreator, isCreator) || other.isCreator == isCreator)&&(identical(other.myParticipation, myParticipation) || other.myParticipation == myParticipation)&&const DeepCollectionEquality().equals(other.participants, participants));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CasualMatchModel&&(identical(other.id, id) || other.id == id)&&(identical(other.creator, creator) || other.creator == creator)&&(identical(other.venue, venue) || other.venue == venue)&&(identical(other.court, court) || other.court == court)&&(identical(other.title, title) || other.title == title)&&(identical(other.hasCustomTitle, hasCustomTitle) || other.hasCustomTitle == hasCustomTitle)&&(identical(other.cancelReason, cancelReason) || other.cancelReason == cancelReason)&&(identical(other.matchType, matchType) || other.matchType == matchType)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt)&&(identical(other.requiredLevel, requiredLevel) || other.requiredLevel == requiredLevel)&&(identical(other.preferredSide, preferredSide) || other.preferredSide == preferredSide)&&(identical(other.playersNeeded, playersNeeded) || other.playersNeeded == playersNeeded)&&(identical(other.acceptedCount, acceptedCount) || other.acceptedCount == acceptedCount)&&(identical(other.spotsLeft, spotsLeft) || other.spotsLeft == spotsLeft)&&(identical(other.status, status) || other.status == status)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.isCreator, isCreator) || other.isCreator == isCreator)&&(identical(other.myParticipation, myParticipation) || other.myParticipation == myParticipation)&&const DeepCollectionEquality().equals(other.participants, participants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,creator,venue,court,matchType,scheduledAt,requiredLevel,preferredSide,playersNeeded,acceptedCount,spotsLeft,status,notes,isCreator,myParticipation,const DeepCollectionEquality().hash(participants));
+int get hashCode => Object.hashAll([runtimeType,id,creator,venue,court,title,hasCustomTitle,cancelReason,matchType,scheduledAt,requiredLevel,preferredSide,playersNeeded,acceptedCount,spotsLeft,status,notes,isCreator,myParticipation,const DeepCollectionEquality().hash(participants)]);
 
 @override
 String toString() {
-  return 'CasualMatchModel(id: $id, creator: $creator, venue: $venue, court: $court, matchType: $matchType, scheduledAt: $scheduledAt, requiredLevel: $requiredLevel, preferredSide: $preferredSide, playersNeeded: $playersNeeded, acceptedCount: $acceptedCount, spotsLeft: $spotsLeft, status: $status, notes: $notes, isCreator: $isCreator, myParticipation: $myParticipation, participants: $participants)';
+  return 'CasualMatchModel(id: $id, creator: $creator, venue: $venue, court: $court, title: $title, hasCustomTitle: $hasCustomTitle, cancelReason: $cancelReason, matchType: $matchType, scheduledAt: $scheduledAt, requiredLevel: $requiredLevel, preferredSide: $preferredSide, playersNeeded: $playersNeeded, acceptedCount: $acceptedCount, spotsLeft: $spotsLeft, status: $status, notes: $notes, isCreator: $isCreator, myParticipation: $myParticipation, participants: $participants)';
 }
 
 
@@ -341,7 +341,7 @@ abstract mixin class $CasualMatchModelCopyWith<$Res>  {
   factory $CasualMatchModelCopyWith(CasualMatchModel value, $Res Function(CasualMatchModel) _then) = _$CasualMatchModelCopyWithImpl;
 @useResult
 $Res call({
- int id, PlayerSummaryModel creator, VenueModel? venue, CourtModel? court,@JsonKey(name: 'match_type') String matchType,@JsonKey(name: 'scheduled_at') DateTime scheduledAt,@JsonKey(name: 'required_level') String? requiredLevel,@JsonKey(name: 'preferred_side') String? preferredSide,@JsonKey(name: 'players_needed') int playersNeeded,@JsonKey(name: 'accepted_count') int acceptedCount,@JsonKey(name: 'spots_left') int? spotsLeft, String status, String? notes,@JsonKey(name: 'is_creator') bool isCreator,@JsonKey(name: 'my_participation') CasualParticipantModel? myParticipation, List<CasualParticipantModel> participants
+ int id, PlayerSummaryModel creator, VenueModel? venue, CourtModel? court, String? title,@JsonKey(name: 'has_custom_title') bool hasCustomTitle,@JsonKey(name: 'cancel_reason') String? cancelReason,@JsonKey(name: 'match_type') String matchType,@JsonKey(name: 'scheduled_at') DateTime scheduledAt,@JsonKey(name: 'required_level') String? requiredLevel,@JsonKey(name: 'preferred_side') String? preferredSide,@JsonKey(name: 'players_needed') int playersNeeded,@JsonKey(name: 'accepted_count') int acceptedCount,@JsonKey(name: 'spots_left') int? spotsLeft, String status, String? notes,@JsonKey(name: 'is_creator') bool isCreator,@JsonKey(name: 'my_participation') CasualParticipantModel? myParticipation, List<CasualParticipantModel> participants
 });
 
 
@@ -358,13 +358,16 @@ class _$CasualMatchModelCopyWithImpl<$Res>
 
 /// Create a copy of CasualMatchModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? creator = null,Object? venue = freezed,Object? court = freezed,Object? matchType = null,Object? scheduledAt = null,Object? requiredLevel = freezed,Object? preferredSide = freezed,Object? playersNeeded = null,Object? acceptedCount = null,Object? spotsLeft = freezed,Object? status = null,Object? notes = freezed,Object? isCreator = null,Object? myParticipation = freezed,Object? participants = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? creator = null,Object? venue = freezed,Object? court = freezed,Object? title = freezed,Object? hasCustomTitle = null,Object? cancelReason = freezed,Object? matchType = null,Object? scheduledAt = null,Object? requiredLevel = freezed,Object? preferredSide = freezed,Object? playersNeeded = null,Object? acceptedCount = null,Object? spotsLeft = freezed,Object? status = null,Object? notes = freezed,Object? isCreator = null,Object? myParticipation = freezed,Object? participants = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,creator: null == creator ? _self.creator : creator // ignore: cast_nullable_to_non_nullable
 as PlayerSummaryModel,venue: freezed == venue ? _self.venue : venue // ignore: cast_nullable_to_non_nullable
 as VenueModel?,court: freezed == court ? _self.court : court // ignore: cast_nullable_to_non_nullable
-as CourtModel?,matchType: null == matchType ? _self.matchType : matchType // ignore: cast_nullable_to_non_nullable
+as CourtModel?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,hasCustomTitle: null == hasCustomTitle ? _self.hasCustomTitle : hasCustomTitle // ignore: cast_nullable_to_non_nullable
+as bool,cancelReason: freezed == cancelReason ? _self.cancelReason : cancelReason // ignore: cast_nullable_to_non_nullable
+as String?,matchType: null == matchType ? _self.matchType : matchType // ignore: cast_nullable_to_non_nullable
 as String,scheduledAt: null == scheduledAt ? _self.scheduledAt : scheduledAt // ignore: cast_nullable_to_non_nullable
 as DateTime,requiredLevel: freezed == requiredLevel ? _self.requiredLevel : requiredLevel // ignore: cast_nullable_to_non_nullable
 as String?,preferredSide: freezed == preferredSide ? _self.preferredSide : preferredSide // ignore: cast_nullable_to_non_nullable
@@ -506,10 +509,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court,  String? title, @JsonKey(name: 'has_custom_title')  bool hasCustomTitle, @JsonKey(name: 'cancel_reason')  String? cancelReason, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CasualMatchModel() when $default != null:
-return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
+return $default(_that.id,_that.creator,_that.venue,_that.court,_that.title,_that.hasCustomTitle,_that.cancelReason,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
   return orElse();
 
 }
@@ -527,10 +530,10 @@ return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court,  String? title, @JsonKey(name: 'has_custom_title')  bool hasCustomTitle, @JsonKey(name: 'cancel_reason')  String? cancelReason, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)  $default,) {final _that = this;
 switch (_that) {
 case _CasualMatchModel():
-return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
+return $default(_that.id,_that.creator,_that.venue,_that.court,_that.title,_that.hasCustomTitle,_that.cancelReason,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -547,10 +550,10 @@ return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  PlayerSummaryModel creator,  VenueModel? venue,  CourtModel? court,  String? title, @JsonKey(name: 'has_custom_title')  bool hasCustomTitle, @JsonKey(name: 'cancel_reason')  String? cancelReason, @JsonKey(name: 'match_type')  String matchType, @JsonKey(name: 'scheduled_at')  DateTime scheduledAt, @JsonKey(name: 'required_level')  String? requiredLevel, @JsonKey(name: 'preferred_side')  String? preferredSide, @JsonKey(name: 'players_needed')  int playersNeeded, @JsonKey(name: 'accepted_count')  int acceptedCount, @JsonKey(name: 'spots_left')  int? spotsLeft,  String status,  String? notes, @JsonKey(name: 'is_creator')  bool isCreator, @JsonKey(name: 'my_participation')  CasualParticipantModel? myParticipation,  List<CasualParticipantModel> participants)?  $default,) {final _that = this;
 switch (_that) {
 case _CasualMatchModel() when $default != null:
-return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
+return $default(_that.id,_that.creator,_that.venue,_that.court,_that.title,_that.hasCustomTitle,_that.cancelReason,_that.matchType,_that.scheduledAt,_that.requiredLevel,_that.preferredSide,_that.playersNeeded,_that.acceptedCount,_that.spotsLeft,_that.status,_that.notes,_that.isCreator,_that.myParticipation,_that.participants);case _:
   return null;
 
 }
@@ -562,13 +565,16 @@ return $default(_that.id,_that.creator,_that.venue,_that.court,_that.matchType,_
 @JsonSerializable()
 
 class _CasualMatchModel implements CasualMatchModel {
-  const _CasualMatchModel({required this.id, required this.creator, this.venue, this.court, @JsonKey(name: 'match_type') required this.matchType, @JsonKey(name: 'scheduled_at') required this.scheduledAt, @JsonKey(name: 'required_level') this.requiredLevel, @JsonKey(name: 'preferred_side') this.preferredSide, @JsonKey(name: 'players_needed') this.playersNeeded = 0, @JsonKey(name: 'accepted_count') this.acceptedCount = 0, @JsonKey(name: 'spots_left') this.spotsLeft, this.status = 'open', this.notes, @JsonKey(name: 'is_creator') this.isCreator = false, @JsonKey(name: 'my_participation') this.myParticipation, final  List<CasualParticipantModel> participants = const []}): _participants = participants;
+  const _CasualMatchModel({required this.id, required this.creator, this.venue, this.court, this.title, @JsonKey(name: 'has_custom_title') this.hasCustomTitle = false, @JsonKey(name: 'cancel_reason') this.cancelReason, @JsonKey(name: 'match_type') required this.matchType, @JsonKey(name: 'scheduled_at') required this.scheduledAt, @JsonKey(name: 'required_level') this.requiredLevel, @JsonKey(name: 'preferred_side') this.preferredSide, @JsonKey(name: 'players_needed') this.playersNeeded = 0, @JsonKey(name: 'accepted_count') this.acceptedCount = 0, @JsonKey(name: 'spots_left') this.spotsLeft, this.status = 'open', this.notes, @JsonKey(name: 'is_creator') this.isCreator = false, @JsonKey(name: 'my_participation') this.myParticipation, final  List<CasualParticipantModel> participants = const []}): _participants = participants;
   factory _CasualMatchModel.fromJson(Map<String, dynamic> json) => _$CasualMatchModelFromJson(json);
 
 @override final  int id;
 @override final  PlayerSummaryModel creator;
 @override final  VenueModel? venue;
 @override final  CourtModel? court;
+@override final  String? title;
+@override@JsonKey(name: 'has_custom_title') final  bool hasCustomTitle;
+@override@JsonKey(name: 'cancel_reason') final  String? cancelReason;
 @override@JsonKey(name: 'match_type') final  String matchType;
 @override@JsonKey(name: 'scheduled_at') final  DateTime scheduledAt;
 @override@JsonKey(name: 'required_level') final  String? requiredLevel;
@@ -601,16 +607,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CasualMatchModel&&(identical(other.id, id) || other.id == id)&&(identical(other.creator, creator) || other.creator == creator)&&(identical(other.venue, venue) || other.venue == venue)&&(identical(other.court, court) || other.court == court)&&(identical(other.matchType, matchType) || other.matchType == matchType)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt)&&(identical(other.requiredLevel, requiredLevel) || other.requiredLevel == requiredLevel)&&(identical(other.preferredSide, preferredSide) || other.preferredSide == preferredSide)&&(identical(other.playersNeeded, playersNeeded) || other.playersNeeded == playersNeeded)&&(identical(other.acceptedCount, acceptedCount) || other.acceptedCount == acceptedCount)&&(identical(other.spotsLeft, spotsLeft) || other.spotsLeft == spotsLeft)&&(identical(other.status, status) || other.status == status)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.isCreator, isCreator) || other.isCreator == isCreator)&&(identical(other.myParticipation, myParticipation) || other.myParticipation == myParticipation)&&const DeepCollectionEquality().equals(other._participants, _participants));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CasualMatchModel&&(identical(other.id, id) || other.id == id)&&(identical(other.creator, creator) || other.creator == creator)&&(identical(other.venue, venue) || other.venue == venue)&&(identical(other.court, court) || other.court == court)&&(identical(other.title, title) || other.title == title)&&(identical(other.hasCustomTitle, hasCustomTitle) || other.hasCustomTitle == hasCustomTitle)&&(identical(other.cancelReason, cancelReason) || other.cancelReason == cancelReason)&&(identical(other.matchType, matchType) || other.matchType == matchType)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt)&&(identical(other.requiredLevel, requiredLevel) || other.requiredLevel == requiredLevel)&&(identical(other.preferredSide, preferredSide) || other.preferredSide == preferredSide)&&(identical(other.playersNeeded, playersNeeded) || other.playersNeeded == playersNeeded)&&(identical(other.acceptedCount, acceptedCount) || other.acceptedCount == acceptedCount)&&(identical(other.spotsLeft, spotsLeft) || other.spotsLeft == spotsLeft)&&(identical(other.status, status) || other.status == status)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.isCreator, isCreator) || other.isCreator == isCreator)&&(identical(other.myParticipation, myParticipation) || other.myParticipation == myParticipation)&&const DeepCollectionEquality().equals(other._participants, _participants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,creator,venue,court,matchType,scheduledAt,requiredLevel,preferredSide,playersNeeded,acceptedCount,spotsLeft,status,notes,isCreator,myParticipation,const DeepCollectionEquality().hash(_participants));
+int get hashCode => Object.hashAll([runtimeType,id,creator,venue,court,title,hasCustomTitle,cancelReason,matchType,scheduledAt,requiredLevel,preferredSide,playersNeeded,acceptedCount,spotsLeft,status,notes,isCreator,myParticipation,const DeepCollectionEquality().hash(_participants)]);
 
 @override
 String toString() {
-  return 'CasualMatchModel(id: $id, creator: $creator, venue: $venue, court: $court, matchType: $matchType, scheduledAt: $scheduledAt, requiredLevel: $requiredLevel, preferredSide: $preferredSide, playersNeeded: $playersNeeded, acceptedCount: $acceptedCount, spotsLeft: $spotsLeft, status: $status, notes: $notes, isCreator: $isCreator, myParticipation: $myParticipation, participants: $participants)';
+  return 'CasualMatchModel(id: $id, creator: $creator, venue: $venue, court: $court, title: $title, hasCustomTitle: $hasCustomTitle, cancelReason: $cancelReason, matchType: $matchType, scheduledAt: $scheduledAt, requiredLevel: $requiredLevel, preferredSide: $preferredSide, playersNeeded: $playersNeeded, acceptedCount: $acceptedCount, spotsLeft: $spotsLeft, status: $status, notes: $notes, isCreator: $isCreator, myParticipation: $myParticipation, participants: $participants)';
 }
 
 
@@ -621,7 +627,7 @@ abstract mixin class _$CasualMatchModelCopyWith<$Res> implements $CasualMatchMod
   factory _$CasualMatchModelCopyWith(_CasualMatchModel value, $Res Function(_CasualMatchModel) _then) = __$CasualMatchModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, PlayerSummaryModel creator, VenueModel? venue, CourtModel? court,@JsonKey(name: 'match_type') String matchType,@JsonKey(name: 'scheduled_at') DateTime scheduledAt,@JsonKey(name: 'required_level') String? requiredLevel,@JsonKey(name: 'preferred_side') String? preferredSide,@JsonKey(name: 'players_needed') int playersNeeded,@JsonKey(name: 'accepted_count') int acceptedCount,@JsonKey(name: 'spots_left') int? spotsLeft, String status, String? notes,@JsonKey(name: 'is_creator') bool isCreator,@JsonKey(name: 'my_participation') CasualParticipantModel? myParticipation, List<CasualParticipantModel> participants
+ int id, PlayerSummaryModel creator, VenueModel? venue, CourtModel? court, String? title,@JsonKey(name: 'has_custom_title') bool hasCustomTitle,@JsonKey(name: 'cancel_reason') String? cancelReason,@JsonKey(name: 'match_type') String matchType,@JsonKey(name: 'scheduled_at') DateTime scheduledAt,@JsonKey(name: 'required_level') String? requiredLevel,@JsonKey(name: 'preferred_side') String? preferredSide,@JsonKey(name: 'players_needed') int playersNeeded,@JsonKey(name: 'accepted_count') int acceptedCount,@JsonKey(name: 'spots_left') int? spotsLeft, String status, String? notes,@JsonKey(name: 'is_creator') bool isCreator,@JsonKey(name: 'my_participation') CasualParticipantModel? myParticipation, List<CasualParticipantModel> participants
 });
 
 
@@ -638,13 +644,16 @@ class __$CasualMatchModelCopyWithImpl<$Res>
 
 /// Create a copy of CasualMatchModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? creator = null,Object? venue = freezed,Object? court = freezed,Object? matchType = null,Object? scheduledAt = null,Object? requiredLevel = freezed,Object? preferredSide = freezed,Object? playersNeeded = null,Object? acceptedCount = null,Object? spotsLeft = freezed,Object? status = null,Object? notes = freezed,Object? isCreator = null,Object? myParticipation = freezed,Object? participants = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? creator = null,Object? venue = freezed,Object? court = freezed,Object? title = freezed,Object? hasCustomTitle = null,Object? cancelReason = freezed,Object? matchType = null,Object? scheduledAt = null,Object? requiredLevel = freezed,Object? preferredSide = freezed,Object? playersNeeded = null,Object? acceptedCount = null,Object? spotsLeft = freezed,Object? status = null,Object? notes = freezed,Object? isCreator = null,Object? myParticipation = freezed,Object? participants = null,}) {
   return _then(_CasualMatchModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,creator: null == creator ? _self.creator : creator // ignore: cast_nullable_to_non_nullable
 as PlayerSummaryModel,venue: freezed == venue ? _self.venue : venue // ignore: cast_nullable_to_non_nullable
 as VenueModel?,court: freezed == court ? _self.court : court // ignore: cast_nullable_to_non_nullable
-as CourtModel?,matchType: null == matchType ? _self.matchType : matchType // ignore: cast_nullable_to_non_nullable
+as CourtModel?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,hasCustomTitle: null == hasCustomTitle ? _self.hasCustomTitle : hasCustomTitle // ignore: cast_nullable_to_non_nullable
+as bool,cancelReason: freezed == cancelReason ? _self.cancelReason : cancelReason // ignore: cast_nullable_to_non_nullable
+as String?,matchType: null == matchType ? _self.matchType : matchType // ignore: cast_nullable_to_non_nullable
 as String,scheduledAt: null == scheduledAt ? _self.scheduledAt : scheduledAt // ignore: cast_nullable_to_non_nullable
 as DateTime,requiredLevel: freezed == requiredLevel ? _self.requiredLevel : requiredLevel // ignore: cast_nullable_to_non_nullable
 as String?,preferredSide: freezed == preferredSide ? _self.preferredSide : preferredSide // ignore: cast_nullable_to_non_nullable

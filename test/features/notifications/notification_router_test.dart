@@ -7,8 +7,8 @@ import 'package:padel/features/notifications/presentation/notification_router.da
 NotificationItem _push(Map<String, dynamic> data) => NotificationRouter.fromPush(data);
 
 void main() {
-  test('all 23 types parse; unknown types never crash', () {
-    expect(NotificationType.values.where((t) => t != NotificationType.unknown), hasLength(23));
+  test('all 42 types parse; unknown types never crash', () {
+    expect(NotificationType.values.where((t) => t != NotificationType.unknown), hasLength(42));
     expect(NotificationTypeX.fromApi('brand_new_type'), NotificationType.unknown);
   });
 

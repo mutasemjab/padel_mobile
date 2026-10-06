@@ -26,6 +26,25 @@ enum NotificationType {
   threeDProfileReady('three_d_profile_ready'),
   threeDProfileFailed('three_d_profile_failed'),
   systemAnnouncement('system_announcement'),
+  casualInvited('casual_invited'),
+  casualJoinRequested('casual_join_requested'),
+  casualRequestAccepted('casual_request_accepted'),
+  casualRequestDeclined('casual_request_declined'),
+  casualInviteAccepted('casual_invite_accepted'),
+  casualInviteDeclined('casual_invite_declined'),
+  casualFull('casual_full'),
+  casualTimeChanged('casual_time_changed'),
+  casualCourtChanged('casual_court_changed'),
+  casualReminder('casual_reminder'),
+  casualStarting('casual_starting'),
+  casualCancelledNotFull('casual_cancelled_not_full'),
+  casualCancelled('casual_cancelled'),
+  tournamentRegistrationOpen('tournament_registration_open'),
+  partnerNeeded('partner_needed'),
+  partnerRemoved('partner_removed'),
+  paymentRequired('payment_required'),
+  registrationChangesRequested('registration_changes_requested'),
+  duo3dReady('duo_3d_ready'),
   unknown('unknown');
 
   final String apiValue;
@@ -49,6 +68,8 @@ enum NotificationScreen {
   booking,
   payments,
   notifications,
+  casualMatch,
+  announcement,
   unknown;
 
   static NotificationScreen fromApi(String? raw) => switch (raw) {
@@ -61,6 +82,8 @@ enum NotificationScreen {
         'booking' => booking,
         'payments' => payments,
         'notifications' => notifications,
+        'casual_match' => casualMatch,
+        'announcement' => announcement,
         _ => unknown,
       };
 }

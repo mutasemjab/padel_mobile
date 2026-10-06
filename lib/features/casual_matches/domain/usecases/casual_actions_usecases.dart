@@ -34,3 +34,21 @@ class GetMyCasualMatchesUseCase {
   ApiResult<Paginated<CasualMatch>> call({required bool created, int page = 1}) =>
       repository.getMyCasualMatches(created: created, page: page);
 }
+
+class UpdateCasualMatchUseCase {
+  final CasualMatchesRepository repository;
+  UpdateCasualMatchUseCase(this.repository);
+  ApiResult<void> call(int id, Map<String, dynamic> fields) => repository.updateCasualMatch(id, fields);
+}
+
+class InviteToCasualMatchUseCase {
+  final CasualMatchesRepository repository;
+  InviteToCasualMatchUseCase(this.repository);
+  ApiResult<void> call(int id, String playerId) => repository.invitePlayer(id, playerId);
+}
+
+class RespondToInvitationUseCase {
+  final CasualMatchesRepository repository;
+  RespondToInvitationUseCase(this.repository);
+  ApiResult<void> call(int id, {required bool accept}) => repository.respondToInvitation(id, accept: accept);
+}

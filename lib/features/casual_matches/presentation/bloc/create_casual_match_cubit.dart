@@ -38,6 +38,7 @@ class CreateCasualMatchCubit extends Cubit<CreateCasualMatchState> {
   CreateCasualMatchCubit(this.createCasualMatch) : super(const CreateCasualMatchIdle());
 
   Future<void> submit({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -48,6 +49,7 @@ class CreateCasualMatchCubit extends Cubit<CreateCasualMatchState> {
   }) async {
     emit(const CreateCasualMatchSubmitting());
     final result = await createCasualMatch(
+      title: title,
       venueId: venueId,
       courtId: courtId,
       matchType: matchType,

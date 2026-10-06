@@ -25,10 +25,13 @@ void registerCasualMatchesDependencies(GetIt sl) {
   sl.registerFactory(() => CancelCasualMatchUseCase(sl()));
   sl.registerFactory(() => RespondToParticipantUseCase(sl()));
   sl.registerFactory(() => GetMyCasualMatchesUseCase(sl()));
+  sl.registerFactory(() => UpdateCasualMatchUseCase(sl()));
+  sl.registerFactory(() => InviteToCasualMatchUseCase(sl()));
+  sl.registerFactory(() => RespondToInvitationUseCase(sl()));
 
   sl.registerFactory(() => CasualMatchesBloc(sl()));
   sl.registerFactory(() => CreateCasualMatchCubit(sl()));
   sl.registerFactory(() => JoinCasualMatchCubit(sl()));
-  sl.registerFactory(() => CasualActionCubit(join: sl(), leave: sl(), cancel: sl(), respond: sl()));
+  sl.registerFactory(() => CasualActionCubit(join: sl(), leave: sl(), cancel: sl(), respond: sl(), update: sl(), invite: sl(), respondInvitation: sl()));
   sl.registerFactory(() => VenuesCubit(sl()));
 }

@@ -26,8 +26,25 @@ class CasualActionCubit extends ActionCubit {
   final LeaveCasualMatchUseCase leave;
   final CancelCasualMatchUseCase cancel;
   final RespondToParticipantUseCase respond;
+  final UpdateCasualMatchUseCase update;
+  final InviteToCasualMatchUseCase invite;
+  final RespondToInvitationUseCase respondInvitation;
 
-  CasualActionCubit({required this.join, required this.leave, required this.cancel, required this.respond});
+  CasualActionCubit({
+    required this.join,
+    required this.leave,
+    required this.cancel,
+    required this.respond,
+    required this.update,
+    required this.invite,
+    required this.respondInvitation,
+  });
+
+  Future<bool> updateMatch(int id, Map<String, dynamic> fields) => run(() => update(id, fields));
+
+  Future<bool> invitePlayer(int id, String playerId) => run(() => invite(id, playerId));
+
+  Future<bool> answerInvitation(int id, {required bool accept}) => run(() => respondInvitation(id, accept: accept));
 
   Future<bool> joinMatch(int id) => run(() => join(id));
 

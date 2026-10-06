@@ -6,11 +6,15 @@ enum RegistrationStatus {
   pending,
   approved,
   rejected,
+  changesRequested,
   waitlisted,
   cancelled;
 
+  /// Value used by the API and `meta/enums.registration_statuses`.
+  String get apiValue => this == RegistrationStatus.changesRequested ? 'changes_requested' : name;
+
   static RegistrationStatus fromApi(String? raw) => RegistrationStatus.values.firstWhere(
-        (s) => s.name == raw,
+        (s) => s.apiValue == raw,
         orElse: () => RegistrationStatus.pending,
       );
 }
@@ -70,6 +74,12 @@ class Registration extends Equatable {
   final RegistrationCategory category;
   final bool canCancel;
 
+  /// Organizer's message (why changes are needed, or why it was rejected).
+  final String? reviewNote;
+
+  /// The pair may still change the partner / notes (pending, waitlisted, changes requested).
+  final bool canEdit;
+
   const Registration({
     required this.id,
     required this.status,
@@ -80,6 +90,8 @@ class Registration extends Equatable {
     this.player,
     this.partner,
     required this.category,
+    this.reviewNote,
+    this.canEdit = false,
     this.canCancel = false,
   });
 

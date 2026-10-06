@@ -74,6 +74,10 @@ class _CasualMatchCardContent extends StatelessWidget {
             ],
           ),
           Gap.md,
+          if (match.title != null) ...[
+            Text(match.title!, style: context.text.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+            Gap.xxs,
+          ],
           Text(
             DateFormatter.weekdayDay(match.scheduledAt),
             style: AppTypography.number(context, size: 22),
@@ -145,6 +149,7 @@ class _ParticipationAction extends StatelessWidget {
         ParticipantStatus.accepted => StatusChip(label: l10n.casualYouAreIn, color: AppColors.success, icon: Icons.check_rounded),
         ParticipantStatus.requested => StatusChip(label: l10n.casualRequestPending, color: AppColors.warning),
         ParticipantStatus.declined => StatusChip(label: l10n.actionDecline, color: context.tokens.textMuted),
+        ParticipantStatus.invited => StatusChip(label: l10n.casualInvitedStatus, color: AppColors.info, icon: Icons.mail_rounded),
       };
     }
     if (!match.isOpen) return StatusChip(label: l10n.statusClosed, color: context.tokens.textMuted);

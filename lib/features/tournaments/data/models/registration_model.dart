@@ -44,6 +44,8 @@ abstract class RegistrationModel with _$RegistrationModel {
     PlayerSummaryModel? partner,
     required RegistrationCategoryModel category,
     @JsonKey(name: 'can_cancel') @Default(false) bool canCancel,
+    @JsonKey(name: 'can_edit') @Default(false) bool canEdit,
+    @JsonKey(name: 'review_note') String? reviewNote,
   }) = _RegistrationModel;
 
   factory RegistrationModel.fromJson(Map<String, dynamic> json) =>
@@ -69,6 +71,8 @@ extension RegistrationModelX on RegistrationModel {
           tournamentStartDate: category.tournament.startDate,
         ),
         canCancel: canCancel,
+        canEdit: canEdit,
+        reviewNote: reviewNote,
       );
 }
 

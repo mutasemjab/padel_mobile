@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/state/view_state.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
@@ -139,13 +140,37 @@ class _RegistrationCard extends StatelessWidget {
               ],
             ),
           ],
+          if (r.reviewNote != null && r.reviewNote!.isNotEmpty &&
+              (r.status == RegistrationStatus.changesRequested || r.status == RegistrationStatus.rejected)) ...[
+            Gap.md,
+            Container(
+              width: double.infinity,
+              padding: AppSpacing.cardDense,
+              decoration: BoxDecoration(
+                color: (r.status == RegistrationStatus.rejected ? AppColors.danger : AppColors.warning).withValues(alpha: 0.12),
+                borderRadius: AppRadius.mdAll,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.registrationOrganizerNote, style: context.text.labelMedium),
+                  Gap.xxs,
+                  Text(r.reviewNote!, style: context.text.bodyMedium),
+                  if (r.status == RegistrationStatus.changesRequested) ...[
+                    Gap.xs,
+                    Text(l10n.registrationChangesHint, style: context.text.bodySmall),
+                  ],
+                ],
+              ),
+            ),
+          ],
           if (r.promotedAt != null) ...[
             Gap.xs,
             Text(l10n.registrationPromoted(DateFormatter.dayMonth(r.promotedAt!)), style: context.text.labelSmall),
           ],
           Gap.sm,
           PaymentStatusChip(status: r.paymentStatus),
-          if (r.canCancel || r.needsPayment) ...[
+          if (r.canCancel || r.canEdit || r.needsPayment) ...[
             Gap.md,
             Wrap(
               spacing: AppSpacing.sm,
@@ -157,10 +182,8 @@ class _RegistrationCard extends StatelessWidget {
                     icon: const Icon(Icons.payments_rounded),
                     label: Text(l10n.registrationPay),
                   ),
-                if (r.canCancel) ...[
-                  OutlinedButton(onPressed: () => _changePartner(context), child: Text(l10n.registerChangePartner)),
-                  TextButton(onPressed: () => _cancel(context), child: Text(l10n.registrationCancel)),
-                ],
+                if (r.canEdit) OutlinedButton(onPressed: () => _changePartner(context), child: Text(l10n.registerChangePartner)),
+                if (r.canCancel) TextButton(onPressed: () => _cancel(context), child: Text(l10n.registrationCancel)),
               ],
             ),
           ],

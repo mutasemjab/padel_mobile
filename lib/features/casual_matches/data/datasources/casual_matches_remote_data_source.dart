@@ -18,6 +18,7 @@ abstract class CasualMatchesRemoteDataSource {
   Future<CasualMatch> getCasualMatch(int id);
 
   Future<CasualMatch?> createCasualMatch({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -32,6 +33,9 @@ abstract class CasualMatchesRemoteDataSource {
   Future<void> cancelCasualMatch(int id);
   Future<CasualMatch?> respondToParticipant(int id, int participantId, {required bool accept});
   Future<Paginated<CasualMatch>> getMyCasualMatches({required String role, int page = 1});
+  Future<CasualMatch?> updateCasualMatch(int id, Map<String, dynamic> fields);
+  Future<CasualMatch?> invitePlayer(int id, String playerId);
+  Future<CasualMatch?> respondToInvitation(int id, {required bool accept});
 }
 
 class CasualMatchesRemoteDataSourceImpl implements CasualMatchesRemoteDataSource {
@@ -70,6 +74,7 @@ class CasualMatchesRemoteDataSourceImpl implements CasualMatchesRemoteDataSource
 
   @override
   Future<CasualMatch?> createCasualMatch({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -79,6 +84,7 @@ class CasualMatchesRemoteDataSourceImpl implements CasualMatchesRemoteDataSource
     String? notes,
   }) async {
     final response = await dio.post(ApiEndpoints.casualMatches, data: {
+      if (title != null && title.trim().isNotEmpty) 'title': title.trim(),
       'venue_id': ?venueId,
       'court_id': ?courtId,
       'match_type': matchType,
@@ -119,5 +125,23 @@ class CasualMatchesRemoteDataSourceImpl implements CasualMatchesRemoteDataSource
   Future<Paginated<CasualMatch>> getMyCasualMatches({required String role, int page = 1}) async {
     final response = await dio.get(ApiEndpoints.myCasualMatches, queryParameters: {'role': role, 'page': page});
     return ApiEnvelope.paginated(response, casualMatchFromJson);
+  }
+
+  @override
+  Future<CasualMatch?> updateCasualMatch(int id, Map<String, dynamic> fields) async {
+    final response = await dio.put(ApiEndpoints.casualMatch(id), data: fields);
+    return _optional(response);
+  }
+
+  @override
+  Future<CasualMatch?> invitePlayer(int id, String playerId) async {
+    final response = await dio.post(ApiEndpoints.casualMatchInvite(id), data: {'player_id': playerId});
+    return _optional(response);
+  }
+
+  @override
+  Future<CasualMatch?> respondToInvitation(int id, {required bool accept}) async {
+    final response = await dio.post(ApiEndpoints.casualInvitationRespond(id), data: {'accept': accept});
+    return _optional(response);
   }
 }

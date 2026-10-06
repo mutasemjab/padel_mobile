@@ -37,10 +37,11 @@ class CompetePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(l10n.competeTitle),
           actions: [
-            IconButton(
-              tooltip: l10n.myRegistrationsTitle,
-              icon: const Icon(Icons.confirmation_number_rounded),
+            // Labelled, not just an icon: players could not tell what the ticket icon meant.
+            TextButton.icon(
               onPressed: () => context.push(AppRoutes.myRegistrations),
+              icon: const Icon(Icons.confirmation_number_rounded, size: 20),
+              label: Text(l10n.myRegistrationsShort),
             ),
             const NotificationBell(),
           ],

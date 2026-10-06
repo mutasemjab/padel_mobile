@@ -63,6 +63,9 @@ _SubscriptionModel _$SubscriptionModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['ends_at'] as String),
       provider: json['provider'] as String?,
       plan: json['plan'] as String?,
+      amount: json['amount'] as num?,
+      currency: json['currency'] as String?,
+      daysLeft: (json['days_left'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SubscriptionModelToJson(_SubscriptionModel instance) =>
@@ -73,6 +76,9 @@ Map<String, dynamic> _$SubscriptionModelToJson(_SubscriptionModel instance) =>
       'ends_at': instance.endsAt?.toIso8601String(),
       'provider': instance.provider,
       'plan': instance.plan,
+      'amount': instance.amount,
+      'currency': instance.currency,
+      'days_left': instance.daysLeft,
     };
 
 _PremiumStatusModel _$PremiumStatusModelFromJson(Map<String, dynamic> json) =>

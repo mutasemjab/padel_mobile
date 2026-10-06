@@ -2523,4 +2523,83 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get duo3dPremium => 'مشاهد الثنائي ضمن Premium.';
+
+  @override
+  String get casualMatchName => 'اسم المباراة (اختياري)';
+
+  @override
+  String get casualMatchNameHint => 'مثال: بادل مساء الجمعة';
+
+  @override
+  String get casualEditMatch => 'تعديل المباراة';
+
+  @override
+  String get casualEditHint => 'سيتم إشعار اللاعبين عند تغيير الوقت أو الملعب.';
+
+  @override
+  String get casualInvitePlayer => 'دعوة لاعب';
+
+  @override
+  String get casualInviteSearchHint => 'ابحث بالاسم أو رمز اللاعب';
+
+  @override
+  String get casualInvite => 'دعوة';
+
+  @override
+  String get casualInvitationSent => 'تم إرسال الدعوة';
+
+  @override
+  String get casualCancelledNotFull =>
+      'تم إلغاء هذه المباراة تلقائياً لعدم اكتمال عدد اللاعبين قبل موعدها بساعتين.';
+
+  @override
+  String get casualCancelledByCreator => 'ألغى المنظّم هذه المباراة.';
+
+  @override
+  String get casualUpdated => 'تم تحديث المباراة';
+
+  @override
+  String get casualInvitedStatus => 'مدعو';
+
+  @override
+  String casualYouAreInvited(String name) {
+    return 'دعاك $name إلى هذه المباراة';
+  }
+
+  @override
+  String get casualInvitationAccepted => 'تم! نراك في الملعب.';
+
+  @override
+  String get notificationSettingsTitle => 'إعدادات الإشعارات';
+
+  @override
+  String get notificationSettingsHint =>
+      'اختر الإشعارات التي تريد استلامها. إعلانات المنصة تصلك دائماً.';
+
+  @override
+  String get myRegistrationsShort => 'تسجيلاتي';
+
+  @override
+  String get myTrainingsShort => 'تدريباتي';
+
+  @override
+  String get registrationOrganizerNote => 'ملاحظة المنظّم';
+
+  @override
+  String get registrationChangesHint =>
+      'عدّل تسجيلك (مثلاً غيّر الشريك) وسيعود للمراجعة.';
+
+  @override
+  String get openInGoogleMaps => 'افتح في خرائط جوجل';
+
+  @override
+  String get premiumPlanMonthly => 'شهري';
+
+  @override
+  String get premiumPlanYearly => 'سنوي';
+
+  @override
+  String premiumDaysLeft(int count) {
+    return 'متبقٍ $count يوم';
+  }
 }

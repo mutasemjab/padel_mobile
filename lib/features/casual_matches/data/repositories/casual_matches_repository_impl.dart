@@ -35,6 +35,7 @@ class CasualMatchesRepositoryImpl implements CasualMatchesRepository {
 
   @override
   ApiResult<void> createCasualMatch({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -44,6 +45,7 @@ class CasualMatchesRepositoryImpl implements CasualMatchesRepository {
     String? notes,
   }) =>
       guard(() => remote.createCasualMatch(
+            title: title,
             venueId: venueId,
             courtId: courtId,
             matchType: matchType,
@@ -69,4 +71,14 @@ class CasualMatchesRepositoryImpl implements CasualMatchesRepository {
   @override
   ApiResult<Paginated<CasualMatch>> getMyCasualMatches({required bool created, int page = 1}) =>
       guard(() => remote.getMyCasualMatches(role: created ? 'created' : 'joined', page: page));
+
+  @override
+  ApiResult<void> updateCasualMatch(int id, Map<String, dynamic> fields) => guard(() => remote.updateCasualMatch(id, fields));
+
+  @override
+  ApiResult<void> invitePlayer(int id, String playerId) => guard(() => remote.invitePlayer(id, playerId));
+
+  @override
+  ApiResult<void> respondToInvitation(int id, {required bool accept}) =>
+      guard(() => remote.respondToInvitation(id, accept: accept));
 }

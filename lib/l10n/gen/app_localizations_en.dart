@@ -2507,4 +2507,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get duo3dPremium => 'Duo scenes are part of Premium.';
+
+  @override
+  String get casualMatchName => 'Match name (optional)';
+
+  @override
+  String get casualMatchNameHint => 'e.g. Friday evening padel';
+
+  @override
+  String get casualEditMatch => 'Edit match';
+
+  @override
+  String get casualEditHint =>
+      'Players are notified when you change the time or the court.';
+
+  @override
+  String get casualInvitePlayer => 'Invite a player';
+
+  @override
+  String get casualInviteSearchHint => 'Search by name or player ID';
+
+  @override
+  String get casualInvite => 'Invite';
+
+  @override
+  String get casualInvitationSent => 'Invitation sent';
+
+  @override
+  String get casualCancelledNotFull =>
+      'This match was cancelled automatically: it did not have enough players 2 hours before the start.';
+
+  @override
+  String get casualCancelledByCreator =>
+      'This match was cancelled by the organizer.';
+
+  @override
+  String get casualUpdated => 'Match updated';
+
+  @override
+  String get casualInvitedStatus => 'Invited';
+
+  @override
+  String casualYouAreInvited(String name) {
+    return '$name invited you to this match';
+  }
+
+  @override
+  String get casualInvitationAccepted => 'You\'re in! See you on court.';
+
+  @override
+  String get notificationSettingsTitle => 'Notification settings';
+
+  @override
+  String get notificationSettingsHint =>
+      'Choose which notifications you receive. Platform announcements are always delivered.';
+
+  @override
+  String get myRegistrationsShort => 'My registrations';
+
+  @override
+  String get myTrainingsShort => 'My trainings';
+
+  @override
+  String get registrationOrganizerNote => 'Organizer\'s note';
+
+  @override
+  String get registrationChangesHint =>
+      'Update your registration (e.g. change partner) and it goes back to review.';
+
+  @override
+  String get openInGoogleMaps => 'Open in Google Maps';
+
+  @override
+  String get premiumPlanMonthly => 'Monthly';
+
+  @override
+  String get premiumPlanYearly => 'Yearly';
+
+  @override
+  String premiumDaysLeft(int count) {
+    return '$count days left';
+  }
 }

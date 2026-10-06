@@ -48,6 +48,7 @@ class _CreateSheet extends StatefulWidget {
 
 class _CreateSheetState extends State<_CreateSheet> {
   final _notes = TextEditingController();
+  final _title = TextEditingController();
   CasualMatchType _type = CasualMatchType.lookingForMatch;
   DateTime? _when;
   String? _level;
@@ -59,6 +60,7 @@ class _CreateSheetState extends State<_CreateSheet> {
   @override
   void dispose() {
     _notes.dispose();
+    _title.dispose();
     super.dispose();
   }
 
@@ -86,6 +88,7 @@ class _CreateSheetState extends State<_CreateSheet> {
       return;
     }
     context.read<CreateCasualMatchCubit>().submit(
+          title: _title.text.trim().isEmpty ? null : _title.text.trim(),
           venueId: _venue?.id,
           courtId: _court?.id,
           matchType: _type.apiValue,
@@ -129,7 +132,18 @@ class _CreateSheetState extends State<_CreateSheet> {
                 Text(l10n.createMatchTitle, style: context.text.titleLarge),
                 Gap.xs,
                 Text(l10n.casualNote, style: context.text.bodySmall),
-                Gap.xl,
+                Gap.lg,
+                TextField(
+                  controller: _title,
+                  maxLength: 120,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    labelText: l10n.casualMatchName,
+                    hintText: l10n.casualMatchNameHint,
+                    errorText: validation?.firstErrorFor('title'),
+                  ),
+                ),
+                Gap.md,
                 Wrap(
                   spacing: AppSpacing.sm,
                   runSpacing: AppSpacing.sm,

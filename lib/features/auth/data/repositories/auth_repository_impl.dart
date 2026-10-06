@@ -89,6 +89,7 @@ class AuthRepositoryImpl implements AuthRepository {
       // Intentionally ignored — the token is cleared locally either way.
     } finally {
       await local.clear();
+      await social?.signOut();
     }
     return const Right(null);
   }
@@ -173,6 +174,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       await remote.deleteAccount();
       await local.clear();
+      await social?.signOut();
       return const Right(null);
     } catch (e, s) {
       return Left(ExceptionMapper.map(e, s));

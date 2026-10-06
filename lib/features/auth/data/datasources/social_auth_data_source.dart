@@ -15,6 +15,10 @@ import '../../domain/entities/social_credential.dart';
 /// isn't configured for this build or platform.
 abstract class SocialAuthDataSource {
   Future<SocialCredential?> signIn(SocialProvider provider);
+
+  /// Forgets the provider account cached on the device, so the next sign-in
+  /// shows the account picker instead of silently reusing the last account.
+  Future<void> signOut();
 }
 
 class SocialAuthDataSourceImpl implements SocialAuthDataSource {
@@ -29,6 +33,15 @@ class SocialAuthDataSourceImpl implements SocialAuthDataSource {
         SocialProvider.google => _googleAuth(),
         SocialProvider.apple => _apple(),
       };
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await _google.signOut();
+    } catch (_) {
+      // Nothing cached, or Google Play services unavailable: nothing to forget.
+    }
+  }
 
   GoogleSignIn? _googleSignIn;
 
@@ -45,6 +58,8 @@ class SocialAuthDataSourceImpl implements SocialAuthDataSource {
   Future<SocialCredential?> _googleAuth() async {
     if (SocialAuthConfig.googleServerClientId.isEmpty) throw _notConfigured;
     try {
+      // Always offer the account picker (another person may use this phone).
+      await signOut();
       final account = await _google.signIn();
       if (account == null) return null;
 

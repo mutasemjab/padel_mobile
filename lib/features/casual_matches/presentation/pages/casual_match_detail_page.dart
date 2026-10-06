@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enum_labels.dart';
@@ -24,6 +25,7 @@ import '../../../../core/widgets/state_builders.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/casual_match.dart';
 import '../bloc/casual_cubits.dart';
+import '../widgets/casual_match_manage_sheets.dart';
 
 /// One casual game: details, players, and creator controls for requests.
 class CasualMatchDetailPage extends StatelessWidget {
@@ -75,6 +77,18 @@ class _Content extends StatelessWidget {
         padding: AppSpacing.page,
         children: [
           _Header(match: match),
+          if (match.isCancelled) ...[
+            Gap.md,
+            _Banner(
+              icon: Icons.event_busy_rounded,
+              color: AppColors.danger,
+              text: match.cancelReason == 'not_full' ? l10n.casualCancelledNotFull : l10n.casualCancelledByCreator,
+            ),
+          ],
+          if (match.isInvited) ...[
+            Gap.md,
+            _InvitationCard(match: match),
+          ],
           Gap.md,
           Container(
             padding: AppSpacing.cardDense,
@@ -101,6 +115,45 @@ class _Content extends StatelessWidget {
               Gap.sm,
               PlayerCard(player: p.player!, dense: true, onTap: () => context.push(AppRoutes.player(p.player!.playerId))),
             ],
+          for (final p in match.participants.where((p) => p.status == ParticipantStatus.invited))
+            if (p.player != null) ...[
+              Gap.sm,
+              PlayerCard(
+                player: p.player!,
+                dense: true,
+                onTap: () => context.push(AppRoutes.player(p.player!.playerId)),
+                trailing: StatusChip(label: l10n.casualInvitedStatus, color: AppColors.info),
+              ),
+            ],
+          if (match.isCreator && (match.isOpen || match.status == 'full')) ...[
+            Gap.lg,
+            Row(
+              children: [
+                if (match.isOpen)
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => showInvitePlayerSheet(context, match),
+                      icon: const Icon(Icons.person_add_alt_1_rounded),
+                      label: Text(l10n.casualInvitePlayer),
+                    ),
+                  ),
+                if (match.isOpen) Gap.sm,
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      final saved = await showEditCasualMatchSheet(context, match);
+                      if (saved == true && context.mounted) {
+                        context.read<CasualMatchDetailCubit>().refresh();
+                        showAppSnack(context, l10n.casualUpdated, icon: Icons.check_circle_rounded);
+                      }
+                    },
+                    icon: const Icon(Icons.edit_calendar_rounded),
+                    label: Text(l10n.casualEditMatch),
+                  ),
+                ),
+              ],
+            ),
+          ],
           if (match.isCreator) ...[
             Gap.xl,
             SectionHeader(title: l10n.casualRequests),
@@ -145,6 +198,10 @@ class _Header extends StatelessWidget {
                 context.enums.label(EnumGroup.casualMatchTypes, match.matchType.apiValue).toUpperCase(),
                 style: AppTypography.eyebrow(context, color: AppColors.white),
               ),
+              if (match.title != null) ...[
+                Gap.sm,
+                Text(match.title!, style: context.text.titleLarge?.copyWith(color: AppColors.white)),
+              ],
               Gap.sm,
               Text(DateFormatter.weekdayDay(match.scheduledAt), style: AppTypography.number(context, size: 34, color: AppColors.white)),
               Text(
@@ -153,7 +210,18 @@ class _Header extends StatelessWidget {
               ),
               if (location.isNotEmpty) ...[
                 Gap.sm,
-                Text(location, style: context.text.bodySmall?.copyWith(color: AppColors.white)),
+                InkWell(
+                  onTap: match.venue?.mapUri == null ? null : () => launchUrl(match.venue!.mapUri!, mode: LaunchMode.externalApplication),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.place_rounded, size: 16, color: AppColors.white),
+                      Gap.xxs,
+                      Flexible(child: Text(location, style: context.text.bodySmall?.copyWith(color: AppColors.white, decoration: match.venue?.mapUri == null ? null : TextDecoration.underline))),
+                      if (match.venue?.mapUri != null) ...[Gap.xxs, const Icon(Icons.open_in_new_rounded, size: 14, color: AppColors.white)],
+                    ],
+                  ),
+                ),
               ],
               Gap.md,
               Wrap(
@@ -255,6 +323,7 @@ class _Actions extends StatelessWidget {
             label: Text(l10n.casualCancelGame),
           );
         }
+        if (match.isInvited) return const SizedBox.shrink();
         if (match.myParticipation != null && match.myParticipation!.status != ParticipantStatus.declined) {
           return OutlinedButton.icon(
             onPressed: busy
@@ -279,6 +348,77 @@ class _Actions extends StatelessWidget {
           child: busy ? const ButtonSpinner() : Text(l10n.actionJoin),
         );
       },
+    );
+  }
+}
+
+class _Banner extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final String text;
+
+  const _Banner({required this.icon, required this.color, required this.text});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: AppSpacing.cardDense,
+        decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.mdAll),
+        child: Row(
+          children: [
+            Icon(icon, color: color),
+            Gap.md,
+            Expanded(child: Text(text, style: context.text.bodyMedium)),
+          ],
+        ),
+      );
+}
+
+/// The creator invited the viewer: accept or decline right here.
+class _InvitationCard extends StatelessWidget {
+  final CasualMatch match;
+
+  const _InvitationCard({required this.match});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final actions = context.read<CasualActionCubit>();
+    return AppCard(
+      padding: AppSpacing.cardDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.mail_rounded, color: AppColors.info),
+              Gap.md,
+              Expanded(child: Text(l10n.casualYouAreInvited(match.creator.name), style: context.text.titleSmall)),
+            ],
+          ),
+          Gap.md,
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => actions.answerInvitation(match.id, accept: false),
+                  child: Text(l10n.actionDecline),
+                ),
+              ),
+              Gap.sm,
+              Expanded(
+                child: FilledButton(
+                  onPressed: () async {
+                    if (await actions.answerInvitation(match.id, accept: true) && context.mounted) {
+                      showAppSnack(context, l10n.casualInvitationAccepted, icon: Icons.check_circle_rounded);
+                    }
+                  },
+                  child: Text(l10n.actionAccept),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

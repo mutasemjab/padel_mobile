@@ -28,6 +28,7 @@ _VenueModel _$VenueModelFromJson(Map<String, dynamic> json) => _VenueModel(
   latitude: json['latitude'] as num?,
   longitude: json['longitude'] as num?,
   imageUrl: json['image_url'] as String?,
+  mapsUrl: json['maps_url'] as String?,
   courts:
       (json['courts'] as List<dynamic>?)
           ?.map((e) => CourtModel.fromJson(e as Map<String, dynamic>))
@@ -46,6 +47,7 @@ Map<String, dynamic> _$VenueModelToJson(_VenueModel instance) =>
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'image_url': instance.imageUrl,
+      'maps_url': instance.mapsUrl,
       'courts': instance.courts.map((e) => e.toJson()).toList(),
       'courts_count': instance.courtsCount,
     };

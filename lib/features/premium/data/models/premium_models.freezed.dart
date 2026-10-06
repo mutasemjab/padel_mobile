@@ -577,7 +577,7 @@ as List<String>,
 /// @nodoc
 mixin _$SubscriptionModel {
 
- int get id; String get status;@JsonKey(name: 'started_at') DateTime? get startedAt;@JsonKey(name: 'ends_at') DateTime? get endsAt; String? get provider; String? get plan;
+ int get id; String get status;@JsonKey(name: 'started_at') DateTime? get startedAt;@JsonKey(name: 'ends_at') DateTime? get endsAt; String? get provider; String? get plan; num? get amount; String? get currency;@JsonKey(name: 'days_left') int? get daysLeft;
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -590,16 +590,16 @@ $SubscriptionModelCopyWith<SubscriptionModel> get copyWith => _$SubscriptionMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscriptionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.plan, plan) || other.plan == plan));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscriptionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.plan, plan) || other.plan == plan)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.daysLeft, daysLeft) || other.daysLeft == daysLeft));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,startedAt,endsAt,provider,plan);
+int get hashCode => Object.hash(runtimeType,id,status,startedAt,endsAt,provider,plan,amount,currency,daysLeft);
 
 @override
 String toString() {
-  return 'SubscriptionModel(id: $id, status: $status, startedAt: $startedAt, endsAt: $endsAt, provider: $provider, plan: $plan)';
+  return 'SubscriptionModel(id: $id, status: $status, startedAt: $startedAt, endsAt: $endsAt, provider: $provider, plan: $plan, amount: $amount, currency: $currency, daysLeft: $daysLeft)';
 }
 
 
@@ -610,7 +610,7 @@ abstract mixin class $SubscriptionModelCopyWith<$Res>  {
   factory $SubscriptionModelCopyWith(SubscriptionModel value, $Res Function(SubscriptionModel) _then) = _$SubscriptionModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ends_at') DateTime? endsAt, String? provider, String? plan
+ int id, String status,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ends_at') DateTime? endsAt, String? provider, String? plan, num? amount, String? currency,@JsonKey(name: 'days_left') int? daysLeft
 });
 
 
@@ -627,7 +627,7 @@ class _$SubscriptionModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? startedAt = freezed,Object? endsAt = freezed,Object? provider = freezed,Object? plan = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? startedAt = freezed,Object? endsAt = freezed,Object? provider = freezed,Object? plan = freezed,Object? amount = freezed,Object? currency = freezed,Object? daysLeft = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -635,7 +635,10 @@ as String,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignor
 as DateTime?,endsAt: freezed == endsAt ? _self.endsAt : endsAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,provider: freezed == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String?,plan: freezed == plan ? _self.plan : plan // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as num?,currency: freezed == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String?,daysLeft: freezed == daysLeft ? _self.daysLeft : daysLeft // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -720,10 +723,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan,  num? amount,  String? currency, @JsonKey(name: 'days_left')  int? daysLeft)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionModel() when $default != null:
-return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan);case _:
+return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan,_that.amount,_that.currency,_that.daysLeft);case _:
   return orElse();
 
 }
@@ -741,10 +744,10 @@ return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provide
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan,  num? amount,  String? currency, @JsonKey(name: 'days_left')  int? daysLeft)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionModel():
-return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan);case _:
+return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan,_that.amount,_that.currency,_that.daysLeft);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -761,10 +764,10 @@ return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provide
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'ends_at')  DateTime? endsAt,  String? provider,  String? plan,  num? amount,  String? currency, @JsonKey(name: 'days_left')  int? daysLeft)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionModel() when $default != null:
-return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan);case _:
+return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provider,_that.plan,_that.amount,_that.currency,_that.daysLeft);case _:
   return null;
 
 }
@@ -776,7 +779,7 @@ return $default(_that.id,_that.status,_that.startedAt,_that.endsAt,_that.provide
 @JsonSerializable()
 
 class _SubscriptionModel implements SubscriptionModel {
-  const _SubscriptionModel({required this.id, this.status = '', @JsonKey(name: 'started_at') this.startedAt, @JsonKey(name: 'ends_at') this.endsAt, this.provider, this.plan});
+  const _SubscriptionModel({required this.id, this.status = '', @JsonKey(name: 'started_at') this.startedAt, @JsonKey(name: 'ends_at') this.endsAt, this.provider, this.plan, this.amount, this.currency, @JsonKey(name: 'days_left') this.daysLeft});
   factory _SubscriptionModel.fromJson(Map<String, dynamic> json) => _$SubscriptionModelFromJson(json);
 
 @override final  int id;
@@ -785,6 +788,9 @@ class _SubscriptionModel implements SubscriptionModel {
 @override@JsonKey(name: 'ends_at') final  DateTime? endsAt;
 @override final  String? provider;
 @override final  String? plan;
+@override final  num? amount;
+@override final  String? currency;
+@override@JsonKey(name: 'days_left') final  int? daysLeft;
 
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
@@ -799,16 +805,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscriptionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.plan, plan) || other.plan == plan));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscriptionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.plan, plan) || other.plan == plan)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.daysLeft, daysLeft) || other.daysLeft == daysLeft));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,startedAt,endsAt,provider,plan);
+int get hashCode => Object.hash(runtimeType,id,status,startedAt,endsAt,provider,plan,amount,currency,daysLeft);
 
 @override
 String toString() {
-  return 'SubscriptionModel(id: $id, status: $status, startedAt: $startedAt, endsAt: $endsAt, provider: $provider, plan: $plan)';
+  return 'SubscriptionModel(id: $id, status: $status, startedAt: $startedAt, endsAt: $endsAt, provider: $provider, plan: $plan, amount: $amount, currency: $currency, daysLeft: $daysLeft)';
 }
 
 
@@ -819,7 +825,7 @@ abstract mixin class _$SubscriptionModelCopyWith<$Res> implements $SubscriptionM
   factory _$SubscriptionModelCopyWith(_SubscriptionModel value, $Res Function(_SubscriptionModel) _then) = __$SubscriptionModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ends_at') DateTime? endsAt, String? provider, String? plan
+ int id, String status,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ends_at') DateTime? endsAt, String? provider, String? plan, num? amount, String? currency,@JsonKey(name: 'days_left') int? daysLeft
 });
 
 
@@ -836,7 +842,7 @@ class __$SubscriptionModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? startedAt = freezed,Object? endsAt = freezed,Object? provider = freezed,Object? plan = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? startedAt = freezed,Object? endsAt = freezed,Object? provider = freezed,Object? plan = freezed,Object? amount = freezed,Object? currency = freezed,Object? daysLeft = freezed,}) {
   return _then(_SubscriptionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -844,7 +850,10 @@ as String,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignor
 as DateTime?,endsAt: freezed == endsAt ? _self.endsAt : endsAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,provider: freezed == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String?,plan: freezed == plan ? _self.plan : plan // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as num?,currency: freezed == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String?,daysLeft: freezed == daysLeft ? _self.daysLeft : daysLeft // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

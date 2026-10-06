@@ -47,7 +47,8 @@ extension CasualMatchTypeX on CasualMatchType {
 enum ParticipantStatus {
   requested,
   accepted,
-  declined;
+  declined,
+  invited;
 
   static ParticipantStatus fromApi(String? raw) =>
       ParticipantStatus.values.firstWhere((s) => s.name == raw, orElse: () => ParticipantStatus.requested);
@@ -71,6 +72,12 @@ class CasualMatch extends Equatable {
   final PlayerSummary creator;
   final Venue? venue;
   final Court? court;
+  /// Server always sends a title ("Padel match" when the creator gave none).
+  final String? title;
+  final bool hasCustomTitle;
+
+  /// `not_full` = cancelled automatically 2 h before (not enough players); `creator`.
+  final String? cancelReason;
   final CasualMatchType matchType;
   final DateTime scheduledAt;
   final String? requiredLevel;
@@ -89,6 +96,9 @@ class CasualMatch extends Equatable {
     required this.creator,
     this.venue,
     this.court,
+    this.title,
+    this.hasCustomTitle = false,
+    this.cancelReason,
     required this.matchType,
     required this.scheduledAt,
     this.requiredLevel,
@@ -105,6 +115,11 @@ class CasualMatch extends Equatable {
 
   bool get isOpen => status == 'open';
 
+  bool get isCancelled => status == 'cancelled';
+
+  /// The viewer was invited by the creator and has not answered yet.
+  bool get isInvited => myParticipation?.status == ParticipantStatus.invited;
+
   String? get courtName => court?.name;
 
   List<CasualParticipant> get pendingRequests =>
@@ -116,6 +131,9 @@ class CasualMatch extends Equatable {
         creator,
         venue,
         court,
+        title,
+        hasCustomTitle,
+        cancelReason,
         matchType,
         scheduledAt,
         requiredLevel,

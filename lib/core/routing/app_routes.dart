@@ -35,6 +35,10 @@ class AppRoutes {
 
   // Play
   static String casualMatch(int id) => '/play/casual/$id';
+
+  /// Same page outside the tab shell — used from "My matches" and notifications.
+  static String casualMatchStandalone(int id) => '/casual/$id';
+  static const notificationSettings = '/settings/notifications';
   static const myCasualMatches = '/me/casual-matches';
   static const coaches = '/play/coaches';
   static String coach(int id) => '/play/coaches/$id';

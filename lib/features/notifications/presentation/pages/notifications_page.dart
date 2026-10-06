@@ -6,6 +6,7 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/paginated_list_view.dart';
@@ -47,6 +48,11 @@ class _NotificationsView extends StatelessWidget {
       final lang = Localizations.localeOf(context).languageCode;
       await showAchievementCelebration(context, achievementMessage: n.title(lang) ?? n.message(lang) ?? '');
       if (!context.mounted) return;
+    }
+    if (n.type == NotificationType.systemAnnouncement) {
+      final lang = Localizations.localeOf(context).languageCode;
+      await showAnnouncementSheet(context, title: n.title(lang) ?? '', message: n.message(lang) ?? '', at: n.createdAt);
+      return;
     }
     final route = NotificationRouter.routeFor(
       n,
@@ -146,4 +152,30 @@ class _NotificationsView extends StatelessWidget {
         );
     }
   }
+}
+
+/// Full text of a staff announcement (e.g. greetings sent from the admin panel).
+Future<void> showAnnouncementSheet(BuildContext context, {required String title, required String message, required DateTime at}) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (context) => Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.xl, 0, AppSpacing.xl, AppSpacing.xl),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Icon(Icons.campaign_rounded, size: 40),
+            Gap.md,
+            Text(title, style: context.text.titleLarge),
+            Gap.xs,
+            Text(DateFormatter.matchTime(at), style: context.text.bodySmall),
+            Gap.lg,
+            SelectableText(message, style: context.text.bodyLarge),
+          ],
+        ),
+      ),
+    ),
+  );
 }

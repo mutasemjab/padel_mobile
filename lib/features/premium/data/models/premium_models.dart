@@ -52,6 +52,9 @@ abstract class SubscriptionModel with _$SubscriptionModel {
     @JsonKey(name: 'ends_at') DateTime? endsAt,
     String? provider,
     String? plan,
+    num? amount,
+    String? currency,
+    @JsonKey(name: 'days_left') int? daysLeft,
   }) = _SubscriptionModel;
 
   factory SubscriptionModel.fromJson(Map<String, dynamic> json) => _$SubscriptionModelFromJson(json);
@@ -83,6 +86,9 @@ extension PremiumStatusModelX on PremiumStatusModel {
                 endsAt: subscription!.endsAt,
                 provider: subscription!.provider,
                 plan: subscription!.plan,
+                amount: subscription!.amount,
+                currency: subscription!.currency,
+                daysLeft: subscription!.daysLeft,
               ),
         features: features,
         neverAffects: neverAffects,

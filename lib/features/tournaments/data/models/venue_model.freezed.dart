@@ -284,7 +284,7 @@ as String?,
 /// @nodoc
 mixin _$VenueModel {
 
- int get id; String get name; String get city; String? get address; String? get description; num? get latitude; num? get longitude;@JsonKey(name: 'image_url') String? get imageUrl; List<CourtModel> get courts;@JsonKey(name: 'courts_count') int? get courtsCount;
+ int get id; String get name; String get city; String? get address; String? get description; num? get latitude; num? get longitude;@JsonKey(name: 'image_url') String? get imageUrl;@JsonKey(name: 'maps_url') String? get mapsUrl; List<CourtModel> get courts;@JsonKey(name: 'courts_count') int? get courtsCount;
 /// Create a copy of VenueModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -297,16 +297,16 @@ $VenueModelCopyWith<VenueModel> get copyWith => _$VenueModelCopyWithImpl<VenueMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VenueModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&const DeepCollectionEquality().equals(other.courts, courts)&&(identical(other.courtsCount, courtsCount) || other.courtsCount == courtsCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VenueModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.mapsUrl, mapsUrl) || other.mapsUrl == mapsUrl)&&const DeepCollectionEquality().equals(other.courts, courts)&&(identical(other.courtsCount, courtsCount) || other.courtsCount == courtsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,city,address,description,latitude,longitude,imageUrl,const DeepCollectionEquality().hash(courts),courtsCount);
+int get hashCode => Object.hash(runtimeType,id,name,city,address,description,latitude,longitude,imageUrl,mapsUrl,const DeepCollectionEquality().hash(courts),courtsCount);
 
 @override
 String toString() {
-  return 'VenueModel(id: $id, name: $name, city: $city, address: $address, description: $description, latitude: $latitude, longitude: $longitude, imageUrl: $imageUrl, courts: $courts, courtsCount: $courtsCount)';
+  return 'VenueModel(id: $id, name: $name, city: $city, address: $address, description: $description, latitude: $latitude, longitude: $longitude, imageUrl: $imageUrl, mapsUrl: $mapsUrl, courts: $courts, courtsCount: $courtsCount)';
 }
 
 
@@ -317,7 +317,7 @@ abstract mixin class $VenueModelCopyWith<$Res>  {
   factory $VenueModelCopyWith(VenueModel value, $Res Function(VenueModel) _then) = _$VenueModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, String city, String? address, String? description, num? latitude, num? longitude,@JsonKey(name: 'image_url') String? imageUrl, List<CourtModel> courts,@JsonKey(name: 'courts_count') int? courtsCount
+ int id, String name, String city, String? address, String? description, num? latitude, num? longitude,@JsonKey(name: 'image_url') String? imageUrl,@JsonKey(name: 'maps_url') String? mapsUrl, List<CourtModel> courts,@JsonKey(name: 'courts_count') int? courtsCount
 });
 
 
@@ -334,7 +334,7 @@ class _$VenueModelCopyWithImpl<$Res>
 
 /// Create a copy of VenueModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? city = null,Object? address = freezed,Object? description = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? imageUrl = freezed,Object? courts = null,Object? courtsCount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? city = null,Object? address = freezed,Object? description = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? imageUrl = freezed,Object? mapsUrl = freezed,Object? courts = null,Object? courtsCount = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -344,6 +344,7 @@ as String?,description: freezed == description ? _self.description : description
 as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as num?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as num?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,mapsUrl: freezed == mapsUrl ? _self.mapsUrl : mapsUrl // ignore: cast_nullable_to_non_nullable
 as String?,courts: null == courts ? _self.courts : courts // ignore: cast_nullable_to_non_nullable
 as List<CourtModel>,courtsCount: freezed == courtsCount ? _self.courtsCount : courtsCount // ignore: cast_nullable_to_non_nullable
 as int?,
@@ -431,10 +432,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl, @JsonKey(name: 'maps_url')  String? mapsUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VenueModel() when $default != null:
-return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.courts,_that.courtsCount);case _:
+return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.mapsUrl,_that.courts,_that.courtsCount);case _:
   return orElse();
 
 }
@@ -452,10 +453,10 @@ return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl, @JsonKey(name: 'maps_url')  String? mapsUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)  $default,) {final _that = this;
 switch (_that) {
 case _VenueModel():
-return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.courts,_that.courtsCount);case _:
+return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.mapsUrl,_that.courts,_that.courtsCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -472,10 +473,10 @@ return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String city,  String? address,  String? description,  num? latitude,  num? longitude, @JsonKey(name: 'image_url')  String? imageUrl, @JsonKey(name: 'maps_url')  String? mapsUrl,  List<CourtModel> courts, @JsonKey(name: 'courts_count')  int? courtsCount)?  $default,) {final _that = this;
 switch (_that) {
 case _VenueModel() when $default != null:
-return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.courts,_that.courtsCount);case _:
+return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_that.latitude,_that.longitude,_that.imageUrl,_that.mapsUrl,_that.courts,_that.courtsCount);case _:
   return null;
 
 }
@@ -487,7 +488,7 @@ return $default(_that.id,_that.name,_that.city,_that.address,_that.description,_
 @JsonSerializable()
 
 class _VenueModel implements VenueModel {
-  const _VenueModel({required this.id, required this.name, this.city = '', this.address, this.description, this.latitude, this.longitude, @JsonKey(name: 'image_url') this.imageUrl, final  List<CourtModel> courts = const [], @JsonKey(name: 'courts_count') this.courtsCount}): _courts = courts;
+  const _VenueModel({required this.id, required this.name, this.city = '', this.address, this.description, this.latitude, this.longitude, @JsonKey(name: 'image_url') this.imageUrl, @JsonKey(name: 'maps_url') this.mapsUrl, final  List<CourtModel> courts = const [], @JsonKey(name: 'courts_count') this.courtsCount}): _courts = courts;
   factory _VenueModel.fromJson(Map<String, dynamic> json) => _$VenueModelFromJson(json);
 
 @override final  int id;
@@ -498,6 +499,7 @@ class _VenueModel implements VenueModel {
 @override final  num? latitude;
 @override final  num? longitude;
 @override@JsonKey(name: 'image_url') final  String? imageUrl;
+@override@JsonKey(name: 'maps_url') final  String? mapsUrl;
  final  List<CourtModel> _courts;
 @override@JsonKey() List<CourtModel> get courts {
   if (_courts is EqualUnmodifiableListView) return _courts;
@@ -520,16 +522,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VenueModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&const DeepCollectionEquality().equals(other._courts, _courts)&&(identical(other.courtsCount, courtsCount) || other.courtsCount == courtsCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VenueModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.mapsUrl, mapsUrl) || other.mapsUrl == mapsUrl)&&const DeepCollectionEquality().equals(other._courts, _courts)&&(identical(other.courtsCount, courtsCount) || other.courtsCount == courtsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,city,address,description,latitude,longitude,imageUrl,const DeepCollectionEquality().hash(_courts),courtsCount);
+int get hashCode => Object.hash(runtimeType,id,name,city,address,description,latitude,longitude,imageUrl,mapsUrl,const DeepCollectionEquality().hash(_courts),courtsCount);
 
 @override
 String toString() {
-  return 'VenueModel(id: $id, name: $name, city: $city, address: $address, description: $description, latitude: $latitude, longitude: $longitude, imageUrl: $imageUrl, courts: $courts, courtsCount: $courtsCount)';
+  return 'VenueModel(id: $id, name: $name, city: $city, address: $address, description: $description, latitude: $latitude, longitude: $longitude, imageUrl: $imageUrl, mapsUrl: $mapsUrl, courts: $courts, courtsCount: $courtsCount)';
 }
 
 
@@ -540,7 +542,7 @@ abstract mixin class _$VenueModelCopyWith<$Res> implements $VenueModelCopyWith<$
   factory _$VenueModelCopyWith(_VenueModel value, $Res Function(_VenueModel) _then) = __$VenueModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, String city, String? address, String? description, num? latitude, num? longitude,@JsonKey(name: 'image_url') String? imageUrl, List<CourtModel> courts,@JsonKey(name: 'courts_count') int? courtsCount
+ int id, String name, String city, String? address, String? description, num? latitude, num? longitude,@JsonKey(name: 'image_url') String? imageUrl,@JsonKey(name: 'maps_url') String? mapsUrl, List<CourtModel> courts,@JsonKey(name: 'courts_count') int? courtsCount
 });
 
 
@@ -557,7 +559,7 @@ class __$VenueModelCopyWithImpl<$Res>
 
 /// Create a copy of VenueModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? city = null,Object? address = freezed,Object? description = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? imageUrl = freezed,Object? courts = null,Object? courtsCount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? city = null,Object? address = freezed,Object? description = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? imageUrl = freezed,Object? mapsUrl = freezed,Object? courts = null,Object? courtsCount = freezed,}) {
   return _then(_VenueModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -567,6 +569,7 @@ as String?,description: freezed == description ? _self.description : description
 as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as num?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as num?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,mapsUrl: freezed == mapsUrl ? _self.mapsUrl : mapsUrl // ignore: cast_nullable_to_non_nullable
 as String?,courts: null == courts ? _self._courts : courts // ignore: cast_nullable_to_non_nullable
 as List<CourtModel>,courtsCount: freezed == courtsCount ? _self.courtsCount : courtsCount // ignore: cast_nullable_to_non_nullable
 as int?,

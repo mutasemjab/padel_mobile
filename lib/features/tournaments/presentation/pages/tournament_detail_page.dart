@@ -279,12 +279,7 @@ class _FactsCard extends StatelessWidget {
           fact(
             Icons.place_rounded,
             venue?.displayName ?? l10n.venueTba,
-            onTap: venue != null && venue.hasLocation
-                ? () => launchUrl(
-                      Uri.parse('https://www.google.com/maps/search/?api=1&query=${venue.latitude},${venue.longitude}'),
-                      mode: LaunchMode.externalApplication,
-                    )
-                : null,
+            onTap: venue != null && venue.hasLocation ? () => launchUrl(venue.mapUri!, mode: LaunchMode.externalApplication) : null,
           ),
           if (tournament.registrationOpensAt != null && tournament.registrationClosesAt != null)
             fact(

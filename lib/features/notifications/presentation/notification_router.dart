@@ -35,6 +35,7 @@ class NotificationRouter {
           return AppRoutes.threeD;
         }
         if (n.type == NotificationType.challengeReceived) return AppRoutes.challenges;
+        if (n.type == NotificationType.duo3dReady) return AppRoutes.profile;
         return playerId == null ? AppRoutes.profile : AppRoutes.player(playerId);
       case NotificationScreen.booking:
         // Coaches receive "requested"/"cancelled" for their own inbox.
@@ -43,6 +44,12 @@ class NotificationRouter {
       case NotificationScreen.payments:
         return reference == null ? AppRoutes.payments : AppRoutes.payment(reference);
       case NotificationScreen.notifications:
+        return AppRoutes.notifications;
+      case NotificationScreen.casualMatch:
+        final casualId = n.intId('casual_match_id');
+        return casualId == null ? AppRoutes.myCasualMatches : AppRoutes.casualMatchStandalone(casualId);
+      case NotificationScreen.announcement:
+        // The full text lives in the notification list (tap to read it all).
         return AppRoutes.notifications;
       case NotificationScreen.unknown:
         return null;

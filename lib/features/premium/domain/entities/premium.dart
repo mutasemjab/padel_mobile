@@ -39,6 +39,9 @@ class Subscription extends Equatable {
   final DateTime? endsAt;
   final String? provider;
   final String? plan;
+  final num? amount;
+  final String? currency;
+  final int? daysLeft;
 
   const Subscription({
     required this.id,
@@ -47,10 +50,13 @@ class Subscription extends Equatable {
     this.endsAt,
     this.provider,
     this.plan,
+    this.amount,
+    this.currency,
+    this.daysLeft,
   });
 
   @override
-  List<Object?> get props => [id, status, startedAt, endsAt, provider, plan];
+  List<Object?> get props => [id, status, startedAt, endsAt, provider, plan, amount, currency, daysLeft];
 }
 
 class PremiumStatus extends Equatable {

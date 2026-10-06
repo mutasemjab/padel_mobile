@@ -38,10 +38,11 @@ class PlayPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(l10n.playTitle),
           actions: [
-            IconButton(
-              tooltip: l10n.myBookingsTitle,
-              icon: const Icon(Icons.event_note_rounded),
+            // Labelled so "my trainings" is easy to find (an icon alone was missed).
+            TextButton.icon(
               onPressed: () => context.push(AppRoutes.myBookings),
+              icon: const Icon(Icons.event_note_rounded, size: 20),
+              label: Text(l10n.myTrainingsShort),
             ),
             const NotificationBell(),
           ],
@@ -209,7 +210,7 @@ class _MyList extends StatelessWidget {
             onRefresh: cubit.refresh,
             onRetry: cubit.load,
             empty: EmptyState(icon: Icons.groups_outlined, title: l10n.emptyCasualTitle, message: l10n.emptyCasualMessage),
-            itemBuilder: (context, m, _) => CasualMatchCard(match: m, onTap: () => context.push(AppRoutes.casualMatch(m.id))),
+            itemBuilder: (context, m, _) => CasualMatchCard(match: m, onTap: () => context.push(AppRoutes.casualMatchStandalone(m.id))),
           );
         },
       ),

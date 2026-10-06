@@ -14,6 +14,7 @@ abstract class CasualMatchesRepository {
   ApiResult<CasualMatch> getCasualMatch(int id);
 
   ApiResult<void> createCasualMatch({
+    String? title,
     int? venueId,
     int? courtId,
     required String matchType,
@@ -30,4 +31,9 @@ abstract class CasualMatchesRepository {
 
   /// `role`: `created | joined`.
   ApiResult<Paginated<CasualMatch>> getMyCasualMatches({required bool created, int page = 1});
+
+  /// Creator edits (title, scheduled_at, venue_id, court_id, notes); players are notified of time/place changes.
+  ApiResult<void> updateCasualMatch(int id, Map<String, dynamic> fields);
+  ApiResult<void> invitePlayer(int id, String playerId);
+  ApiResult<void> respondToInvitation(int id, {required bool accept});
 }

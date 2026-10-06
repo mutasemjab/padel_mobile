@@ -248,6 +248,16 @@ class _ActiveCard extends StatelessWidget {
                       l10n.premiumActiveUntil(DateFormatter.fullDate(ends)),
                       style: context.text.bodySmall?.copyWith(color: AppColors.onPremium),
                     ),
+                  if (status.subscription?.plan != null || status.subscription?.amount != null)
+                    Text(
+                      [
+                        if (status.subscription?.plan == 'monthly') l10n.premiumPlanMonthly,
+                        if (status.subscription?.plan == 'yearly') l10n.premiumPlanYearly,
+                        if (status.subscription?.amount != null) Formatters.money(status.subscription!.amount!, status.subscription!.currency),
+                        if (status.subscription?.daysLeft != null) l10n.premiumDaysLeft(status.subscription!.daysLeft!),
+                      ].join(' · '),
+                      style: context.text.bodySmall?.copyWith(color: AppColors.onPremium),
+                    ),
                 ],
               ),
             ),

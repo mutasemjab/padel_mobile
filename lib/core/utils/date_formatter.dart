@@ -74,5 +74,7 @@ class DateFormatter {
     return fullDate(local);
   }
 
-  static String apiDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+  /// Always Latin digits: without an explicit locale Intl uses the app
+  /// language, and in Arabic the API would receive Arabic-Indic digits.
+  static String apiDate(DateTime date) => DateFormat('yyyy-MM-dd', 'en').format(date);
 }

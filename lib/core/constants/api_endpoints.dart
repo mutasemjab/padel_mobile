@@ -91,6 +91,9 @@ class ApiEndpoints {
   static String casualMatchJoin(int id) => 'casual-matches/$id/join';
   static String casualMatchLeave(int id) => 'casual-matches/$id/leave';
   static String casualMatchCancel(int id) => 'casual-matches/$id/cancel';
+  static String casualMatchInvite(int id) => 'casual-matches/$id/invite';
+  static String casualInvitationRespond(int id) => 'casual-matches/$id/invitation/respond';
+  static const String notificationSettings = 'me/notification-settings';
   static String casualParticipantRespond(int id, int participantId) =>
       'casual-matches/$id/participants/$participantId/respond';
   static const String myCasualMatches = 'me/casual-matches';

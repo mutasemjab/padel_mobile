@@ -20,15 +20,17 @@ class RegistrationStatusChip extends StatelessWidget {
       RegistrationStatus.pending => AppColors.warning,
       RegistrationStatus.waitlisted => AppColors.info,
       RegistrationStatus.rejected => AppColors.danger,
+      RegistrationStatus.changesRequested => AppColors.warning,
       RegistrationStatus.cancelled => context.tokens.textMuted,
     };
     final icon = switch (status) {
       RegistrationStatus.approved => Icons.check_circle_rounded,
       RegistrationStatus.waitlisted => Icons.hourglass_top_rounded,
+      RegistrationStatus.changesRequested => Icons.edit_note_rounded,
       _ => null,
     };
     return StatusChip(
-      label: context.enums.label(EnumGroup.registrationStatuses, status.name),
+      label: context.enums.label(EnumGroup.registrationStatuses, status.apiValue),
       color: color,
       icon: icon,
     );

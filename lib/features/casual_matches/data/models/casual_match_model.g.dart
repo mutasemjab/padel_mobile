@@ -36,6 +36,9 @@ _CasualMatchModel _$CasualMatchModelFromJson(Map<String, dynamic> json) =>
       court: json['court'] == null
           ? null
           : CourtModel.fromJson(json['court'] as Map<String, dynamic>),
+      title: json['title'] as String?,
+      hasCustomTitle: json['has_custom_title'] as bool? ?? false,
+      cancelReason: json['cancel_reason'] as String?,
       matchType: json['match_type'] as String,
       scheduledAt: DateTime.parse(json['scheduled_at'] as String),
       requiredLevel: json['required_level'] as String?,
@@ -67,6 +70,9 @@ Map<String, dynamic> _$CasualMatchModelToJson(_CasualMatchModel instance) =>
       'creator': instance.creator.toJson(),
       'venue': instance.venue?.toJson(),
       'court': instance.court?.toJson(),
+      'title': instance.title,
+      'has_custom_title': instance.hasCustomTitle,
+      'cancel_reason': instance.cancelReason,
       'match_type': instance.matchType,
       'scheduled_at': instance.scheduledAt.toIso8601String(),
       'required_level': instance.requiredLevel,

@@ -574,7 +574,7 @@ $RegistrationTournamentModelCopyWith<$Res> get tournament {
 /// @nodoc
 mixin _$RegistrationModel {
 
- int get id; String get status;@JsonKey(name: 'payment_status') String get paymentStatus;@JsonKey(name: 'registered_at') DateTime? get registeredAt;@JsonKey(name: 'promoted_at') DateTime? get promotedAt; String? get notes; PlayerSummaryModel? get player; PlayerSummaryModel? get partner; RegistrationCategoryModel get category;@JsonKey(name: 'can_cancel') bool get canCancel;
+ int get id; String get status;@JsonKey(name: 'payment_status') String get paymentStatus;@JsonKey(name: 'registered_at') DateTime? get registeredAt;@JsonKey(name: 'promoted_at') DateTime? get promotedAt; String? get notes; PlayerSummaryModel? get player; PlayerSummaryModel? get partner; RegistrationCategoryModel get category;@JsonKey(name: 'can_cancel') bool get canCancel;@JsonKey(name: 'can_edit') bool get canEdit;@JsonKey(name: 'review_note') String? get reviewNote;
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -587,16 +587,16 @@ $RegistrationModelCopyWith<RegistrationModel> get copyWith => _$RegistrationMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel);
+int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote);
 
 @override
 String toString() {
-  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel)';
+  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote)';
 }
 
 
@@ -607,7 +607,7 @@ abstract mixin class $RegistrationModelCopyWith<$Res>  {
   factory $RegistrationModelCopyWith(RegistrationModel value, $Res Function(RegistrationModel) _then) = _$RegistrationModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel
+ int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote
 });
 
 
@@ -624,7 +624,7 @@ class _$RegistrationModelCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -636,7 +636,9 @@ as String?,player: freezed == player ? _self.player : player // ignore: cast_nul
 as PlayerSummaryModel?,partner: freezed == partner ? _self.partner : partner // ignore: cast_nullable_to_non_nullable
 as PlayerSummaryModel?,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as RegistrationCategoryModel,canCancel: null == canCancel ? _self.canCancel : canCancel // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,canEdit: null == canEdit ? _self.canEdit : canEdit // ignore: cast_nullable_to_non_nullable
+as bool,reviewNote: freezed == reviewNote ? _self.reviewNote : reviewNote // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of RegistrationModel
@@ -754,10 +756,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RegistrationModel() when $default != null:
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote);case _:
   return orElse();
 
 }
@@ -775,10 +777,10 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote)  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationModel():
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -795,10 +797,10 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote)?  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationModel() when $default != null:
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote);case _:
   return null;
 
 }
@@ -810,7 +812,7 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 @JsonSerializable()
 
 class _RegistrationModel implements RegistrationModel {
-  const _RegistrationModel({required this.id, this.status = 'pending', @JsonKey(name: 'payment_status') this.paymentStatus = 'not_required', @JsonKey(name: 'registered_at') this.registeredAt, @JsonKey(name: 'promoted_at') this.promotedAt, this.notes, this.player, this.partner, required this.category, @JsonKey(name: 'can_cancel') this.canCancel = false});
+  const _RegistrationModel({required this.id, this.status = 'pending', @JsonKey(name: 'payment_status') this.paymentStatus = 'not_required', @JsonKey(name: 'registered_at') this.registeredAt, @JsonKey(name: 'promoted_at') this.promotedAt, this.notes, this.player, this.partner, required this.category, @JsonKey(name: 'can_cancel') this.canCancel = false, @JsonKey(name: 'can_edit') this.canEdit = false, @JsonKey(name: 'review_note') this.reviewNote});
   factory _RegistrationModel.fromJson(Map<String, dynamic> json) => _$RegistrationModelFromJson(json);
 
 @override final  int id;
@@ -823,6 +825,8 @@ class _RegistrationModel implements RegistrationModel {
 @override final  PlayerSummaryModel? partner;
 @override final  RegistrationCategoryModel category;
 @override@JsonKey(name: 'can_cancel') final  bool canCancel;
+@override@JsonKey(name: 'can_edit') final  bool canEdit;
+@override@JsonKey(name: 'review_note') final  String? reviewNote;
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
@@ -837,16 +841,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel);
+int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote);
 
 @override
 String toString() {
-  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel)';
+  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote)';
 }
 
 
@@ -857,7 +861,7 @@ abstract mixin class _$RegistrationModelCopyWith<$Res> implements $RegistrationM
   factory _$RegistrationModelCopyWith(_RegistrationModel value, $Res Function(_RegistrationModel) _then) = __$RegistrationModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel
+ int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote
 });
 
 
@@ -874,7 +878,7 @@ class __$RegistrationModelCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,}) {
   return _then(_RegistrationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -886,7 +890,9 @@ as String?,player: freezed == player ? _self.player : player // ignore: cast_nul
 as PlayerSummaryModel?,partner: freezed == partner ? _self.partner : partner // ignore: cast_nullable_to_non_nullable
 as PlayerSummaryModel?,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as RegistrationCategoryModel,canCancel: null == canCancel ? _self.canCancel : canCancel // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,canEdit: null == canEdit ? _self.canEdit : canEdit // ignore: cast_nullable_to_non_nullable
+as bool,reviewNote: freezed == reviewNote ? _self.reviewNote : reviewNote // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

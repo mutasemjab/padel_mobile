@@ -162,12 +162,7 @@ class VenueDetailPage extends StatelessWidget {
                     sliver: SliverList.list(
                       children: [
                         AppCard(
-                          onTap: v.hasLocation
-                              ? () => launchUrl(
-                                    Uri.parse('https://www.google.com/maps/search/?api=1&query=${v.latitude},${v.longitude}'),
-                                    mode: LaunchMode.externalApplication,
-                                  )
-                              : null,
+                          onTap: v.hasLocation ? () => launchUrl(v.mapUri!, mode: LaunchMode.externalApplication) : null,
                           child: Row(
                             children: [
                               Icon(Icons.place_rounded, color: context.tokens.highlight),
@@ -177,6 +172,14 @@ class VenueDetailPage extends StatelessWidget {
                             ],
                           ),
                         ),
+                        if (v.hasLocation) ...[
+                          Gap.sm,
+                          FilledButton.icon(
+                            onPressed: () => launchUrl(v.mapUri!, mode: LaunchMode.externalApplication),
+                            icon: const Icon(Icons.map_rounded),
+                            label: Text(AppLocalizations.of(context).openInGoogleMaps),
+                          ),
+                        ],
                         if (v.description != null) ...[Gap.lg, Text(v.description!)],
                         if (v.courts.isNotEmpty) ...[
                           Gap.xl,

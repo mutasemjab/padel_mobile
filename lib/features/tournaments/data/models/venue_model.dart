@@ -27,6 +27,7 @@ abstract class VenueModel with _$VenueModel {
     num? latitude,
     num? longitude,
     @JsonKey(name: 'image_url') String? imageUrl,
+    @JsonKey(name: 'maps_url') String? mapsUrl,
     @Default([]) List<CourtModel> courts,
     @JsonKey(name: 'courts_count') int? courtsCount,
   }) = _VenueModel;
@@ -44,6 +45,7 @@ extension VenueModelX on VenueModel {
         latitude: latitude?.toDouble(),
         longitude: longitude?.toDouble(),
         imageUrl: imageUrl,
+        mapsUrl: mapsUrl,
         courts: courts.map((c) => c.toEntity()).toList(),
         courtsCount: courtsCount,
       );

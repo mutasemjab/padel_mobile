@@ -28,6 +28,22 @@ import '../../domain/entities/notification_item.dart';
       NotificationType.threeDProfileReady => (Icons.view_in_ar_rounded, AppColors.premiumGold),
       NotificationType.threeDProfileFailed => (Icons.view_in_ar_rounded, AppColors.danger),
       NotificationType.systemAnnouncement => (Icons.campaign_rounded, AppColors.info),
+      NotificationType.casualInvited || NotificationType.casualJoinRequested => (Icons.mail_rounded, AppColors.clay),
+      NotificationType.casualRequestAccepted ||
+      NotificationType.casualInviteAccepted ||
+      NotificationType.casualFull => (Icons.groups_rounded, AppColors.success),
+      NotificationType.casualRequestDeclined ||
+      NotificationType.casualInviteDeclined ||
+      NotificationType.casualCancelledNotFull ||
+      NotificationType.casualCancelled => (Icons.event_busy_rounded, AppColors.danger),
+      NotificationType.casualTimeChanged || NotificationType.casualCourtChanged => (Icons.edit_calendar_rounded, AppColors.info),
+      NotificationType.casualReminder => (Icons.alarm_rounded, AppColors.clay),
+      NotificationType.casualStarting => (Icons.sports_tennis_rounded, AppColors.live),
+      NotificationType.tournamentRegistrationOpen => (Icons.emoji_events_rounded, AppColors.primary),
+      NotificationType.partnerNeeded || NotificationType.partnerRemoved => (Icons.person_search_rounded, context.tokens.highlight),
+      NotificationType.paymentRequired => (Icons.request_quote_rounded, AppColors.premiumGold),
+      NotificationType.registrationChangesRequested => (Icons.edit_note_rounded, AppColors.info),
+      NotificationType.duo3dReady => (Icons.view_in_ar_rounded, AppColors.premiumGold),
       NotificationType.unknown => (Icons.notifications_rounded, context.tokens.textMuted),
     };
 
@@ -74,7 +90,13 @@ class NotificationTile extends StatelessWidget {
                   ),
                   if (title != null && message != null) ...[
                     Gap.xxs,
-                    Text(message, style: context.text.bodySmall, maxLines: 3, overflow: TextOverflow.ellipsis),
+                    Text(
+                      message,
+                      style: context.text.bodySmall,
+                      // Announcements are read in full; other notifications stay compact.
+                      maxLines: notification.type == NotificationType.systemAnnouncement ? null : 3,
+                      overflow: notification.type == NotificationType.systemAnnouncement ? null : TextOverflow.ellipsis,
+                    ),
                   ],
                   Gap.xs,
                   Text(DateFormatter.relative(context, notification.createdAt), style: context.text.labelSmall),

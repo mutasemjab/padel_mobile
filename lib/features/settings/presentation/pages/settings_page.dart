@@ -64,6 +64,15 @@ class SettingsPage extends StatelessWidget {
           ),
           _Section(title: l10n.settingsNotifications),
           const _PushTile(),
+          Gap.sm,
+          AppCard(
+            padding: EdgeInsets.zero,
+            child: _Link(
+              icon: Icons.tune_rounded,
+              label: l10n.notificationSettingsTitle,
+              onTap: () => context.push(AppRoutes.notificationSettings),
+            ),
+          ),
           _Section(title: l10n.settingsAccount),
           AppCard(
             padding: EdgeInsets.zero,
