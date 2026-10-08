@@ -29,6 +29,13 @@ class PartnerRequestsPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.partnerRequestsTitle),
+          actions: [
+            TextButton.icon(
+              onPressed: () => context.push(AppRoutes.playerSearch),
+              icon: const Icon(Icons.person_search_rounded, size: 20),
+              label: Text(l10n.findPartner),
+            ),
+          ],
           bottom: TabBar(
             isScrollable: true,
             padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md),
@@ -69,6 +76,8 @@ class _RequestsList extends StatelessWidget {
               icon: Icons.handshake_outlined,
               title: l10n.partnerRequestsEmpty,
               message: l10n.partnerNotSetHint,
+              ctaLabel: l10n.findPartner,
+              onCta: () => context.push(AppRoutes.playerSearch),
             ),
             itemBuilder: (context, request, _) => _RequestCard(request: request, incoming: incoming),
           );

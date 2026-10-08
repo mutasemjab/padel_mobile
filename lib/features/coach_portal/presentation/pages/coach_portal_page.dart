@@ -405,6 +405,8 @@ class _AddSlotsSheetState extends State<_AddSlotsSheet> {
           field(l10n.slotDate, DateFormatter.fullDate(_date), () async {
             final picked = await showDatePicker(
               context: context,
+              // Calendar only: no pencil, dates cannot be typed.
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
               initialDate: _date,
               firstDate: DateTime.now(),
               lastDate: DateTime.now().add(const Duration(days: 365)),

@@ -103,6 +103,10 @@ class _PlayerSearchPageState extends State<PlayerSearchPage> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.gutter, AppSpacing.xs, AppSpacing.gutter, 0),
+              child: Text(l10n.findPartnerHint, style: context.text.bodySmall),
+            ),
             Gap.md,
             SizedBox(
               height: AppSizes.chipHeight + 8,

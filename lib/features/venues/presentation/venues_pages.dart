@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/network/api_result.dart';
 import '../../../core/routing/app_routes.dart';
+import '../../../core/routing/open_route.dart';
 import '../../../core/state/base_cubits.dart';
 import '../../../core/state/view_state.dart';
 import '../../../core/theme/app_effects.dart';
@@ -198,7 +199,7 @@ class VenueDetailPage extends StatelessWidget {
                         Gap.md,
                         if (detail.upcomingTournaments.isEmpty) Text(l10n.emptyTournamentsMessage, style: context.text.bodySmall),
                         for (final t in detail.upcomingTournaments) ...[
-                          TournamentCard(tournament: t, compact: true, onTap: () => context.push(AppRoutes.tournament(t.id))),
+                          TournamentCard(tournament: t, compact: true, onTap: () => context.openRoute(AppRoutes.tournament(t.id))),
                           Gap.md,
                         ],
                       ],

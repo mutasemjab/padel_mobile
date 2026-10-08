@@ -1865,6 +1865,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationCancel => 'Cancel registration';
 
   @override
+  String registrationPartnerInvite(String name) {
+    return '$name wants you as a partner in this tournament. Confirm to send it to the organizer.';
+  }
+
+  @override
+  String get registrationPartnerAccept => 'Accept';
+
+  @override
+  String get registrationPartnerDecline => 'Decline';
+
+  @override
+  String get registrationPartnerDeclineConfirm =>
+      'Decline playing in this tournament as a pair?';
+
+  @override
+  String get registrationPartnerAcceptedSnack =>
+      'Confirmed — the organizer will now review the registration';
+
+  @override
+  String get registrationPartnerDeclinedSnack => 'Invitation declined';
+
+  @override
+  String get registrationAwaitingPartnerHint =>
+      'Waiting for your partner to confirm before the organizer reviews it.';
+
+  @override
+  String get registrationPartnerDeclinedHint =>
+      'Your partner declined. Choose another partner or cancel the registration.';
+
+  @override
   String get registrationCancelConfirm => 'Your spot will be released.';
 
   @override
@@ -2588,4 +2618,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String premiumDaysLeft(int count) {
     return '$count days left';
   }
+
+  @override
+  String get findPartner => 'Find a partner';
+
+  @override
+  String get findPartnerHint =>
+      'Search by name or player ID, open the player\'s profile, then tap \"Request as main partner\".';
 }

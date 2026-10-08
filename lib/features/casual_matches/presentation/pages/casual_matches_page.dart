@@ -38,6 +38,11 @@ class PlayPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(l10n.playTitle),
           actions: [
+            IconButton(
+              tooltip: l10n.findPartner,
+              icon: const Icon(Icons.person_search_rounded),
+              onPressed: () => context.push(AppRoutes.playerSearch),
+            ),
             // Labelled so "my trainings" is easy to find (an icon alone was missed).
             TextButton.icon(
               onPressed: () => context.push(AppRoutes.myBookings),

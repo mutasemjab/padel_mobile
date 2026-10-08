@@ -75,7 +75,8 @@ class _PadelAppState extends State<PadelApp> with WidgetsBindingObserver {
       coachAccount: auth.accountType == AccountType.coach,
       myPlayerId: auth.player?.playerId,
     );
-    if (route != null) _router.push(route);
+    if (route == null) return;
+    NotificationRouter.isInsideTabs(route) ? _router.go(route) : _router.push(route);
   }
 
   void _onForegroundPush(Map<String, dynamic> data) {

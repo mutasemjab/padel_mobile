@@ -32,6 +32,9 @@ abstract class TournamentsRepository {
   ApiResult<Registration?> cancelRegistration(int registrationId);
   ApiResult<Registration?> changePartner(int registrationId, String partnerPlayerId);
 
+  /// The named partner accepts or declines the invitation (before the organizer reviews it).
+  ApiResult<Registration?> respondAsPartner(int registrationId, {required bool accept});
+
   /// Payment, or `ProviderUnavailableFailure(PAYMENT_PROVIDER_NOT_CONFIGURED)`.
   ApiResult<Payment> payRegistration(int registrationId);
 }

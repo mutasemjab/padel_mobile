@@ -59,7 +59,8 @@ class _NotificationsView extends StatelessWidget {
       coachAccount: auth is AuthAuthenticated && auth.accountType == AccountType.coach,
       myPlayerId: auth.currentPlayer?.playerId,
     );
-    if (route != null) context.push(route);
+    if (route == null) return;
+    NotificationRouter.isInsideTabs(route) ? context.go(route) : context.push(route);
   }
 
   @override

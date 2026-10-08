@@ -187,6 +187,11 @@ class _HomeAppBar extends StatelessWidget {
         ],
       ),
       actions: [
+        IconButton(
+          tooltip: l10n.searchPlayersTitle,
+          icon: const Icon(Icons.search_rounded),
+          onPressed: () => context.push(AppRoutes.playerSearch),
+        ),
         const NotificationBell(),
         if (summary != null && summary.playerId.isNotEmpty)
           Padding(

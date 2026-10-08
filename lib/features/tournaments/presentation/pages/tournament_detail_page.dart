@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enum_labels.dart';
 import '../../../../core/meta/enums_service.dart';
+import '../../../../core/push/push_notification_service.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_effects.dart';
@@ -44,7 +48,9 @@ class TournamentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<TournamentDetailCubit>()..load(tournamentId),
-      child: Scaffold(
+      child: _KeepFresh(
+        tournamentId: tournamentId,
+        child: Scaffold(
         body: BlocBuilder<TournamentDetailCubit, TournamentDetailState>(
           builder: (context, state) {
             return switch (state) {
@@ -67,8 +73,52 @@ class TournamentDetailPage extends StatelessWidget {
           },
         ),
       ),
+      ),
     );
   }
+}
+
+/// Reloads the page (registration status, matches, details) when a
+/// notification about this tournament arrives or the app comes back to the
+/// foreground — e.g. the organizer approved the registration meanwhile.
+class _KeepFresh extends StatefulWidget {
+  final int tournamentId;
+  final Widget child;
+
+  const _KeepFresh({required this.tournamentId, required this.child});
+
+  @override
+  State<_KeepFresh> createState() => _KeepFreshState();
+}
+
+class _KeepFreshState extends State<_KeepFresh> {
+  StreamSubscription<Map<String, dynamic>>? _pushSub;
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    if (sl.isRegistered<PushNotificationService>()) {
+      _pushSub = sl<PushNotificationService>().onForegroundMessage.listen((data) {
+        if (data['tournament_id']?.toString() == widget.tournamentId.toString()) _refresh();
+      });
+    }
+    _lifecycle = AppLifecycleListener(onResume: _refresh);
+  }
+
+  void _refresh() {
+    if (mounted) context.read<TournamentDetailCubit>().refresh();
+  }
+
+  @override
+  void dispose() {
+    _pushSub?.cancel();
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 class _DetailSkeleton extends StatelessWidget {
@@ -358,7 +408,7 @@ class _CategoryCard extends StatelessWidget {
           Gap.xs,
           Text(
             [
-              if (category.level != null) category.level!,
+              if (category.levels.isNotEmpty) category.levels.join(' / '),
               if (category.gender != null) context.enums.label(EnumGroup.categoryGenders, category.gender),
               if (category.format != null) context.enums.label(EnumGroup.tournamentFormats, category.format),
             ].join(' · '),
@@ -412,7 +462,7 @@ class _CategoryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () => context.push(AppRoutes.tournamentCategory(tournament.id, category.id)),
+                  onPressed: () => context.openRoute(AppRoutes.tournamentCategory(tournament.id, category.id)),
                   child: Text(l10n.categoryView, maxLines: 1, overflow: TextOverflow.ellipsis),
                 ),
               ),
@@ -450,9 +500,12 @@ class _RegistrationCta extends StatelessWidget {
     if (!tournament.registrationOpen || !category.isActive) return const SizedBox.shrink();
     return FilledButton(
       onPressed: () async {
+        final cubit = context.read<TournamentDetailCubit>();
         final result = await showRegistrationSheet(context, tournament: tournament, category: category);
+        // Refresh however the sheet was closed (button, swipe or tap outside),
+        // so the button turns into the registration status right away.
+        await cubit.refresh();
         if (result == null || !context.mounted) return;
-        context.read<TournamentDetailCubit>().refresh();
         if (result.payNow) await startRegistrationPayment(context, result.registration);
       },
       child: Text(category.isFull ? l10n.categoryJoinWaitlist : l10n.categoryRegister),
@@ -478,7 +531,7 @@ class _LiveTab extends StatelessWidget {
       separatorBuilder: (_, _) => Gap.md,
       itemBuilder: (context, i) => LiveMatchCard(
         match: matches[i],
-        onTap: () => context.push(AppRoutes.match(tournamentId, matches[i].id)),
+        onTap: () => context.openRoute(AppRoutes.match(tournamentId, matches[i].id)),
       ),
     );
   }
@@ -587,7 +640,7 @@ class _MatchList extends StatelessWidget {
         separatorBuilder: (_, _) => Gap.md,
         itemBuilder: (context, i) => LiveMatchCard(
           match: matches[i],
-          onTap: () => context.push(AppRoutes.match(tournamentId, matches[i].id)),
+          onTap: () => context.openRoute(AppRoutes.match(tournamentId, matches[i].id)),
         ),
       ),
     );

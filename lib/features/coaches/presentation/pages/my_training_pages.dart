@@ -63,8 +63,11 @@ class _BookingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return BlocProvider(
-      create: (_) => MyBookingsCubit(sl(), upcoming: upcoming)..load(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => MyBookingsCubit(sl(), upcoming: upcoming)..load()),
+        BlocProvider(create: (_) => sl<BookingActionCubit>()),
+      ],
       child: BlocBuilder<MyBookingsCubit, PagedState<Booking>>(
         builder: (context, state) {
           final cubit = context.read<MyBookingsCubit>();
@@ -87,6 +90,16 @@ class _BookingList extends StatelessWidget {
                 await context.push(AppRoutes.booking(b.id));
                 if (context.mounted) cubit.refresh();
               },
+              // Pending requests (and confirmed ones inside the window) can be cancelled right here.
+              trailing: b.canCancel
+                  ? TextButton(
+                      style: TextButton.styleFrom(foregroundColor: AppColors.danger),
+                      onPressed: () async {
+                        if (await cancelBookingFlow(context, b) && context.mounted) cubit.refresh();
+                      },
+                      child: Text(l10n.actionCancel),
+                    )
+                  : null,
             ),
           );
         },
@@ -225,14 +238,7 @@ class _BookingDetail extends StatelessWidget {
     );
   }
 
-  Future<void> _cancel(BuildContext context, Booking b) async {
-    final l10n = AppLocalizations.of(context);
-    final reason = await _promptText(context, title: l10n.bookingCancel, label: l10n.bookingCancelReason);
-    if (reason == null || !context.mounted) return;
-    if (await context.read<BookingActionCubit>().cancel(b.id, reason: reason) && context.mounted) {
-      showAppSnack(context, l10n.bookingCancelled);
-    }
-  }
+  Future<void> _cancel(BuildContext context, Booking b) => cancelBookingFlow(context, b);
 
   Future<void> _showReviewSheet(BuildContext context, Booking b) async {
     final l10n = AppLocalizations.of(context);
@@ -281,6 +287,22 @@ class _BookingDetail extends StatelessWidget {
     }
     comment.dispose();
   }
+}
+
+/// Asks for an optional reason and cancels the booking (needs a [BookingActionCubit] above).
+Future<bool> cancelBookingFlow(BuildContext context, Booking b) async {
+  final l10n = AppLocalizations.of(context);
+  final actions = context.read<BookingActionCubit>();
+  final reason = await _promptText(context, title: l10n.bookingCancel, label: l10n.bookingCancelReason);
+  if (reason == null || !context.mounted) return false;
+  final ok = await actions.cancel(b.id, reason: reason.isEmpty ? null : reason);
+  if (!context.mounted) return ok;
+  if (ok) {
+    showAppSnack(context, l10n.bookingCancelled);
+  } else if (actions.state is ActionFailure) {
+    showFailure(context, (actions.state as ActionFailure).failure);
+  }
+  return ok;
 }
 
 Future<String?> _promptText(BuildContext context, {required String title, required String label}) async {

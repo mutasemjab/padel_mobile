@@ -14,6 +14,7 @@ abstract class TournamentCategoryModel with _$TournamentCategoryModel {
     @JsonKey(name: 'tournament_id') int? tournamentId,
     required String name,
     String? level,
+    @Default(<String>[]) List<String> levels,
     String? gender,
     String? format,
     @JsonKey(name: 'max_teams') @Default(0) int maxTeams,
@@ -39,6 +40,8 @@ extension TournamentCategoryModelX on TournamentCategoryModel {
         tournamentId: tournamentId,
         name: name,
         level: level,
+        // Older servers only send `level`.
+        levels: levels.isNotEmpty ? levels : [?level],
         gender: gender,
         format: format,
         maxTeams: maxTeams,

@@ -46,6 +46,8 @@ abstract class RegistrationModel with _$RegistrationModel {
     @JsonKey(name: 'can_cancel') @Default(false) bool canCancel,
     @JsonKey(name: 'can_edit') @Default(false) bool canEdit,
     @JsonKey(name: 'review_note') String? reviewNote,
+    @JsonKey(name: 'needs_my_confirmation') @Default(false) bool needsMyConfirmation,
+    @JsonKey(name: 'partner_confirmed') @Default(true) bool partnerConfirmed,
   }) = _RegistrationModel;
 
   factory RegistrationModel.fromJson(Map<String, dynamic> json) =>
@@ -73,6 +75,8 @@ extension RegistrationModelX on RegistrationModel {
         canCancel: canCancel,
         canEdit: canEdit,
         reviewNote: reviewNote,
+        needsMyConfirmation: needsMyConfirmation,
+        partnerConfirmed: partnerConfirmed,
       );
 }
 

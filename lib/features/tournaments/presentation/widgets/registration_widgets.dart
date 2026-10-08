@@ -22,11 +22,15 @@ class RegistrationStatusChip extends StatelessWidget {
       RegistrationStatus.rejected => AppColors.danger,
       RegistrationStatus.changesRequested => AppColors.warning,
       RegistrationStatus.cancelled => context.tokens.textMuted,
+      RegistrationStatus.awaitingPartner => AppColors.info,
+      RegistrationStatus.partnerDeclined => AppColors.danger,
     };
     final icon = switch (status) {
       RegistrationStatus.approved => Icons.check_circle_rounded,
       RegistrationStatus.waitlisted => Icons.hourglass_top_rounded,
       RegistrationStatus.changesRequested => Icons.edit_note_rounded,
+      RegistrationStatus.awaitingPartner => Icons.person_search_rounded,
+      RegistrationStatus.partnerDeclined => Icons.person_off_rounded,
       _ => null,
     };
     return StatusChip(

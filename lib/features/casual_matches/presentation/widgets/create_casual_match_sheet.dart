@@ -69,6 +69,8 @@ class _CreateSheetState extends State<_CreateSheet> {
     final initial = _when ?? now.add(const Duration(hours: 2));
     final date = await showDatePicker(
       context: context,
+      // Calendar only: no pencil, dates cannot be typed.
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: initial,
       firstDate: now,
       lastDate: now.add(const Duration(days: 180)),

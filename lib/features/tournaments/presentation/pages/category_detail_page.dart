@@ -6,6 +6,7 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enum_labels.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -58,7 +59,7 @@ class CategoryDetailPage extends StatelessWidget {
                 state: state,
                 onRetry: () => context.read<CategoryDetailCubit>().load(),
                 builder: (context, detail) {
-                  void open(Match m) => context.push(AppRoutes.match(tournamentId, m.id));
+                  void open(Match m) => context.openRoute(AppRoutes.match(tournamentId, m.id));
                   return TabBarView(
                     children: [
                       _TeamsTab(teams: detail.teams),

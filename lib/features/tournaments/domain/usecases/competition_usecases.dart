@@ -74,6 +74,13 @@ class GetMyRegistrationsUseCase {
       repository.getMyRegistrations(status: status, page: page);
 }
 
+class RespondAsPartnerUseCase {
+  final TournamentsRepository repository;
+  RespondAsPartnerUseCase(this.repository);
+  ApiResult<Registration?> call(int registrationId, {required bool accept}) =>
+      repository.respondAsPartner(registrationId, accept: accept);
+}
+
 class CancelRegistrationUseCase {
   final TournamentsRepository repository;
   CancelRegistrationUseCase(this.repository);

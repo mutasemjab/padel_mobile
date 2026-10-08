@@ -100,5 +100,9 @@ class TournamentsRepositoryImpl implements TournamentsRepository {
       guard(() => remote.changePartner(registrationId, partnerPlayerId));
 
   @override
+  ApiResult<Registration?> respondAsPartner(int registrationId, {required bool accept}) =>
+      guard(() => remote.respondAsPartner(registrationId, accept: accept));
+
+  @override
   ApiResult<Payment> payRegistration(int registrationId) => guard(() => remote.payRegistration(registrationId));
 }

@@ -95,6 +95,7 @@ class RegistrationCubit extends Cubit<RegistrationFlowState> {
   final CancelRegistrationUseCase cancelRegistration;
   final ChangeRegistrationPartnerUseCase changePartner;
   final PayRegistrationUseCase pay;
+  final RespondAsPartnerUseCase? respondAsPartner;
 
   RegistrationCubit({
     required this.checkEligibility,
@@ -102,6 +103,7 @@ class RegistrationCubit extends Cubit<RegistrationFlowState> {
     required this.cancelRegistration,
     required this.changePartner,
     required this.pay,
+    this.respondAsPartner,
   }) : super(const RegistrationFlowState());
 
   Future<void> check(int tournamentId, int categoryId, {String? partnerPlayerId}) async {
@@ -120,6 +122,14 @@ class RegistrationCubit extends Cubit<RegistrationFlowState> {
   /// True when the backend accepted the cancellation.
   Future<bool> cancel(int registrationId) async {
     await _run<Registration?>(() => cancelRegistration(registrationId));
+    return state.action is ActionSuccess;
+  }
+
+  /// The invited partner confirms (or declines) playing together.
+  Future<bool> answerAsPartner(int registrationId, {required bool accept}) async {
+    final respond = respondAsPartner;
+    if (respond == null) return false;
+    await _run<Registration?>(() => respond(registrationId, accept: accept));
     return state.action is ActionSuccess;
   }
 

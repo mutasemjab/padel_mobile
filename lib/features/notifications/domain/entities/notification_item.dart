@@ -45,6 +45,13 @@ enum NotificationType {
   paymentRequired('payment_required'),
   registrationChangesRequested('registration_changes_requested'),
   duo3dReady('duo_3d_ready'),
+  tournamentCancelled('tournament_cancelled'),
+  tournamentUpdated('tournament_updated'),
+  matchStarted('match_started'),
+  matchRescheduled('match_rescheduled'),
+  registrationPartnerInvite('registration_partner_invite'),
+  registrationPartnerAccepted('registration_partner_accepted'),
+  registrationPartnerDeclined('registration_partner_declined'),
   unknown('unknown');
 
   final String apiValue;
@@ -70,6 +77,7 @@ enum NotificationScreen {
   notifications,
   casualMatch,
   announcement,
+  registrations,
   unknown;
 
   static NotificationScreen fromApi(String? raw) => switch (raw) {
@@ -84,6 +92,7 @@ enum NotificationScreen {
         'notifications' => notifications,
         'casual_match' => casualMatch,
         'announcement' => announcement,
+        'registrations' => registrations,
         _ => unknown,
       };
 }

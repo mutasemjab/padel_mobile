@@ -1878,6 +1878,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get registrationCancel => 'إلغاء التسجيل';
 
   @override
+  String registrationPartnerInvite(String name) {
+    return '$name يريدك شريكاً له في هذه البطولة. أكّد لإرسال التسجيل للمنظم.';
+  }
+
+  @override
+  String get registrationPartnerAccept => 'موافقة';
+
+  @override
+  String get registrationPartnerDecline => 'رفض';
+
+  @override
+  String get registrationPartnerDeclineConfirm =>
+      'رفض اللعب كشريك في هذه البطولة؟';
+
+  @override
+  String get registrationPartnerAcceptedSnack =>
+      'تم التأكيد — سيراجع المنظم التسجيل الآن';
+
+  @override
+  String get registrationPartnerDeclinedSnack => 'تم رفض الدعوة';
+
+  @override
+  String get registrationAwaitingPartnerHint =>
+      'بانتظار تأكيد شريكك قبل أن يراجع المنظم التسجيل.';
+
+  @override
+  String get registrationPartnerDeclinedHint =>
+      'رفض شريكك الدعوة. اختر شريكاً آخر أو ألغِ التسجيل.';
+
+  @override
   String get registrationCancelConfirm => 'سيتم تحرير مكانك.';
 
   @override
@@ -2602,4 +2632,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String premiumDaysLeft(int count) {
     return 'متبقٍ $count يوم';
   }
+
+  @override
+  String get findPartner => 'ابحث عن شريك';
+
+  @override
+  String get findPartnerHint =>
+      'ابحث بالاسم أو رمز اللاعب، افتح ملفه ثم اضغط «اطلب شراكة أساسية».';
 }

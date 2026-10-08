@@ -35,6 +35,7 @@ void registerTournamentsDependencies(GetIt sl) {
   sl.registerFactory(() => RegisterForCategoryUseCase(sl()));
   sl.registerFactory(() => GetMyRegistrationsUseCase(sl()));
   sl.registerFactory(() => CancelRegistrationUseCase(sl()));
+  sl.registerFactory(() => RespondAsPartnerUseCase(sl()));
   sl.registerFactory(() => ChangeRegistrationPartnerUseCase(sl()));
   sl.registerFactory(() => PayRegistrationUseCase(sl()));
 
@@ -49,6 +50,13 @@ void registerTournamentsDependencies(GetIt sl) {
   );
   sl.registerFactory(() => MyRegistrationsCubit(sl()));
   sl.registerFactory(
-    () => RegistrationCubit(checkEligibility: sl(), register: sl(), cancelRegistration: sl(), changePartner: sl(), pay: sl()),
+    () => RegistrationCubit(
+      checkEligibility: sl(),
+      register: sl(),
+      cancelRegistration: sl(),
+      changePartner: sl(),
+      pay: sl(),
+      respondAsPartner: sl(),
+    ),
   );
 }

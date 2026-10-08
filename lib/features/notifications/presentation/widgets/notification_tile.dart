@@ -44,6 +44,13 @@ import '../../domain/entities/notification_item.dart';
       NotificationType.paymentRequired => (Icons.request_quote_rounded, AppColors.premiumGold),
       NotificationType.registrationChangesRequested => (Icons.edit_note_rounded, AppColors.info),
       NotificationType.duo3dReady => (Icons.view_in_ar_rounded, AppColors.premiumGold),
+      NotificationType.tournamentCancelled => (Icons.event_busy_rounded, AppColors.danger),
+      NotificationType.tournamentUpdated => (Icons.edit_calendar_rounded, AppColors.info),
+      NotificationType.matchStarted => (Icons.sensors_rounded, AppColors.live),
+      NotificationType.matchRescheduled => (Icons.edit_calendar_rounded, AppColors.primary),
+      NotificationType.registrationPartnerInvite => (Icons.group_add_rounded, context.tokens.highlight),
+      NotificationType.registrationPartnerAccepted => (Icons.how_to_reg_rounded, AppColors.success),
+      NotificationType.registrationPartnerDeclined => (Icons.person_off_rounded, AppColors.danger),
       NotificationType.unknown => (Icons.notifications_rounded, context.tokens.textMuted),
     };
 

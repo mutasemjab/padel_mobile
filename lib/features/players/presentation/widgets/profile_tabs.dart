@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -40,7 +41,7 @@ import 'achievements_grid.dart';
 import 'result_row_tile.dart';
 import 'stats_views.dart';
 
-void _openResult(BuildContext context, ResultRow r) => context.push(AppRoutes.match(r.tournamentId, r.matchId));
+void _openResult(BuildContext context, ResultRow r) => context.openRoute(AppRoutes.match(r.tournamentId, r.matchId));
 
 /// Overview: contact (owner), 3D identity, achievements shelf, recent
 /// results, partner cards, stats and tournament timeline.
@@ -313,7 +314,7 @@ class _TimelineEntry extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.md),
               child: AppCard(
                 padding: AppSpacing.cardDense,
-                onTap: () => context.push(AppRoutes.tournament(entry.tournamentId)),
+                onTap: () => context.openRoute(AppRoutes.tournament(entry.tournamentId)),
                 child: Row(
                   children: [
                     Expanded(
@@ -461,6 +462,12 @@ class ProfilePartnersTab extends StatelessWidget {
                         const Icon(Icons.chevron_right_rounded),
                       ],
                     ),
+                  ),
+                  Gap.md,
+                  FilledButton.icon(
+                    onPressed: () => context.push(AppRoutes.playerSearch),
+                    icon: const Icon(Icons.person_search_rounded),
+                    label: Text(l10n.findPartner),
                   ),
                   Gap.lg,
                 ],

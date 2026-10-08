@@ -3344,6 +3344,54 @@ abstract class AppLocalizations {
   /// **'Cancel registration'**
   String get registrationCancel;
 
+  /// No description provided for @registrationPartnerInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants you as a partner in this tournament. Confirm to send it to the organizer.'**
+  String registrationPartnerInvite(String name);
+
+  /// No description provided for @registrationPartnerAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get registrationPartnerAccept;
+
+  /// No description provided for @registrationPartnerDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get registrationPartnerDecline;
+
+  /// No description provided for @registrationPartnerDeclineConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline playing in this tournament as a pair?'**
+  String get registrationPartnerDeclineConfirm;
+
+  /// No description provided for @registrationPartnerAcceptedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed — the organizer will now review the registration'**
+  String get registrationPartnerAcceptedSnack;
+
+  /// No description provided for @registrationPartnerDeclinedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation declined'**
+  String get registrationPartnerDeclinedSnack;
+
+  /// No description provided for @registrationAwaitingPartnerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your partner to confirm before the organizer reviews it.'**
+  String get registrationAwaitingPartnerHint;
+
+  /// No description provided for @registrationPartnerDeclinedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your partner declined. Choose another partner or cancel the registration.'**
+  String get registrationPartnerDeclinedHint;
+
   /// No description provided for @registrationCancelConfirm.
   ///
   /// In en, this message translates to:
@@ -4657,6 +4705,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} days left'**
   String premiumDaysLeft(int count);
+
+  /// No description provided for @findPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a partner'**
+  String get findPartner;
+
+  /// No description provided for @findPartnerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or player ID, open the player\'s profile, then tap \"Request as main partner\".'**
+  String get findPartnerHint;
 }
 
 class _AppLocalizationsDelegate

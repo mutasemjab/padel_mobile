@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/models/section_state.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -105,7 +106,7 @@ class HomeSectionView extends StatelessWidget {
       CasualOpportunitiesSection(:final matches) => Column(
           children: [
             for (final m in matches.take(3)) ...[
-              CasualMatchCard(match: m, onTap: () => context.push(AppRoutes.casualMatch(m.id))),
+              CasualMatchCard(match: m, onTap: () => context.openRoute(AppRoutes.casualMatch(m.id))),
               Gap.md,
             ],
           ],
@@ -292,7 +293,7 @@ class _MyTournaments extends StatelessWidget {
           return SizedBox(
             width: AppSizes.carouselCardWidth,
             child: AppCard(
-              onTap: () => context.push(AppRoutes.tournament(r.category.tournamentId)),
+              onTap: () => context.openRoute(AppRoutes.tournament(r.category.tournamentId)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -339,7 +340,7 @@ class _TournamentCarousel extends StatelessWidget {
             child: AppCard(
               gradient: AppGradients.court,
               borderColor: AppColors.transparent,
-              onTap: () => context.push(AppRoutes.tournament(item.tournamentId)),
+              onTap: () => context.openRoute(AppRoutes.tournament(item.tournamentId)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

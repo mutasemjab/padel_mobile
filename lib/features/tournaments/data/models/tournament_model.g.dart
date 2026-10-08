@@ -13,6 +13,9 @@ _TournamentCategoryModel _$TournamentCategoryModelFromJson(
   tournamentId: (json['tournament_id'] as num?)?.toInt(),
   name: json['name'] as String,
   level: json['level'] as String?,
+  levels:
+      (json['levels'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
   gender: json['gender'] as String?,
   format: json['format'] as String?,
   maxTeams: (json['max_teams'] as num?)?.toInt() ?? 0,
@@ -39,6 +42,7 @@ Map<String, dynamic> _$TournamentCategoryModelToJson(
   'tournament_id': instance.tournamentId,
   'name': instance.name,
   'level': instance.level,
+  'levels': instance.levels,
   'gender': instance.gender,
   'format': instance.format,
   'max_teams': instance.maxTeams,

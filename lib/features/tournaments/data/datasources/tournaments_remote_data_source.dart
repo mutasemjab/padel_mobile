@@ -67,6 +67,7 @@ abstract class TournamentsRemoteDataSource {
   Future<Paginated<Registration>> getMyRegistrations({String? status, int page = 1});
   Future<Registration?> cancelRegistration(int registrationId);
   Future<Registration?> changePartner(int registrationId, String partnerPlayerId);
+  Future<Registration?> respondAsPartner(int registrationId, {required bool accept});
   Future<Payment> payRegistration(int registrationId);
 }
 
@@ -191,6 +192,15 @@ class TournamentsRemoteDataSourceImpl implements TournamentsRemoteDataSource {
     final response = await dio.put(
       ApiEndpoints.registrationPartner(registrationId),
       data: {'partner_player_id': partnerPlayerId},
+    );
+    return _optionalRegistration(response);
+  }
+
+  @override
+  Future<Registration?> respondAsPartner(int registrationId, {required bool accept}) async {
+    final response = await dio.post(
+      ApiEndpoints.registrationPartnerResponse(registrationId),
+      data: {'accept': accept},
     );
     return _optionalRegistration(response);
   }

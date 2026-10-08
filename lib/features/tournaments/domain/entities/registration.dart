@@ -8,10 +8,21 @@ enum RegistrationStatus {
   rejected,
   changesRequested,
   waitlisted,
-  cancelled;
+  cancelled,
+
+  /// The named partner has not confirmed yet (the organizer can't review it before).
+  awaitingPartner,
+
+  /// The named partner declined; the player picks another one or cancels.
+  partnerDeclined;
 
   /// Value used by the API and `meta/enums.registration_statuses`.
-  String get apiValue => this == RegistrationStatus.changesRequested ? 'changes_requested' : name;
+  String get apiValue => switch (this) {
+        RegistrationStatus.changesRequested => 'changes_requested',
+        RegistrationStatus.awaitingPartner => 'awaiting_partner',
+        RegistrationStatus.partnerDeclined => 'partner_declined',
+        _ => name,
+      };
 
   static RegistrationStatus fromApi(String? raw) => RegistrationStatus.values.firstWhere(
         (s) => s.apiValue == raw,
@@ -80,6 +91,12 @@ class Registration extends Equatable {
   /// The pair may still change the partner / notes (pending, waitlisted, changes requested).
   final bool canEdit;
 
+  /// The viewer is the invited partner and must accept or decline.
+  final bool needsMyConfirmation;
+
+  /// The partner accepted (or the organizer entered the pair).
+  final bool partnerConfirmed;
+
   const Registration({
     required this.id,
     required this.status,
@@ -93,6 +110,8 @@ class Registration extends Equatable {
     this.reviewNote,
     this.canEdit = false,
     this.canCancel = false,
+    this.needsMyConfirmation = false,
+    this.partnerConfirmed = true,
   });
 
   bool get needsPayment => paymentStatus == PaymentStatus.pending;
@@ -109,5 +128,9 @@ class Registration extends Equatable {
         partner,
         category,
         canCancel,
+        canEdit,
+        reviewNote,
+        needsMyConfirmation,
+        partnerConfirmed,
       ];
 }

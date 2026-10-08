@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TournamentCategoryModel {
 
- int get id;@JsonKey(name: 'tournament_id') int? get tournamentId; String get name; String? get level; String? get gender; String? get format;@JsonKey(name: 'max_teams') int get maxTeams;@JsonKey(name: 'active_teams') int get activeTeams;@JsonKey(name: 'registration_fee') num get registrationFee; String? get currency;@JsonKey(name: 'requires_payment') bool get requiresPayment;@JsonKey(name: 'ranking_weight') num? get rankingWeight;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'is_full') bool get isFull;@JsonKey(name: 'waitlist_count') int get waitlistCount;@JsonKey(name: 'completed_at') DateTime? get completedAt; MatchTeamModel? get champion;
+ int get id;@JsonKey(name: 'tournament_id') int? get tournamentId; String get name; String? get level; List<String> get levels; String? get gender; String? get format;@JsonKey(name: 'max_teams') int get maxTeams;@JsonKey(name: 'active_teams') int get activeTeams;@JsonKey(name: 'registration_fee') num get registrationFee; String? get currency;@JsonKey(name: 'requires_payment') bool get requiresPayment;@JsonKey(name: 'ranking_weight') num? get rankingWeight;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'is_full') bool get isFull;@JsonKey(name: 'waitlist_count') int get waitlistCount;@JsonKey(name: 'completed_at') DateTime? get completedAt; MatchTeamModel? get champion;
 /// Create a copy of TournamentCategoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TournamentCategoryModelCopyWith<TournamentCategoryModel> get copyWith => _$Tour
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TournamentCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.format, format) || other.format == format)&&(identical(other.maxTeams, maxTeams) || other.maxTeams == maxTeams)&&(identical(other.activeTeams, activeTeams) || other.activeTeams == activeTeams)&&(identical(other.registrationFee, registrationFee) || other.registrationFee == registrationFee)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.requiresPayment, requiresPayment) || other.requiresPayment == requiresPayment)&&(identical(other.rankingWeight, rankingWeight) || other.rankingWeight == rankingWeight)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isFull, isFull) || other.isFull == isFull)&&(identical(other.waitlistCount, waitlistCount) || other.waitlistCount == waitlistCount)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.champion, champion) || other.champion == champion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TournamentCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level)&&const DeepCollectionEquality().equals(other.levels, levels)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.format, format) || other.format == format)&&(identical(other.maxTeams, maxTeams) || other.maxTeams == maxTeams)&&(identical(other.activeTeams, activeTeams) || other.activeTeams == activeTeams)&&(identical(other.registrationFee, registrationFee) || other.registrationFee == registrationFee)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.requiresPayment, requiresPayment) || other.requiresPayment == requiresPayment)&&(identical(other.rankingWeight, rankingWeight) || other.rankingWeight == rankingWeight)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isFull, isFull) || other.isFull == isFull)&&(identical(other.waitlistCount, waitlistCount) || other.waitlistCount == waitlistCount)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.champion, champion) || other.champion == champion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,tournamentId,name,level,gender,format,maxTeams,activeTeams,registrationFee,currency,requiresPayment,rankingWeight,isActive,isFull,waitlistCount,completedAt,champion);
+int get hashCode => Object.hash(runtimeType,id,tournamentId,name,level,const DeepCollectionEquality().hash(levels),gender,format,maxTeams,activeTeams,registrationFee,currency,requiresPayment,rankingWeight,isActive,isFull,waitlistCount,completedAt,champion);
 
 @override
 String toString() {
-  return 'TournamentCategoryModel(id: $id, tournamentId: $tournamentId, name: $name, level: $level, gender: $gender, format: $format, maxTeams: $maxTeams, activeTeams: $activeTeams, registrationFee: $registrationFee, currency: $currency, requiresPayment: $requiresPayment, rankingWeight: $rankingWeight, isActive: $isActive, isFull: $isFull, waitlistCount: $waitlistCount, completedAt: $completedAt, champion: $champion)';
+  return 'TournamentCategoryModel(id: $id, tournamentId: $tournamentId, name: $name, level: $level, levels: $levels, gender: $gender, format: $format, maxTeams: $maxTeams, activeTeams: $activeTeams, registrationFee: $registrationFee, currency: $currency, requiresPayment: $requiresPayment, rankingWeight: $rankingWeight, isActive: $isActive, isFull: $isFull, waitlistCount: $waitlistCount, completedAt: $completedAt, champion: $champion)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TournamentCategoryModelCopyWith<$Res>  {
   factory $TournamentCategoryModelCopyWith(TournamentCategoryModel value, $Res Function(TournamentCategoryModel) _then) = _$TournamentCategoryModelCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'tournament_id') int? tournamentId, String name, String? level, String? gender, String? format,@JsonKey(name: 'max_teams') int maxTeams,@JsonKey(name: 'active_teams') int activeTeams,@JsonKey(name: 'registration_fee') num registrationFee, String? currency,@JsonKey(name: 'requires_payment') bool requiresPayment,@JsonKey(name: 'ranking_weight') num? rankingWeight,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_full') bool isFull,@JsonKey(name: 'waitlist_count') int waitlistCount,@JsonKey(name: 'completed_at') DateTime? completedAt, MatchTeamModel? champion
+ int id,@JsonKey(name: 'tournament_id') int? tournamentId, String name, String? level, List<String> levels, String? gender, String? format,@JsonKey(name: 'max_teams') int maxTeams,@JsonKey(name: 'active_teams') int activeTeams,@JsonKey(name: 'registration_fee') num registrationFee, String? currency,@JsonKey(name: 'requires_payment') bool requiresPayment,@JsonKey(name: 'ranking_weight') num? rankingWeight,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_full') bool isFull,@JsonKey(name: 'waitlist_count') int waitlistCount,@JsonKey(name: 'completed_at') DateTime? completedAt, MatchTeamModel? champion
 });
 
 
@@ -65,13 +65,14 @@ class _$TournamentCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of TournamentCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tournamentId = freezed,Object? name = null,Object? level = freezed,Object? gender = freezed,Object? format = freezed,Object? maxTeams = null,Object? activeTeams = null,Object? registrationFee = null,Object? currency = freezed,Object? requiresPayment = null,Object? rankingWeight = freezed,Object? isActive = null,Object? isFull = null,Object? waitlistCount = null,Object? completedAt = freezed,Object? champion = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tournamentId = freezed,Object? name = null,Object? level = freezed,Object? levels = null,Object? gender = freezed,Object? format = freezed,Object? maxTeams = null,Object? activeTeams = null,Object? registrationFee = null,Object? currency = freezed,Object? requiresPayment = null,Object? rankingWeight = freezed,Object? isActive = null,Object? isFull = null,Object? waitlistCount = null,Object? completedAt = freezed,Object? champion = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,tournamentId: freezed == tournamentId ? _self.tournamentId : tournamentId // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,level: freezed == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,levels: null == levels ? _self.levels : levels // ignore: cast_nullable_to_non_nullable
+as List<String>,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as String?,format: freezed == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
 as String?,maxTeams: null == maxTeams ? _self.maxTeams : maxTeams // ignore: cast_nullable_to_non_nullable
 as int,activeTeams: null == activeTeams ? _self.activeTeams : activeTeams // ignore: cast_nullable_to_non_nullable
@@ -181,10 +182,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  List<String> levels,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TournamentCategoryModel() when $default != null:
-return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
+return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.levels,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
   return orElse();
 
 }
@@ -202,10 +203,10 @@ return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  List<String> levels,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)  $default,) {final _that = this;
 switch (_that) {
 case _TournamentCategoryModel():
-return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
+return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.levels,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -222,10 +223,10 @@ return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'tournament_id')  int? tournamentId,  String name,  String? level,  List<String> levels,  String? gender,  String? format, @JsonKey(name: 'max_teams')  int maxTeams, @JsonKey(name: 'active_teams')  int activeTeams, @JsonKey(name: 'registration_fee')  num registrationFee,  String? currency, @JsonKey(name: 'requires_payment')  bool requiresPayment, @JsonKey(name: 'ranking_weight')  num? rankingWeight, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_full')  bool isFull, @JsonKey(name: 'waitlist_count')  int waitlistCount, @JsonKey(name: 'completed_at')  DateTime? completedAt,  MatchTeamModel? champion)?  $default,) {final _that = this;
 switch (_that) {
 case _TournamentCategoryModel() when $default != null:
-return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
+return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.levels,_that.gender,_that.format,_that.maxTeams,_that.activeTeams,_that.registrationFee,_that.currency,_that.requiresPayment,_that.rankingWeight,_that.isActive,_that.isFull,_that.waitlistCount,_that.completedAt,_that.champion);case _:
   return null;
 
 }
@@ -237,13 +238,20 @@ return $default(_that.id,_that.tournamentId,_that.name,_that.level,_that.gender,
 @JsonSerializable()
 
 class _TournamentCategoryModel implements TournamentCategoryModel {
-  const _TournamentCategoryModel({required this.id, @JsonKey(name: 'tournament_id') this.tournamentId, required this.name, this.level, this.gender, this.format, @JsonKey(name: 'max_teams') this.maxTeams = 0, @JsonKey(name: 'active_teams') this.activeTeams = 0, @JsonKey(name: 'registration_fee') this.registrationFee = 0, this.currency, @JsonKey(name: 'requires_payment') this.requiresPayment = false, @JsonKey(name: 'ranking_weight') this.rankingWeight, @JsonKey(name: 'is_active') this.isActive = true, @JsonKey(name: 'is_full') this.isFull = false, @JsonKey(name: 'waitlist_count') this.waitlistCount = 0, @JsonKey(name: 'completed_at') this.completedAt, this.champion});
+  const _TournamentCategoryModel({required this.id, @JsonKey(name: 'tournament_id') this.tournamentId, required this.name, this.level, final  List<String> levels = const <String>[], this.gender, this.format, @JsonKey(name: 'max_teams') this.maxTeams = 0, @JsonKey(name: 'active_teams') this.activeTeams = 0, @JsonKey(name: 'registration_fee') this.registrationFee = 0, this.currency, @JsonKey(name: 'requires_payment') this.requiresPayment = false, @JsonKey(name: 'ranking_weight') this.rankingWeight, @JsonKey(name: 'is_active') this.isActive = true, @JsonKey(name: 'is_full') this.isFull = false, @JsonKey(name: 'waitlist_count') this.waitlistCount = 0, @JsonKey(name: 'completed_at') this.completedAt, this.champion}): _levels = levels;
   factory _TournamentCategoryModel.fromJson(Map<String, dynamic> json) => _$TournamentCategoryModelFromJson(json);
 
 @override final  int id;
 @override@JsonKey(name: 'tournament_id') final  int? tournamentId;
 @override final  String name;
 @override final  String? level;
+ final  List<String> _levels;
+@override@JsonKey() List<String> get levels {
+  if (_levels is EqualUnmodifiableListView) return _levels;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_levels);
+}
+
 @override final  String? gender;
 @override final  String? format;
 @override@JsonKey(name: 'max_teams') final  int maxTeams;
@@ -271,16 +279,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TournamentCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.format, format) || other.format == format)&&(identical(other.maxTeams, maxTeams) || other.maxTeams == maxTeams)&&(identical(other.activeTeams, activeTeams) || other.activeTeams == activeTeams)&&(identical(other.registrationFee, registrationFee) || other.registrationFee == registrationFee)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.requiresPayment, requiresPayment) || other.requiresPayment == requiresPayment)&&(identical(other.rankingWeight, rankingWeight) || other.rankingWeight == rankingWeight)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isFull, isFull) || other.isFull == isFull)&&(identical(other.waitlistCount, waitlistCount) || other.waitlistCount == waitlistCount)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.champion, champion) || other.champion == champion));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TournamentCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level)&&const DeepCollectionEquality().equals(other._levels, _levels)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.format, format) || other.format == format)&&(identical(other.maxTeams, maxTeams) || other.maxTeams == maxTeams)&&(identical(other.activeTeams, activeTeams) || other.activeTeams == activeTeams)&&(identical(other.registrationFee, registrationFee) || other.registrationFee == registrationFee)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.requiresPayment, requiresPayment) || other.requiresPayment == requiresPayment)&&(identical(other.rankingWeight, rankingWeight) || other.rankingWeight == rankingWeight)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isFull, isFull) || other.isFull == isFull)&&(identical(other.waitlistCount, waitlistCount) || other.waitlistCount == waitlistCount)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.champion, champion) || other.champion == champion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,tournamentId,name,level,gender,format,maxTeams,activeTeams,registrationFee,currency,requiresPayment,rankingWeight,isActive,isFull,waitlistCount,completedAt,champion);
+int get hashCode => Object.hash(runtimeType,id,tournamentId,name,level,const DeepCollectionEquality().hash(_levels),gender,format,maxTeams,activeTeams,registrationFee,currency,requiresPayment,rankingWeight,isActive,isFull,waitlistCount,completedAt,champion);
 
 @override
 String toString() {
-  return 'TournamentCategoryModel(id: $id, tournamentId: $tournamentId, name: $name, level: $level, gender: $gender, format: $format, maxTeams: $maxTeams, activeTeams: $activeTeams, registrationFee: $registrationFee, currency: $currency, requiresPayment: $requiresPayment, rankingWeight: $rankingWeight, isActive: $isActive, isFull: $isFull, waitlistCount: $waitlistCount, completedAt: $completedAt, champion: $champion)';
+  return 'TournamentCategoryModel(id: $id, tournamentId: $tournamentId, name: $name, level: $level, levels: $levels, gender: $gender, format: $format, maxTeams: $maxTeams, activeTeams: $activeTeams, registrationFee: $registrationFee, currency: $currency, requiresPayment: $requiresPayment, rankingWeight: $rankingWeight, isActive: $isActive, isFull: $isFull, waitlistCount: $waitlistCount, completedAt: $completedAt, champion: $champion)';
 }
 
 
@@ -291,7 +299,7 @@ abstract mixin class _$TournamentCategoryModelCopyWith<$Res> implements $Tournam
   factory _$TournamentCategoryModelCopyWith(_TournamentCategoryModel value, $Res Function(_TournamentCategoryModel) _then) = __$TournamentCategoryModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'tournament_id') int? tournamentId, String name, String? level, String? gender, String? format,@JsonKey(name: 'max_teams') int maxTeams,@JsonKey(name: 'active_teams') int activeTeams,@JsonKey(name: 'registration_fee') num registrationFee, String? currency,@JsonKey(name: 'requires_payment') bool requiresPayment,@JsonKey(name: 'ranking_weight') num? rankingWeight,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_full') bool isFull,@JsonKey(name: 'waitlist_count') int waitlistCount,@JsonKey(name: 'completed_at') DateTime? completedAt, MatchTeamModel? champion
+ int id,@JsonKey(name: 'tournament_id') int? tournamentId, String name, String? level, List<String> levels, String? gender, String? format,@JsonKey(name: 'max_teams') int maxTeams,@JsonKey(name: 'active_teams') int activeTeams,@JsonKey(name: 'registration_fee') num registrationFee, String? currency,@JsonKey(name: 'requires_payment') bool requiresPayment,@JsonKey(name: 'ranking_weight') num? rankingWeight,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_full') bool isFull,@JsonKey(name: 'waitlist_count') int waitlistCount,@JsonKey(name: 'completed_at') DateTime? completedAt, MatchTeamModel? champion
 });
 
 
@@ -308,13 +316,14 @@ class __$TournamentCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of TournamentCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tournamentId = freezed,Object? name = null,Object? level = freezed,Object? gender = freezed,Object? format = freezed,Object? maxTeams = null,Object? activeTeams = null,Object? registrationFee = null,Object? currency = freezed,Object? requiresPayment = null,Object? rankingWeight = freezed,Object? isActive = null,Object? isFull = null,Object? waitlistCount = null,Object? completedAt = freezed,Object? champion = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tournamentId = freezed,Object? name = null,Object? level = freezed,Object? levels = null,Object? gender = freezed,Object? format = freezed,Object? maxTeams = null,Object? activeTeams = null,Object? registrationFee = null,Object? currency = freezed,Object? requiresPayment = null,Object? rankingWeight = freezed,Object? isActive = null,Object? isFull = null,Object? waitlistCount = null,Object? completedAt = freezed,Object? champion = freezed,}) {
   return _then(_TournamentCategoryModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,tournamentId: freezed == tournamentId ? _self.tournamentId : tournamentId // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,level: freezed == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,levels: null == levels ? _self._levels : levels // ignore: cast_nullable_to_non_nullable
+as List<String>,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as String?,format: freezed == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
 as String?,maxTeams: null == maxTeams ? _self.maxTeams : maxTeams // ignore: cast_nullable_to_non_nullable
 as int,activeTeams: null == activeTeams ? _self.activeTeams : activeTeams // ignore: cast_nullable_to_non_nullable

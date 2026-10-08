@@ -70,6 +70,8 @@ _RegistrationModel _$RegistrationModelFromJson(Map<String, dynamic> json) =>
       canCancel: json['can_cancel'] as bool? ?? false,
       canEdit: json['can_edit'] as bool? ?? false,
       reviewNote: json['review_note'] as String?,
+      needsMyConfirmation: json['needs_my_confirmation'] as bool? ?? false,
+      partnerConfirmed: json['partner_confirmed'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$RegistrationModelToJson(_RegistrationModel instance) =>
@@ -86,4 +88,6 @@ Map<String, dynamic> _$RegistrationModelToJson(_RegistrationModel instance) =>
       'can_cancel': instance.canCancel,
       'can_edit': instance.canEdit,
       'review_note': instance.reviewNote,
+      'needs_my_confirmation': instance.needsMyConfirmation,
+      'partner_confirmed': instance.partnerConfirmed,
     };

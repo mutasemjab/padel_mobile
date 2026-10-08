@@ -1106,6 +1106,19 @@
   "myRegistrationsTitle": "My registrations",
   "myRegistrationsEmpty": "You haven't registered for a tournament yet",
   "registrationCancel": "Cancel registration",
+  "registrationPartnerInvite": "{name} wants you as a partner in this tournament. Confirm to send it to the organizer.",
+  "@registrationPartnerInvite": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "registrationPartnerAccept": "Accept",
+  "registrationPartnerDecline": "Decline",
+  "registrationPartnerDeclineConfirm": "Decline playing in this tournament as a pair?",
+  "registrationPartnerAcceptedSnack": "Confirmed — the organizer will now review the registration",
+  "registrationPartnerDeclinedSnack": "Invitation declined",
+  "registrationAwaitingPartnerHint": "Waiting for your partner to confirm before the organizer reviews it.",
+  "registrationPartnerDeclinedHint": "Your partner declined. Choose another partner or cancel the registration.",
   "registrationCancelConfirm": "Your spot will be released.",
   "registrationCancelled": "Registration cancelled",
   "registrationPay": "Pay now",
@@ -1399,5 +1412,7 @@
   "premiumPlanMonthly": "Monthly",
   "premiumPlanYearly": "Yearly",
   "premiumDaysLeft": "{count} days left",
-  "@premiumDaysLeft": {"placeholders":{"count":{"type":"int"}}}
+  "@premiumDaysLeft": {"placeholders":{"count":{"type":"int"}}},
+  "findPartner": "Find a partner",
+  "findPartnerHint": "Search by name or player ID, open the player's profile, then tap \"Request as main partner\"."
 }

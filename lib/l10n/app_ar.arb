@@ -541,6 +541,14 @@
   "myRegistrationsTitle": "تسجيلاتي",
   "myRegistrationsEmpty": "لم تسجل في أي بطولة بعد",
   "registrationCancel": "إلغاء التسجيل",
+  "registrationPartnerInvite": "{name} يريدك شريكاً له في هذه البطولة. أكّد لإرسال التسجيل للمنظم.",
+  "registrationPartnerAccept": "موافقة",
+  "registrationPartnerDecline": "رفض",
+  "registrationPartnerDeclineConfirm": "رفض اللعب كشريك في هذه البطولة؟",
+  "registrationPartnerAcceptedSnack": "تم التأكيد — سيراجع المنظم التسجيل الآن",
+  "registrationPartnerDeclinedSnack": "تم رفض الدعوة",
+  "registrationAwaitingPartnerHint": "بانتظار تأكيد شريكك قبل أن يراجع المنظم التسجيل.",
+  "registrationPartnerDeclinedHint": "رفض شريكك الدعوة. اختر شريكاً آخر أو ألغِ التسجيل.",
   "registrationCancelConfirm": "سيتم تحرير مكانك.",
   "registrationCancelled": "تم إلغاء التسجيل",
   "registrationPay": "ادفع الآن",
@@ -759,5 +767,7 @@
   "openInGoogleMaps": "افتح في خرائط جوجل",
   "premiumPlanMonthly": "شهري",
   "premiumPlanYearly": "سنوي",
-  "premiumDaysLeft": "متبقٍ {count} يوم"
+  "premiumDaysLeft": "متبقٍ {count} يوم",
+  "findPartner": "ابحث عن شريك",
+  "findPartnerHint": "ابحث بالاسم أو رمز اللاعب، افتح ملفه ثم اضغط «اطلب شراكة أساسية»."
 }

@@ -74,6 +74,7 @@ class ApiEndpoints {
   static const String myRegistrations = 'me/registrations';
   static String registrationCancel(int id) => 'registrations/$id/cancel';
   static String registrationPartner(int id) => 'registrations/$id/partner';
+  static String registrationPartnerResponse(int id) => 'registrations/$id/partner-response';
   static String registrationPay(int id) => 'registrations/$id/pay';
   static const String liveMatches = 'matches/live';
   static String match(int id) => 'matches/$id';

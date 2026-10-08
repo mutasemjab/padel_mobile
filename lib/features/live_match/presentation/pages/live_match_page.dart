@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enum_labels.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/realtime/realtime_client.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -153,7 +153,7 @@ class _ContextStrip extends StatelessWidget {
       if (match.court != null) match.court!,
     ].where((p) => p.isNotEmpty).toList();
     return InkWell(
-      onTap: match.tournamentId == null ? null : () => context.push(AppRoutes.tournament(match.tournamentId!)),
+      onTap: match.tournamentId == null ? null : () => context.openRoute(AppRoutes.tournament(match.tournamentId!)),
       child: Text(parts.join(' · ').toUpperCase(), style: AppTypography.eyebrow(context), textAlign: TextAlign.center),
     );
   }

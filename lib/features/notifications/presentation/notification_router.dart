@@ -1,4 +1,5 @@
 import '../../../core/routing/app_routes.dart';
+import '../../../core/routing/open_route.dart' as routing;
 import '../domain/entities/notification_item.dart';
 
 /// Maps a notification (list item or push payload) to the screen it's about,
@@ -51,10 +52,15 @@ class NotificationRouter {
       case NotificationScreen.announcement:
         // The full text lives in the notification list (tap to read it all).
         return AppRoutes.notifications;
+      case NotificationScreen.registrations:
+        return AppRoutes.myRegistrations;
       case NotificationScreen.unknown:
         return null;
     }
   }
+
+  /// See [isInsideTabs] in core/routing/open_route.dart.
+  static bool isInsideTabs(String route) => routing.isInsideTabs(route);
 
   /// Builds a [NotificationItem] from an FCM `data` map (all strings).
   static NotificationItem fromPush(Map<String, dynamic> data) => NotificationItem(

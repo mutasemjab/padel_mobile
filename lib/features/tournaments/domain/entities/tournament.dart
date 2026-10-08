@@ -76,6 +76,9 @@ class TournamentCategory extends Equatable {
   final int? tournamentId;
   final String name;
   final String? level;
+
+  /// Levels allowed in this category (empty = every level).
+  final List<String> levels;
   final String? gender;
   final String? format;
   final int maxTeams;
@@ -95,6 +98,7 @@ class TournamentCategory extends Equatable {
     this.tournamentId,
     required this.name,
     this.level,
+    this.levels = const [],
     this.gender,
     this.format,
     required this.maxTeams,
@@ -118,6 +122,7 @@ class TournamentCategory extends Equatable {
         tournamentId,
         name,
         level,
+        levels,
         gender,
         format,
         maxTeams,

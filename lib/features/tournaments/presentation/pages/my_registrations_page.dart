@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/routing/open_route.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -86,6 +87,29 @@ class _RegistrationCard extends StatelessWidget {
     }
   }
 
+  Future<void> _answer(BuildContext context, {required bool accept}) async {
+    final l10n = AppLocalizations.of(context);
+    if (!accept) {
+      final ok = await confirmAction(
+        context,
+        title: l10n.registrationPartnerDecline,
+        message: l10n.registrationPartnerDeclineConfirm,
+        confirmLabel: l10n.registrationPartnerDecline,
+        cancelLabel: l10n.actionBack,
+        destructive: true,
+      );
+      if (!ok || !context.mounted) return;
+    }
+    final flow = context.read<RegistrationCubit>();
+    if (await flow.answerAsPartner(registration.id, accept: accept)) {
+      if (!context.mounted) return;
+      showAppSnack(context, accept ? l10n.registrationPartnerAcceptedSnack : l10n.registrationPartnerDeclinedSnack);
+      context.read<MyRegistrationsCubit>().refresh();
+    } else if (context.mounted && flow.state.action is ActionFailure) {
+      showFailure(context, (flow.state.action as ActionFailure).failure);
+    }
+  }
+
   Future<void> _changePartner(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
     final picked = await showPlayerPicker(context, excludePlayerId: registration.player?.playerId);
@@ -105,7 +129,7 @@ class _RegistrationCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final r = registration;
     return AppCard(
-      onTap: () => context.push(AppRoutes.tournament(r.category.tournamentId)),
+      onTap: () => context.openRoute(AppRoutes.tournament(r.category.tournamentId)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,7 +154,7 @@ class _RegistrationCard extends StatelessWidget {
               RegistrationStatusChip(status: r.status),
             ],
           ),
-          if (r.partner != null) ...[
+          if (r.partner != null && !r.needsMyConfirmation) ...[
             Gap.md,
             Row(
               children: [
@@ -163,6 +187,47 @@ class _RegistrationCard extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+          if (r.needsMyConfirmation) ...[
+            Gap.md,
+            Container(
+              width: double.infinity,
+              padding: AppSpacing.cardDense,
+              decoration: BoxDecoration(
+                color: AppColors.info.withValues(alpha: 0.12),
+                borderRadius: AppRadius.mdAll,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(l10n.registrationPartnerInvite(r.player?.name ?? ''), style: context.text.bodyMedium),
+                  Gap.sm,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: () => _answer(context, accept: true),
+                          child: Text(l10n.registrationPartnerAccept),
+                        ),
+                      ),
+                      Gap.sm,
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => _answer(context, accept: false),
+                          child: Text(l10n.registrationPartnerDecline),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ] else if (r.status == RegistrationStatus.awaitingPartner) ...[
+            Gap.sm,
+            Text(l10n.registrationAwaitingPartnerHint, style: context.text.bodySmall),
+          ] else if (r.status == RegistrationStatus.partnerDeclined) ...[
+            Gap.sm,
+            Text(l10n.registrationPartnerDeclinedHint, style: context.text.bodySmall?.copyWith(color: AppColors.danger)),
           ],
           if (r.promotedAt != null) ...[
             Gap.xs,

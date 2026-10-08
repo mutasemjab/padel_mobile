@@ -61,6 +61,8 @@ class _EditSheetState extends State<_EditSheet> {
     final now = DateTime.now();
     final date = await showDatePicker(
       context: context,
+      // Calendar only: no pencil, dates cannot be typed.
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: _when.isAfter(now) ? _when : now,
       firstDate: now,
       lastDate: now.add(const Duration(days: 180)),

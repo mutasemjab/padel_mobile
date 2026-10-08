@@ -89,6 +89,10 @@ class _EditProfileViewState extends State<_EditProfileView> {
     final now = DateTime.now();
     final picked = await showDatePicker(
       context: context,
+      // Calendar only: no pencil, dates cannot be typed.
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      // Birth dates are years back: open on the year list, then month and day.
+      initialDatePickerMode: DatePickerMode.year,
       initialDate: _dob ?? DateTime(now.year - 25),
       firstDate: DateTime(1920),
       lastDate: now,
