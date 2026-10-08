@@ -3344,6 +3344,48 @@ abstract class AppLocalizations {
   /// **'Cancel registration'**
   String get registrationCancel;
 
+  /// No description provided for @scoreDeuce.
+  ///
+  /// In en, this message translates to:
+  /// **'Deuce'**
+  String get scoreDeuce;
+
+  /// No description provided for @scoreAdvantage.
+  ///
+  /// In en, this message translates to:
+  /// **'Advantage'**
+  String get scoreAdvantage;
+
+  /// No description provided for @scoreGoldenPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Golden point'**
+  String get scoreGoldenPoint;
+
+  /// No description provided for @registerTeamName.
+  ///
+  /// In en, this message translates to:
+  /// **'Team name'**
+  String get registerTeamName;
+
+  /// No description provided for @registerTeamNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Required — e.g. Smash Brothers'**
+  String get registerTeamNameHint;
+
+  /// No description provided for @registrationRenameTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename team'**
+  String get registrationRenameTeam;
+
+  /// No description provided for @registrationTeamRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Team name updated'**
+  String get registrationTeamRenamed;
+
   /// No description provided for @registrationPartnerInvite.
   ///
   /// In en, this message translates to:
@@ -4213,6 +4255,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Undo last point'**
   String get scorekeeperUndo;
+
+  /// No description provided for @scorekeeperEndMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'End match'**
+  String get scorekeeperEndMatch;
+
+  /// No description provided for @scorekeeperEndMatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the match — who won?'**
+  String get scorekeeperEndMatchTitle;
+
+  /// No description provided for @scorekeeperEndMatchHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The match ends now with the current score (time limit, court needed...). You can reopen it with undo.'**
+  String get scorekeeperEndMatchHelp;
+
+  /// No description provided for @scorekeeperEndReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get scorekeeperEndReason;
+
+  /// No description provided for @scorekeeperMatchEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Match ended'**
+  String get scorekeeperMatchEnded;
+
+  /// No description provided for @scorekeeperReopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen match'**
+  String get scorekeeperReopen;
 
   /// No description provided for @scorekeeperAddDetail.
   ///

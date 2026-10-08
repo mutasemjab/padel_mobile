@@ -104,6 +104,8 @@ class LivePayload extends Equatable {
   final PointDisplay? currentGameDisplay;
   final int? winnerTeamId;
   final PointEvent? lastPoint;
+  final bool deuceEnabled;
+  final bool endedEarly;
   final DateTime? serverTime;
 
   /// Polling only: false when nothing changed since `since_version`.
@@ -127,6 +129,8 @@ class LivePayload extends Equatable {
     this.currentGameDisplay,
     this.winnerTeamId,
     this.lastPoint,
+    this.deuceEnabled = true,
+    this.endedEarly = false,
     this.serverTime,
     this.changed = true,
     this.pollIntervalSeconds,
@@ -142,6 +146,8 @@ class LivePayload extends Equatable {
         currentGameDisplay: currentGameDisplay,
         version: version,
         winnerTeamId: winnerTeamId,
+        deuceEnabled: deuceEnabled,
+        endedEarly: endedEarly,
       );
 
   @override
@@ -160,6 +166,8 @@ class LivePayload extends Equatable {
         currentGameDisplay,
         winnerTeamId,
         lastPoint,
+        deuceEnabled,
+        endedEarly,
         serverTime,
         changed,
         pollIntervalSeconds,

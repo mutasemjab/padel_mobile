@@ -21,12 +21,36 @@ class LiveScoreboard extends StatelessWidget {
 
   const LiveScoreboard({super.key, required this.match, this.lastEvent});
 
-  String _point(bool teamOne) {
-    final d = match.currentGameDisplay;
-    if (d != null) return teamOne ? d.teamOne : d.teamTwo;
+  String _point(AppLocalizations l10n, bool teamOne) {
     final live = match.liveScore;
-    if (live == null) return '0';
-    return PointLabelFormatter.format(teamOne ? live.currentGame.teamOne : live.currentGame.teamTwo, isTiebreak: live.isTiebreak);
+    if (live == null) {
+      final d = match.currentGameDisplay;
+      return d == null ? '0' : (teamOne ? d.teamOne : d.teamTwo);
+    }
+    final game = live.currentGame;
+    // At deuce both sides read 40 here; the word is shown under the score.
+    return PointLabelFormatter.label(
+      teamOne ? game.teamOne : game.teamTwo,
+      teamOne ? game.teamTwo : game.teamOne,
+      isTiebreak: live.isTiebreak,
+      deuce: match.deuceEnabled,
+      deuceText: '40',
+      advantageText: l10n.scoreAdvantage,
+    );
+  }
+
+  String? _situation(AppLocalizations l10n) {
+    final live = match.liveScore;
+    if (live == null || !match.isInProgress) return null;
+    return PointLabelFormatter.situation(
+      live.currentGame.teamOne,
+      live.currentGame.teamTwo,
+      isTiebreak: live.isTiebreak,
+      deuce: match.deuceEnabled,
+      deuceText: l10n.scoreDeuce,
+      advantageText: l10n.scoreAdvantage,
+      goldenPointText: l10n.scoreGoldenPoint,
+    );
   }
 
   @override
@@ -72,11 +96,24 @@ class LiveScoreboard extends StatelessWidget {
               // The point — the largest thing on screen. Each side sits under
               // its own team panel in both LTR and RTL.
               _SplitRow(
-                start: FlipDigit(value: _point(true), style: AppTypography.score(context, color: AppColors.white)),
-                end: FlipDigit(value: _point(false), style: AppTypography.score(context, color: AppColors.white)),
+                start: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: FlipDigit(value: _point(l10n, true), style: AppTypography.score(context, color: AppColors.white)),
+                ),
+                end: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: FlipDigit(value: _point(l10n, false), style: AppTypography.score(context, color: AppColors.white)),
+                ),
                 separator: Text('–', style: AppTypography.scoreSecondary(context, color: AppColors.textMuted)),
               ),
-              Text(l10n.matchPoints.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.textMuted)),
+              if (_situation(l10n) case final situation?)
+                Container(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xxs),
+                  decoration: BoxDecoration(color: AppColors.white.withValues(alpha: 0.16), borderRadius: AppRadius.pillAll),
+                  child: Text(situation.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.white)),
+                )
+              else
+                Text(l10n.matchPoints.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.textMuted)),
               Gap.md,
               PulseOnChange(
                 trigger: '${games.teamOne}-${games.teamTwo}',

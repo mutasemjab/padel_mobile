@@ -47,19 +47,23 @@ class ScoringState {
 class ScoringCubit extends Cubit<ScoringState> {
   final ScorekeeperRepository repository;
 
-  ScoringCubit(this.repository, Match match) : super(ScoringState(match: match));
+  ScoringCubit(this.repository, Match match) : super(ScoringState(match: match, lastPoint: match.lastPoint));
 
   void _apply(LivePayload? payload) {
     if (payload == null) {
       emit(state.copyWith(sending: false));
       return;
     }
-    emit(ScoringState(match: payload.applyTo(state.match), lastPoint: payload.lastPoint ?? state.lastPoint));
+    // The server returns the latest counted point with every call (null once all points are undone).
+    emit(ScoringState(match: payload.applyTo(state.match), lastPoint: payload.lastPoint));
   }
 
   Future<void> point(PointInput input) => _send(() => repository.recordPoint(state.match.id, input));
 
   Future<void> undo() => _send(() => repository.undo(state.match.id));
+
+  Future<void> end(int winningTeamId, {String? reason}) =>
+      _send(() => repository.endMatch(state.match.id, winningTeamId: winningTeamId, reason: reason));
 
   Future<void> details(PointInput input) async {
     final point = state.lastPoint;

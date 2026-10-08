@@ -87,6 +87,7 @@ class _RegistrationSheet extends StatefulWidget {
 
 class _RegistrationSheetState extends State<_RegistrationSheet> {
   final _notes = TextEditingController();
+  final _teamName = TextEditingController();
   PlayerSummary? _partner;
   Registration? _result;
 
@@ -101,6 +102,7 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
   @override
   void dispose() {
     _notes.dispose();
+    _teamName.dispose();
     super.dispose();
   }
 
@@ -122,6 +124,7 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
           widget.category.id,
           partnerPlayerId: _partner?.playerId,
           notes: _notes.text.trim(),
+          teamName: _teamName.text.trim(),
         );
     if (registration != null && mounted) setState(() => _result = registration);
   }
@@ -172,6 +175,18 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
                       _EligibilityView(state: state.eligibility, category: widget.category),
                       Gap.lg,
                       TextField(
+                        controller: _teamName,
+                        maxLength: 40,
+                        textCapitalization: TextCapitalization.words,
+                        onChanged: (_) => setState(() {}),
+                        decoration: InputDecoration(
+                          labelText: l10n.registerTeamName,
+                          hintText: l10n.registerTeamNameHint,
+                          prefixIcon: const Icon(Icons.groups_rounded),
+                        ),
+                      ),
+                      Gap.sm,
+                      TextField(
                         controller: _notes,
                         maxLines: 2,
                         decoration: InputDecoration(labelText: l10n.fieldNotesOptional),
@@ -189,7 +204,9 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
     );
   }
 
-  bool _canSubmit(ViewState<Eligibility> state) => switch (state) {
+  bool _canSubmit(ViewState<Eligibility> state) =>
+      _teamName.text.trim().length >= 2 &&
+      switch (state) {
         ViewLoaded(:final data) => data.canRegister,
         _ => false,
       };

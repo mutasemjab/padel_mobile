@@ -70,6 +70,8 @@ _LivePayloadModel _$LivePayloadModelFromJson(Map<String, dynamic> json) =>
           : PointEventModel.fromJson(
               json['last_point'] as Map<String, dynamic>,
             ),
+      deuceEnabled: json['deuce_enabled'] as bool? ?? true,
+      endedEarly: json['ended_early'] as bool? ?? false,
       serverTime: json['server_time'] == null
           ? null
           : DateTime.parse(json['server_time'] as String),
@@ -92,6 +94,8 @@ Map<String, dynamic> _$LivePayloadModelToJson(_LivePayloadModel instance) =>
       'current_game_display': instance.currentGameDisplay?.toJson(),
       'winner_team_id': instance.winnerTeamId,
       'last_point': instance.lastPoint?.toJson(),
+      'deuce_enabled': instance.deuceEnabled,
+      'ended_early': instance.endedEarly,
       'server_time': instance.serverTime?.toIso8601String(),
       'changed': instance.changed,
     };

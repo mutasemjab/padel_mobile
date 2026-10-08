@@ -1865,6 +1865,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationCancel => 'Cancel registration';
 
   @override
+  String get scoreDeuce => 'Deuce';
+
+  @override
+  String get scoreAdvantage => 'Advantage';
+
+  @override
+  String get scoreGoldenPoint => 'Golden point';
+
+  @override
+  String get registerTeamName => 'Team name';
+
+  @override
+  String get registerTeamNameHint => 'Required — e.g. Smash Brothers';
+
+  @override
+  String get registrationRenameTeam => 'Rename team';
+
+  @override
+  String get registrationTeamRenamed => 'Team name updated';
+
+  @override
   String registrationPartnerInvite(String name) {
     return '$name wants you as a partner in this tournament. Confirm to send it to the organizer.';
   }
@@ -2350,6 +2371,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scorekeeperUndo => 'Undo last point';
+
+  @override
+  String get scorekeeperEndMatch => 'End match';
+
+  @override
+  String get scorekeeperEndMatchTitle => 'End the match — who won?';
+
+  @override
+  String get scorekeeperEndMatchHelp =>
+      'The match ends now with the current score (time limit, court needed...). You can reopen it with undo.';
+
+  @override
+  String get scorekeeperEndReason => 'Reason (optional)';
+
+  @override
+  String get scorekeeperMatchEnded => 'Match ended';
+
+  @override
+  String get scorekeeperReopen => 'Reopen match';
 
   @override
   String get scorekeeperAddDetail => 'Add detail';

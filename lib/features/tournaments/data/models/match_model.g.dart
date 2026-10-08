@@ -174,6 +174,11 @@ _MatchModel _$MatchModelFromJson(Map<String, dynamic> json) => _MatchModel(
   result: json['result'] == null
       ? null
       : MatchResultModel.fromJson(json['result'] as Map<String, dynamic>),
+  deuceEnabled: json['deuce_enabled'] as bool? ?? true,
+  lastPoint: json['last_point'] == null
+      ? null
+      : PointEventModel.fromJson(json['last_point'] as Map<String, dynamic>),
+  endedEarly: json['ended_early'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$MatchModelToJson(_MatchModel instance) =>
@@ -205,4 +210,7 @@ Map<String, dynamic> _$MatchModelToJson(_MatchModel instance) =>
       'next_match_id': instance.nextMatchId,
       'is_bye': instance.isBye,
       'result': instance.result?.toJson(),
+      'deuce_enabled': instance.deuceEnabled,
+      'last_point': instance.lastPoint?.toJson(),
+      'ended_early': instance.endedEarly,
     };

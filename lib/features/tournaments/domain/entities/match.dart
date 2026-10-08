@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/models/player_summary.dart';
+import 'live_payload.dart';
 
 enum MatchStatus { scheduled, inProgress, completed, walkover, cancelled }
 
@@ -190,6 +191,15 @@ class Match extends Equatable {
   final bool isBye;
   final MatchResult? result;
 
+  /// Tournament scoring: true = deuce / advantage, false = golden point at 40-40.
+  final bool deuceEnabled;
+
+  /// Scorekeeper only: the latest counted point (to edit its details).
+  final PointEvent? lastPoint;
+
+  /// The scorekeeper ended it before the score decided it (undo reopens it).
+  final bool endedEarly;
+
   const Match({
     required this.id,
     this.tournamentId,
@@ -218,6 +228,9 @@ class Match extends Equatable {
     this.nextMatchId,
     this.isBye = false,
     this.result,
+    this.deuceEnabled = true,
+    this.lastPoint,
+    this.endedEarly = false,
   });
 
   bool get isInProgress => status == MatchStatus.inProgress;
@@ -239,6 +252,8 @@ class Match extends Equatable {
     PointDisplay? currentGameDisplay,
     int? version,
     int? winnerTeamId,
+    bool? deuceEnabled,
+    bool? endedEarly,
   }) {
     return Match(
       id: id,
@@ -268,6 +283,9 @@ class Match extends Equatable {
       nextMatchId: nextMatchId,
       isBye: isBye,
       result: result,
+      deuceEnabled: deuceEnabled ?? this.deuceEnabled,
+      lastPoint: lastPoint,
+      endedEarly: endedEarly ?? this.endedEarly,
     );
   }
 
@@ -298,6 +316,9 @@ class Match extends Equatable {
         version,
         winnerTeamId,
         nextMatchId,
+        deuceEnabled,
+        lastPoint,
+        endedEarly,
         isBye,
         result,
       ];

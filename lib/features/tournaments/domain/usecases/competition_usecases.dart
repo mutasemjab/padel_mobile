@@ -63,8 +63,8 @@ class CheckEligibilityUseCase {
 class RegisterForCategoryUseCase {
   final TournamentsRepository repository;
   RegisterForCategoryUseCase(this.repository);
-  ApiResult<Registration> call(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes}) =>
-      repository.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes);
+  ApiResult<Registration> call(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) =>
+      repository.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName);
 }
 
 class GetMyRegistrationsUseCase {
@@ -72,6 +72,12 @@ class GetMyRegistrationsUseCase {
   GetMyRegistrationsUseCase(this.repository);
   ApiResult<Paginated<Registration>> call({String? status, int page = 1}) =>
       repository.getMyRegistrations(status: status, page: page);
+}
+
+class RenameTeamUseCase {
+  final TournamentsRepository repository;
+  RenameTeamUseCase(this.repository);
+  ApiResult<Registration?> call(int registrationId, String teamName) => repository.renameTeam(registrationId, teamName);
 }
 
 class RespondAsPartnerUseCase {

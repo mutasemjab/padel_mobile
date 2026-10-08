@@ -1878,6 +1878,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get registrationCancel => 'إلغاء التسجيل';
 
   @override
+  String get scoreDeuce => 'ديوس';
+
+  @override
+  String get scoreAdvantage => 'أدفانتج';
+
+  @override
+  String get scoreGoldenPoint => 'النقطة الذهبية';
+
+  @override
+  String get registerTeamName => 'اسم الفريق';
+
+  @override
+  String get registerTeamNameHint => 'إجباري — مثال: أبطال البادل';
+
+  @override
+  String get registrationRenameTeam => 'تغيير اسم الفريق';
+
+  @override
+  String get registrationTeamRenamed => 'تم تحديث اسم الفريق';
+
+  @override
   String registrationPartnerInvite(String name) {
     return '$name يريدك شريكاً له في هذه البطولة. أكّد لإرسال التسجيل للمنظم.';
   }
@@ -2372,6 +2393,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scorekeeperUndo => 'تراجع عن آخر نقطة';
+
+  @override
+  String get scorekeeperEndMatch => 'إنهاء المباراة';
+
+  @override
+  String get scorekeeperEndMatchTitle => 'إنهاء المباراة — من الفائز؟';
+
+  @override
+  String get scorekeeperEndMatchHelp =>
+      'تنتهي المباراة الآن بالنتيجة الحالية (انتهاء الوقت، الحاجة للملعب...). يمكنك إعادة فتحها بالتراجع.';
+
+  @override
+  String get scorekeeperEndReason => 'السبب (اختياري)';
+
+  @override
+  String get scorekeeperMatchEnded => 'انتهت المباراة';
+
+  @override
+  String get scorekeeperReopen => 'إعادة فتح المباراة';
 
   @override
   String get scorekeeperAddDetail => 'إضافة تفاصيل';

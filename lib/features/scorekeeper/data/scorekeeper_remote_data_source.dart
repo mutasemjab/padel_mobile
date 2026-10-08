@@ -16,6 +16,7 @@ abstract class ScorekeeperRemoteDataSource {
   Future<List<Match>> getMatches(String token);
   Future<LivePayload?> recordPoint(String token, int matchId, PointInput input);
   Future<LivePayload?> undo(String token, int matchId);
+  Future<LivePayload?> endMatch(String token, int matchId, {required int winningTeamId, String? reason});
   Future<LivePayload?> correctPoint(String token, int matchId, int pointId, PointInput input, {required String reason});
   Future<LivePayload?> updateDetails(String token, int matchId, int pointId, PointInput input);
 }
@@ -60,6 +61,16 @@ class ScorekeeperRemoteDataSourceImpl implements ScorekeeperRemoteDataSource {
   @override
   Future<LivePayload?> undo(String token, int matchId) async {
     final response = await dio.post(ApiEndpoints.scorekeeperUndo(matchId), options: _auth(token));
+    return _payload(response);
+  }
+
+  @override
+  Future<LivePayload?> endMatch(String token, int matchId, {required int winningTeamId, String? reason}) async {
+    final response = await dio.post(
+      ApiEndpoints.scorekeeperEnd(matchId),
+      data: {'winning_team_id': winningTeamId, if (reason != null && reason.isNotEmpty) 'reason': reason},
+      options: _auth(token),
+    );
     return _payload(response);
   }
 

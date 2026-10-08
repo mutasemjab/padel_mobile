@@ -5,7 +5,7 @@ class ApiEndpoints {
   /// Override at build time with --dart-define=API_BASE_URL=... for staging/prod.
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://padel.mutasemjaber.online/api/v1/',
+    defaultValue: 'https://playmakerpadel.com/api/v1/',
   );
 
   /// `POST {base}/broadcasting/auth` — private-channel authorization.
@@ -73,6 +73,7 @@ class ApiEndpoints {
   static String categoryRegistrations(int id, int categoryId) => 'tournaments/$id/categories/$categoryId/registrations';
   static const String myRegistrations = 'me/registrations';
   static String registrationCancel(int id) => 'registrations/$id/cancel';
+  static String registrationUpdate(int id) => 'registrations/$id';
   static String registrationPartner(int id) => 'registrations/$id/partner';
   static String registrationPartnerResponse(int id) => 'registrations/$id/partner-response';
   static String registrationPay(int id) => 'registrations/$id/pay';
@@ -145,6 +146,7 @@ class ApiEndpoints {
   static const String scorekeeperMatches = 'scorekeeper/matches';
   static String scorekeeperPoints(int matchId) => 'scorekeeper/matches/$matchId/points';
   static String scorekeeperUndo(int matchId) => 'scorekeeper/matches/$matchId/undo';
+  static String scorekeeperEnd(int matchId) => 'scorekeeper/matches/$matchId/end';
   static String scorekeeperPoint(int matchId, int pointId) => 'scorekeeper/matches/$matchId/points/$pointId';
   static String scorekeeperPointDetails(int matchId, int pointId) =>
       'scorekeeper/matches/$matchId/points/$pointId/details';

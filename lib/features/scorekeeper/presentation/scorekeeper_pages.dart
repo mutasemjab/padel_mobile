@@ -150,6 +150,7 @@ class ScoringPage extends StatelessWidget {
           builder: (context, state) {
             final cubit = context.read<ScoringCubit>();
             final m = state.match;
+            final finished = m.status == MatchStatus.completed || m.status == MatchStatus.walkover;
             Future<void> recordFor(int teamId) async {
               final input = await _showReasonSheet(context, m, winningTeamId: teamId);
               if (input != null) await cubit.point(input);
@@ -166,12 +167,31 @@ class ScoringPage extends StatelessWidget {
                     Expanded(
                       child: Row(
                         children: [
-                          Expanded(child: _PointButton(team: m.teamOne, color: AppColors.primary, busy: state.sending, onTap: recordFor)),
+                          Expanded(child: _PointButton(team: m.teamOne, color: AppColors.primary, busy: state.sending || finished, onTap: recordFor)),
                           Gap.md,
-                          Expanded(child: _PointButton(team: m.teamTwo, color: AppColors.info, busy: state.sending, onTap: recordFor)),
+                          Expanded(child: _PointButton(team: m.teamTwo, color: AppColors.info, busy: state.sending || finished, onTap: recordFor)),
                         ],
                       ),
                     ),
+                    if (finished) ...[
+                      Gap.md,
+                      Container(
+                        padding: AppSpacing.cardDense,
+                        decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.14), borderRadius: AppRadius.mdAll),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.emoji_events_rounded, color: AppColors.success),
+                            Gap.sm,
+                            Expanded(
+                              child: Text(
+                                '${l10n.scorekeeperMatchEnded} — ${m.winner?.label ?? ''}',
+                                style: context.text.titleSmall,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     Gap.md,
                     Row(
                       children: [
@@ -179,7 +199,7 @@ class ScoringPage extends StatelessWidget {
                           child: OutlinedButton.icon(
                             onPressed: state.sending ? null : cubit.undo,
                             icon: const Icon(Icons.undo_rounded),
-                            label: Text(l10n.scorekeeperUndo),
+                            label: Text(m.endedEarly ? l10n.scorekeeperReopen : l10n.scorekeeperUndo),
                           ),
                         ),
                         Gap.sm,
@@ -200,6 +220,20 @@ class ScoringPage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    if (m.isInProgress) ...[
+                      Gap.sm,
+                      TextButton.icon(
+                        style: TextButton.styleFrom(foregroundColor: AppColors.danger),
+                        onPressed: state.sending
+                            ? null
+                            : () async {
+                                final choice = await _showEndSheet(context, m);
+                                if (choice != null) await cubit.end(choice.winnerId, reason: choice.reason);
+                              },
+                        icon: const Icon(Icons.flag_rounded),
+                        label: Text(l10n.scorekeeperEndMatch),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -208,6 +242,60 @@ class ScoringPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Who won and why — the team ahead is preselected.
+  Future<({int winnerId, String reason})?> _showEndSheet(BuildContext context, Match m) {
+    final live = m.liveScore;
+    // Sets first, then games in the current set.
+    final setsDiff = m.setsWonTeamOne - m.setsWonTeamTwo;
+    final gamesDiff = (live?.currentSetGames.teamOne ?? 0) - (live?.currentSetGames.teamTwo ?? 0);
+    final oneAhead = setsDiff != 0 ? setsDiff > 0 : gamesDiff >= 0;
+    var winner = oneAhead ? m.teamOne!.id : m.teamTwo!.id;
+    final reason = TextEditingController();
+    return showModalBottomSheet<({int winnerId, String reason})>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheet) {
+        final l10n = AppLocalizations.of(sheet);
+        return StatefulBuilder(
+          builder: (sheet, setState) => Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(AppSpacing.xl, 0, AppSpacing.xl, MediaQuery.viewInsetsOf(sheet).bottom + AppSpacing.xl),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(l10n.scorekeeperEndMatchTitle, style: sheet.text.titleLarge),
+                Gap.xs,
+                Text(l10n.scorekeeperEndMatchHelp, style: sheet.text.bodySmall),
+                Gap.md,
+                for (final team in [m.teamOne!, m.teamTwo!])
+                  Card(
+                    child: ListTile(
+                      leading: Icon(
+                        winner == team.id ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
+                        color: winner == team.id ? AppColors.success : null,
+                      ),
+                      title: Text(team.label),
+                      onTap: () => setState(() => winner = team.id),
+                    ),
+                  ),
+                Gap.sm,
+                TextField(controller: reason, maxLength: 255, decoration: InputDecoration(labelText: l10n.scorekeeperEndReason)),
+                Gap.md,
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
+                  onPressed: () => Navigator.of(sheet).pop((winnerId: winner, reason: reason.text.trim())),
+                  icon: const Icon(Icons.flag_rounded),
+                  label: Text(l10n.scorekeeperEndMatch),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(reason.dispose);
   }
 
   Future<PointInput?> _showReasonSheet(BuildContext context, Match m, {required int winningTeamId, PointEvent? initial}) {

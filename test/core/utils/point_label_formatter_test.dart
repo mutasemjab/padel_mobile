@@ -25,4 +25,27 @@ void main() {
       expect(PointLabelFormatter.format(-1, isTiebreak: false), '0');
     });
   });
+
+  group('PointLabelFormatter.label', () {
+    String label(int a, int b, {bool deuce = true}) =>
+        PointLabelFormatter.label(a, b, isTiebreak: false, deuce: deuce, deuceText: 'Deuce', advantageText: 'Advantage');
+
+    test('40-40 is Deuce, one point ahead is Advantage', () {
+      expect(label(3, 3), 'Deuce');
+      expect(label(4, 3), 'Advantage');
+      expect(label(3, 4), '40');
+      expect(label(5, 5), 'Deuce');
+      expect(label(2, 3), '30');
+    });
+
+    test('golden point never goes past 40', () {
+      expect(label(3, 3, deuce: false), '40');
+      expect(PointLabelFormatter.situation(3, 3,
+          isTiebreak: false, deuce: false, deuceText: 'D', advantageText: 'A', goldenPointText: 'G'), 'G');
+    });
+
+    test('tiebreak shows raw numbers', () {
+      expect(PointLabelFormatter.label(5, 4, isTiebreak: true, deuceText: 'D', advantageText: 'A'), '5');
+    });
+  });
 }

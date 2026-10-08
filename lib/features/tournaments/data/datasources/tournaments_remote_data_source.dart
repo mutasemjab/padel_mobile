@@ -63,7 +63,8 @@ abstract class TournamentsRemoteDataSource {
   Future<LivePayload> getMatchLive(int matchId, {int? sinceVersion});
   Future<List<PointEvent>> getMatchPoints(int matchId, {bool includeVoided = false});
   Future<Eligibility> getEligibility(int tournamentId, int categoryId, {String? partnerPlayerId});
-  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes});
+  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName});
+  Future<Registration?> renameTeam(int registrationId, String teamName);
   Future<Paginated<Registration>> getMyRegistrations({String? status, int page = 1});
   Future<Registration?> cancelRegistration(int registrationId);
   Future<Registration?> changePartner(int registrationId, String partnerPlayerId);
@@ -162,9 +163,10 @@ class TournamentsRemoteDataSourceImpl implements TournamentsRemoteDataSource {
   }
 
   @override
-  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes}) async {
+  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) async {
     final response = await dio.post(ApiEndpoints.categoryRegistrations(tournamentId, categoryId), data: {
       'partner_player_id': ?partnerPlayerId,
+      'team_name': ?teamName,
       if (notes != null && notes.isNotEmpty) 'notes': notes,
     });
     return registrationFromJson(ApiEnvelope.map(response));
@@ -193,6 +195,12 @@ class TournamentsRemoteDataSourceImpl implements TournamentsRemoteDataSource {
       ApiEndpoints.registrationPartner(registrationId),
       data: {'partner_player_id': partnerPlayerId},
     );
+    return _optionalRegistration(response);
+  }
+
+  @override
+  Future<Registration?> renameTeam(int registrationId, String teamName) async {
+    final response = await dio.put(ApiEndpoints.registrationUpdate(registrationId), data: {'team_name': teamName});
     return _optionalRegistration(response);
   }
 

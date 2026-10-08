@@ -91,6 +91,12 @@ class Registration extends Equatable {
   /// The pair may still change the partner / notes (pending, waitlisted, changes requested).
   final bool canEdit;
 
+  /// The pair's team name (required when registering from the app).
+  final String? teamName;
+
+  /// The player who registered may still rename the team (until the tournament starts).
+  final bool canRenameTeam;
+
   /// The viewer is the invited partner and must accept or decline.
   final bool needsMyConfirmation;
 
@@ -112,6 +118,8 @@ class Registration extends Equatable {
     this.canCancel = false,
     this.needsMyConfirmation = false,
     this.partnerConfirmed = true,
+    this.teamName,
+    this.canRenameTeam = false,
   });
 
   bool get needsPayment => paymentStatus == PaymentStatus.pending;
@@ -132,5 +140,7 @@ class Registration extends Equatable {
         reviewNote,
         needsMyConfirmation,
         partnerConfirmed,
+        teamName,
+        canRenameTeam,
       ];
 }

@@ -36,6 +36,7 @@ void registerTournamentsDependencies(GetIt sl) {
   sl.registerFactory(() => GetMyRegistrationsUseCase(sl()));
   sl.registerFactory(() => CancelRegistrationUseCase(sl()));
   sl.registerFactory(() => RespondAsPartnerUseCase(sl()));
+  sl.registerFactory(() => RenameTeamUseCase(sl()));
   sl.registerFactory(() => ChangeRegistrationPartnerUseCase(sl()));
   sl.registerFactory(() => PayRegistrationUseCase(sl()));
 
@@ -57,6 +58,7 @@ void registerTournamentsDependencies(GetIt sl) {
       changePartner: sl(),
       pay: sl(),
       respondAsPartner: sl(),
+      renameTeam: sl(),
     ),
   );
 }

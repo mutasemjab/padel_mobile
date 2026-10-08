@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/models/player_summary_model.dart';
 import '../../domain/entities/match.dart';
+import 'live_payload_model.dart';
 
 part 'match_model.freezed.dart';
 part 'match_model.g.dart';
@@ -165,6 +166,9 @@ abstract class MatchModel with _$MatchModel {
     @JsonKey(name: 'next_match_id') int? nextMatchId,
     @JsonKey(name: 'is_bye') @Default(false) bool isBye,
     MatchResultModel? result,
+    @JsonKey(name: 'deuce_enabled') @Default(true) bool deuceEnabled,
+    @JsonKey(name: 'last_point') PointEventModel? lastPoint,
+    @JsonKey(name: 'ended_early') @Default(false) bool endedEarly,
   }) = _MatchModel;
 
   factory MatchModel.fromJson(Map<String, dynamic> json) => _$MatchModelFromJson(json);
@@ -201,6 +205,9 @@ extension MatchModelX on MatchModel {
       nextMatchId: nextMatchId,
       isBye: isBye,
       result: result?.toEntity(),
+      deuceEnabled: deuceEnabled,
+      lastPoint: lastPoint?.toEntity(),
+      endedEarly: endedEarly,
     );
   }
 }

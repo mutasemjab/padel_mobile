@@ -110,6 +110,38 @@ class _RegistrationCard extends StatelessWidget {
     }
   }
 
+  Future<void> _renameTeam(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    final controller = TextEditingController(text: registration.teamName ?? '');
+    final name = await showDialog<String>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(l10n.registrationRenameTeam),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLength: 40,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(labelText: l10n.registerTeamName),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(dialog).pop(), child: Text(l10n.actionBack)),
+          FilledButton(onPressed: () => Navigator.of(dialog).pop(controller.text.trim()), child: Text(l10n.actionConfirm)),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (name == null || name.length < 2 || name == registration.teamName || !context.mounted) return;
+    final flow = context.read<RegistrationCubit>();
+    if (await flow.changeTeamName(registration.id, name)) {
+      if (!context.mounted) return;
+      showAppSnack(context, l10n.registrationTeamRenamed);
+      context.read<MyRegistrationsCubit>().refresh();
+    } else if (context.mounted && flow.state.action is ActionFailure) {
+      showFailure(context, (flow.state.action as ActionFailure).failure);
+    }
+  }
+
   Future<void> _changePartner(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
     final picked = await showPlayerPicker(context, excludePlayerId: registration.player?.playerId);
@@ -140,6 +172,14 @@ class _RegistrationCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(r.category.tournamentName, style: context.text.titleMedium),
+                    if (r.teamName != null && r.teamName!.isNotEmpty)
+                      Row(
+                        children: [
+                          Icon(Icons.groups_rounded, size: AppSizes.iconSm, color: context.tokens.highlight),
+                          Gap.xs,
+                          Flexible(child: Text(r.teamName!, style: context.text.titleSmall?.copyWith(color: context.tokens.highlight))),
+                        ],
+                      ),
                     Text(
                       [
                         r.category.name,
@@ -235,7 +275,7 @@ class _RegistrationCard extends StatelessWidget {
           ],
           Gap.sm,
           PaymentStatusChip(status: r.paymentStatus),
-          if (r.canCancel || r.canEdit || r.needsPayment) ...[
+          if (r.canCancel || r.canEdit || r.needsPayment || r.canRenameTeam) ...[
             Gap.md,
             Wrap(
               spacing: AppSpacing.sm,
@@ -248,6 +288,7 @@ class _RegistrationCard extends StatelessWidget {
                     label: Text(l10n.registrationPay),
                   ),
                 if (r.canEdit) OutlinedButton(onPressed: () => _changePartner(context), child: Text(l10n.registerChangePartner)),
+                if (r.canRenameTeam) OutlinedButton(onPressed: () => _renameTeam(context), child: Text(l10n.registrationRenameTeam)),
                 if (r.canCancel) TextButton(onPressed: () => _cancel(context), child: Text(l10n.registrationCancel)),
               ],
             ),

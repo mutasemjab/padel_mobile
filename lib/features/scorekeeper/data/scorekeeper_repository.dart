@@ -58,6 +58,10 @@ class ScorekeeperRepository {
 
   ApiResult<LivePayload?> undo(int matchId) => _withToken((t) => remote.undo(t, matchId));
 
+  /// Ends a live match now with [winningTeamId]; undo reopens it.
+  ApiResult<LivePayload?> endMatch(int matchId, {required int winningTeamId, String? reason}) =>
+      _withToken((t) => remote.endMatch(t, matchId, winningTeamId: winningTeamId, reason: reason));
+
   ApiResult<LivePayload?> correctPoint(int matchId, int pointId, PointInput input, {required String reason}) =>
       _withToken((t) => remote.correctPoint(t, matchId, pointId, input, reason: reason));
 

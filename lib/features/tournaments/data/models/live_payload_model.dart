@@ -65,6 +65,8 @@ abstract class LivePayloadModel with _$LivePayloadModel {
     @JsonKey(name: 'current_game_display') PointDisplayModel? currentGameDisplay,
     @JsonKey(name: 'winner_team_id') int? winnerTeamId,
     @JsonKey(name: 'last_point') PointEventModel? lastPoint,
+    @JsonKey(name: 'deuce_enabled') @Default(true) bool deuceEnabled,
+    @JsonKey(name: 'ended_early') @Default(false) bool endedEarly,
     @JsonKey(name: 'server_time') DateTime? serverTime,
     @Default(true) bool changed,
   }) = _LivePayloadModel;
@@ -88,6 +90,8 @@ extension LivePayloadModelX on LivePayloadModel {
         currentGameDisplay: currentGameDisplay?.toEntity(),
         winnerTeamId: winnerTeamId,
         lastPoint: lastPoint?.toEntity(),
+        deuceEnabled: deuceEnabled,
+        endedEarly: endedEarly,
         serverTime: serverTime,
         changed: changed,
         pollIntervalSeconds: pollIntervalSeconds,

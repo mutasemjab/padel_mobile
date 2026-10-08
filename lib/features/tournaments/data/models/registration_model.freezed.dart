@@ -574,7 +574,7 @@ $RegistrationTournamentModelCopyWith<$Res> get tournament {
 /// @nodoc
 mixin _$RegistrationModel {
 
- int get id; String get status;@JsonKey(name: 'payment_status') String get paymentStatus;@JsonKey(name: 'registered_at') DateTime? get registeredAt;@JsonKey(name: 'promoted_at') DateTime? get promotedAt; String? get notes; PlayerSummaryModel? get player; PlayerSummaryModel? get partner; RegistrationCategoryModel get category;@JsonKey(name: 'can_cancel') bool get canCancel;@JsonKey(name: 'can_edit') bool get canEdit;@JsonKey(name: 'review_note') String? get reviewNote;@JsonKey(name: 'needs_my_confirmation') bool get needsMyConfirmation;@JsonKey(name: 'partner_confirmed') bool get partnerConfirmed;
+ int get id; String get status;@JsonKey(name: 'payment_status') String get paymentStatus;@JsonKey(name: 'registered_at') DateTime? get registeredAt;@JsonKey(name: 'promoted_at') DateTime? get promotedAt; String? get notes; PlayerSummaryModel? get player; PlayerSummaryModel? get partner; RegistrationCategoryModel get category;@JsonKey(name: 'can_cancel') bool get canCancel;@JsonKey(name: 'can_edit') bool get canEdit;@JsonKey(name: 'review_note') String? get reviewNote;@JsonKey(name: 'needs_my_confirmation') bool get needsMyConfirmation;@JsonKey(name: 'partner_confirmed') bool get partnerConfirmed;@JsonKey(name: 'team_name') String? get teamName;@JsonKey(name: 'can_rename_team') bool get canRenameTeam;
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -587,16 +587,16 @@ $RegistrationModelCopyWith<RegistrationModel> get copyWith => _$RegistrationMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote)&&(identical(other.needsMyConfirmation, needsMyConfirmation) || other.needsMyConfirmation == needsMyConfirmation)&&(identical(other.partnerConfirmed, partnerConfirmed) || other.partnerConfirmed == partnerConfirmed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote)&&(identical(other.needsMyConfirmation, needsMyConfirmation) || other.needsMyConfirmation == needsMyConfirmation)&&(identical(other.partnerConfirmed, partnerConfirmed) || other.partnerConfirmed == partnerConfirmed)&&(identical(other.teamName, teamName) || other.teamName == teamName)&&(identical(other.canRenameTeam, canRenameTeam) || other.canRenameTeam == canRenameTeam));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote,needsMyConfirmation,partnerConfirmed);
+int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote,needsMyConfirmation,partnerConfirmed,teamName,canRenameTeam);
 
 @override
 String toString() {
-  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote, needsMyConfirmation: $needsMyConfirmation, partnerConfirmed: $partnerConfirmed)';
+  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote, needsMyConfirmation: $needsMyConfirmation, partnerConfirmed: $partnerConfirmed, teamName: $teamName, canRenameTeam: $canRenameTeam)';
 }
 
 
@@ -607,7 +607,7 @@ abstract mixin class $RegistrationModelCopyWith<$Res>  {
   factory $RegistrationModelCopyWith(RegistrationModel value, $Res Function(RegistrationModel) _then) = _$RegistrationModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote,@JsonKey(name: 'needs_my_confirmation') bool needsMyConfirmation,@JsonKey(name: 'partner_confirmed') bool partnerConfirmed
+ int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote,@JsonKey(name: 'needs_my_confirmation') bool needsMyConfirmation,@JsonKey(name: 'partner_confirmed') bool partnerConfirmed,@JsonKey(name: 'team_name') String? teamName,@JsonKey(name: 'can_rename_team') bool canRenameTeam
 });
 
 
@@ -624,7 +624,7 @@ class _$RegistrationModelCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,Object? needsMyConfirmation = null,Object? partnerConfirmed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,Object? needsMyConfirmation = null,Object? partnerConfirmed = null,Object? teamName = freezed,Object? canRenameTeam = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -640,6 +640,8 @@ as bool,canEdit: null == canEdit ? _self.canEdit : canEdit // ignore: cast_nulla
 as bool,reviewNote: freezed == reviewNote ? _self.reviewNote : reviewNote // ignore: cast_nullable_to_non_nullable
 as String?,needsMyConfirmation: null == needsMyConfirmation ? _self.needsMyConfirmation : needsMyConfirmation // ignore: cast_nullable_to_non_nullable
 as bool,partnerConfirmed: null == partnerConfirmed ? _self.partnerConfirmed : partnerConfirmed // ignore: cast_nullable_to_non_nullable
+as bool,teamName: freezed == teamName ? _self.teamName : teamName // ignore: cast_nullable_to_non_nullable
+as String?,canRenameTeam: null == canRenameTeam ? _self.canRenameTeam : canRenameTeam // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -758,10 +760,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed, @JsonKey(name: 'team_name')  String? teamName, @JsonKey(name: 'can_rename_team')  bool canRenameTeam)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RegistrationModel() when $default != null:
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed,_that.teamName,_that.canRenameTeam);case _:
   return orElse();
 
 }
@@ -779,10 +781,10 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed, @JsonKey(name: 'team_name')  String? teamName, @JsonKey(name: 'can_rename_team')  bool canRenameTeam)  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationModel():
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed,_that.teamName,_that.canRenameTeam);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -799,10 +801,10 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String status, @JsonKey(name: 'payment_status')  String paymentStatus, @JsonKey(name: 'registered_at')  DateTime? registeredAt, @JsonKey(name: 'promoted_at')  DateTime? promotedAt,  String? notes,  PlayerSummaryModel? player,  PlayerSummaryModel? partner,  RegistrationCategoryModel category, @JsonKey(name: 'can_cancel')  bool canCancel, @JsonKey(name: 'can_edit')  bool canEdit, @JsonKey(name: 'review_note')  String? reviewNote, @JsonKey(name: 'needs_my_confirmation')  bool needsMyConfirmation, @JsonKey(name: 'partner_confirmed')  bool partnerConfirmed, @JsonKey(name: 'team_name')  String? teamName, @JsonKey(name: 'can_rename_team')  bool canRenameTeam)?  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationModel() when $default != null:
-return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed);case _:
+return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_that.promotedAt,_that.notes,_that.player,_that.partner,_that.category,_that.canCancel,_that.canEdit,_that.reviewNote,_that.needsMyConfirmation,_that.partnerConfirmed,_that.teamName,_that.canRenameTeam);case _:
   return null;
 
 }
@@ -814,7 +816,7 @@ return $default(_that.id,_that.status,_that.paymentStatus,_that.registeredAt,_th
 @JsonSerializable()
 
 class _RegistrationModel implements RegistrationModel {
-  const _RegistrationModel({required this.id, this.status = 'pending', @JsonKey(name: 'payment_status') this.paymentStatus = 'not_required', @JsonKey(name: 'registered_at') this.registeredAt, @JsonKey(name: 'promoted_at') this.promotedAt, this.notes, this.player, this.partner, required this.category, @JsonKey(name: 'can_cancel') this.canCancel = false, @JsonKey(name: 'can_edit') this.canEdit = false, @JsonKey(name: 'review_note') this.reviewNote, @JsonKey(name: 'needs_my_confirmation') this.needsMyConfirmation = false, @JsonKey(name: 'partner_confirmed') this.partnerConfirmed = true});
+  const _RegistrationModel({required this.id, this.status = 'pending', @JsonKey(name: 'payment_status') this.paymentStatus = 'not_required', @JsonKey(name: 'registered_at') this.registeredAt, @JsonKey(name: 'promoted_at') this.promotedAt, this.notes, this.player, this.partner, required this.category, @JsonKey(name: 'can_cancel') this.canCancel = false, @JsonKey(name: 'can_edit') this.canEdit = false, @JsonKey(name: 'review_note') this.reviewNote, @JsonKey(name: 'needs_my_confirmation') this.needsMyConfirmation = false, @JsonKey(name: 'partner_confirmed') this.partnerConfirmed = true, @JsonKey(name: 'team_name') this.teamName, @JsonKey(name: 'can_rename_team') this.canRenameTeam = false});
   factory _RegistrationModel.fromJson(Map<String, dynamic> json) => _$RegistrationModelFromJson(json);
 
 @override final  int id;
@@ -831,6 +833,8 @@ class _RegistrationModel implements RegistrationModel {
 @override@JsonKey(name: 'review_note') final  String? reviewNote;
 @override@JsonKey(name: 'needs_my_confirmation') final  bool needsMyConfirmation;
 @override@JsonKey(name: 'partner_confirmed') final  bool partnerConfirmed;
+@override@JsonKey(name: 'team_name') final  String? teamName;
+@override@JsonKey(name: 'can_rename_team') final  bool canRenameTeam;
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
@@ -845,16 +849,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote)&&(identical(other.needsMyConfirmation, needsMyConfirmation) || other.needsMyConfirmation == needsMyConfirmation)&&(identical(other.partnerConfirmed, partnerConfirmed) || other.partnerConfirmed == partnerConfirmed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus)&&(identical(other.registeredAt, registeredAt) || other.registeredAt == registeredAt)&&(identical(other.promotedAt, promotedAt) || other.promotedAt == promotedAt)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.player, player) || other.player == player)&&(identical(other.partner, partner) || other.partner == partner)&&(identical(other.category, category) || other.category == category)&&(identical(other.canCancel, canCancel) || other.canCancel == canCancel)&&(identical(other.canEdit, canEdit) || other.canEdit == canEdit)&&(identical(other.reviewNote, reviewNote) || other.reviewNote == reviewNote)&&(identical(other.needsMyConfirmation, needsMyConfirmation) || other.needsMyConfirmation == needsMyConfirmation)&&(identical(other.partnerConfirmed, partnerConfirmed) || other.partnerConfirmed == partnerConfirmed)&&(identical(other.teamName, teamName) || other.teamName == teamName)&&(identical(other.canRenameTeam, canRenameTeam) || other.canRenameTeam == canRenameTeam));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote,needsMyConfirmation,partnerConfirmed);
+int get hashCode => Object.hash(runtimeType,id,status,paymentStatus,registeredAt,promotedAt,notes,player,partner,category,canCancel,canEdit,reviewNote,needsMyConfirmation,partnerConfirmed,teamName,canRenameTeam);
 
 @override
 String toString() {
-  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote, needsMyConfirmation: $needsMyConfirmation, partnerConfirmed: $partnerConfirmed)';
+  return 'RegistrationModel(id: $id, status: $status, paymentStatus: $paymentStatus, registeredAt: $registeredAt, promotedAt: $promotedAt, notes: $notes, player: $player, partner: $partner, category: $category, canCancel: $canCancel, canEdit: $canEdit, reviewNote: $reviewNote, needsMyConfirmation: $needsMyConfirmation, partnerConfirmed: $partnerConfirmed, teamName: $teamName, canRenameTeam: $canRenameTeam)';
 }
 
 
@@ -865,7 +869,7 @@ abstract mixin class _$RegistrationModelCopyWith<$Res> implements $RegistrationM
   factory _$RegistrationModelCopyWith(_RegistrationModel value, $Res Function(_RegistrationModel) _then) = __$RegistrationModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote,@JsonKey(name: 'needs_my_confirmation') bool needsMyConfirmation,@JsonKey(name: 'partner_confirmed') bool partnerConfirmed
+ int id, String status,@JsonKey(name: 'payment_status') String paymentStatus,@JsonKey(name: 'registered_at') DateTime? registeredAt,@JsonKey(name: 'promoted_at') DateTime? promotedAt, String? notes, PlayerSummaryModel? player, PlayerSummaryModel? partner, RegistrationCategoryModel category,@JsonKey(name: 'can_cancel') bool canCancel,@JsonKey(name: 'can_edit') bool canEdit,@JsonKey(name: 'review_note') String? reviewNote,@JsonKey(name: 'needs_my_confirmation') bool needsMyConfirmation,@JsonKey(name: 'partner_confirmed') bool partnerConfirmed,@JsonKey(name: 'team_name') String? teamName,@JsonKey(name: 'can_rename_team') bool canRenameTeam
 });
 
 
@@ -882,7 +886,7 @@ class __$RegistrationModelCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,Object? needsMyConfirmation = null,Object? partnerConfirmed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? paymentStatus = null,Object? registeredAt = freezed,Object? promotedAt = freezed,Object? notes = freezed,Object? player = freezed,Object? partner = freezed,Object? category = null,Object? canCancel = null,Object? canEdit = null,Object? reviewNote = freezed,Object? needsMyConfirmation = null,Object? partnerConfirmed = null,Object? teamName = freezed,Object? canRenameTeam = null,}) {
   return _then(_RegistrationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -898,6 +902,8 @@ as bool,canEdit: null == canEdit ? _self.canEdit : canEdit // ignore: cast_nulla
 as bool,reviewNote: freezed == reviewNote ? _self.reviewNote : reviewNote // ignore: cast_nullable_to_non_nullable
 as String?,needsMyConfirmation: null == needsMyConfirmation ? _self.needsMyConfirmation : needsMyConfirmation // ignore: cast_nullable_to_non_nullable
 as bool,partnerConfirmed: null == partnerConfirmed ? _self.partnerConfirmed : partnerConfirmed // ignore: cast_nullable_to_non_nullable
+as bool,teamName: freezed == teamName ? _self.teamName : teamName // ignore: cast_nullable_to_non_nullable
+as String?,canRenameTeam: null == canRenameTeam ? _self.canRenameTeam : canRenameTeam // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

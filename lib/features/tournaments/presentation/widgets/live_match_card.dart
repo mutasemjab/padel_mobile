@@ -158,7 +158,7 @@ class _TeamLine extends StatelessWidget {
             decoration: BoxDecoration(color: t.highlight.withValues(alpha: 0.14), borderRadius: AppRadius.smAll),
             alignment: Alignment.center,
             child: FlipDigit(
-              value: _point(match, isTeamOne),
+              value: _point(context, match, isTeamOne),
               style: AppTypography.number(context, size: 18, color: t.highlight),
             ),
           ),
@@ -173,13 +173,22 @@ class _TeamLine extends StatelessWidget {
     );
   }
 
-  static String _point(Match match, bool teamOne) {
-    final display = match.currentGameDisplay;
-    if (display != null) return teamOne ? display.teamOne : display.teamTwo;
-    // Fallback only: older payloads without `current_game_display`.
+  /// Built here from the raw counts so Deuce / Advantage follow the app's language.
+  static String _point(BuildContext context, Match match, bool teamOne) {
     final live = match.liveScore;
-    if (live == null) return '0';
-    final raw = teamOne ? live.currentGame.teamOne : live.currentGame.teamTwo;
-    return PointLabelFormatter.format(raw, isTiebreak: live.isTiebreak);
+    if (live == null) {
+      final display = match.currentGameDisplay;
+      return display == null ? '0' : (teamOne ? display.teamOne : display.teamTwo);
+    }
+    final l10n = AppLocalizations.of(context);
+    final game = live.currentGame;
+    return PointLabelFormatter.label(
+      teamOne ? game.teamOne : game.teamTwo,
+      teamOne ? game.teamTwo : game.teamOne,
+      isTiebreak: live.isTiebreak,
+      deuce: match.deuceEnabled,
+      deuceText: l10n.scoreDeuce,
+      advantageText: l10n.scoreAdvantage,
+    );
   }
 }

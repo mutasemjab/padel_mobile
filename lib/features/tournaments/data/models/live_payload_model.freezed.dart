@@ -333,7 +333,7 @@ as DateTime?,
 /// @nodoc
 mixin _$LivePayloadModel {
 
- String? get event;@JsonKey(name: 'match_id') int get matchId;@JsonKey(name: 'tournament_id') int? get tournamentId;@JsonKey(name: 'category_id') int? get categoryId; String get status; int get version;@JsonKey(name: 'team_one_id') int? get teamOneId;@JsonKey(name: 'team_two_id') int? get teamTwoId;@JsonKey(name: 'sets_won_team_one') int get setsWonTeamOne;@JsonKey(name: 'sets_won_team_two') int get setsWonTeamTwo;@JsonKey(name: 'live_score') LiveScoreModel? get liveScore;@JsonKey(name: 'current_game_display') PointDisplayModel? get currentGameDisplay;@JsonKey(name: 'winner_team_id') int? get winnerTeamId;@JsonKey(name: 'last_point') PointEventModel? get lastPoint;@JsonKey(name: 'server_time') DateTime? get serverTime; bool get changed;
+ String? get event;@JsonKey(name: 'match_id') int get matchId;@JsonKey(name: 'tournament_id') int? get tournamentId;@JsonKey(name: 'category_id') int? get categoryId; String get status; int get version;@JsonKey(name: 'team_one_id') int? get teamOneId;@JsonKey(name: 'team_two_id') int? get teamTwoId;@JsonKey(name: 'sets_won_team_one') int get setsWonTeamOne;@JsonKey(name: 'sets_won_team_two') int get setsWonTeamTwo;@JsonKey(name: 'live_score') LiveScoreModel? get liveScore;@JsonKey(name: 'current_game_display') PointDisplayModel? get currentGameDisplay;@JsonKey(name: 'winner_team_id') int? get winnerTeamId;@JsonKey(name: 'last_point') PointEventModel? get lastPoint;@JsonKey(name: 'deuce_enabled') bool get deuceEnabled;@JsonKey(name: 'ended_early') bool get endedEarly;@JsonKey(name: 'server_time') DateTime? get serverTime; bool get changed;
 /// Create a copy of LivePayloadModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -346,16 +346,16 @@ $LivePayloadModelCopyWith<LivePayloadModel> get copyWith => _$LivePayloadModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LivePayloadModel&&(identical(other.event, event) || other.event == event)&&(identical(other.matchId, matchId) || other.matchId == matchId)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status)&&(identical(other.version, version) || other.version == version)&&(identical(other.teamOneId, teamOneId) || other.teamOneId == teamOneId)&&(identical(other.teamTwoId, teamTwoId) || other.teamTwoId == teamTwoId)&&(identical(other.setsWonTeamOne, setsWonTeamOne) || other.setsWonTeamOne == setsWonTeamOne)&&(identical(other.setsWonTeamTwo, setsWonTeamTwo) || other.setsWonTeamTwo == setsWonTeamTwo)&&(identical(other.liveScore, liveScore) || other.liveScore == liveScore)&&(identical(other.currentGameDisplay, currentGameDisplay) || other.currentGameDisplay == currentGameDisplay)&&(identical(other.winnerTeamId, winnerTeamId) || other.winnerTeamId == winnerTeamId)&&(identical(other.lastPoint, lastPoint) || other.lastPoint == lastPoint)&&(identical(other.serverTime, serverTime) || other.serverTime == serverTime)&&(identical(other.changed, changed) || other.changed == changed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LivePayloadModel&&(identical(other.event, event) || other.event == event)&&(identical(other.matchId, matchId) || other.matchId == matchId)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status)&&(identical(other.version, version) || other.version == version)&&(identical(other.teamOneId, teamOneId) || other.teamOneId == teamOneId)&&(identical(other.teamTwoId, teamTwoId) || other.teamTwoId == teamTwoId)&&(identical(other.setsWonTeamOne, setsWonTeamOne) || other.setsWonTeamOne == setsWonTeamOne)&&(identical(other.setsWonTeamTwo, setsWonTeamTwo) || other.setsWonTeamTwo == setsWonTeamTwo)&&(identical(other.liveScore, liveScore) || other.liveScore == liveScore)&&(identical(other.currentGameDisplay, currentGameDisplay) || other.currentGameDisplay == currentGameDisplay)&&(identical(other.winnerTeamId, winnerTeamId) || other.winnerTeamId == winnerTeamId)&&(identical(other.lastPoint, lastPoint) || other.lastPoint == lastPoint)&&(identical(other.deuceEnabled, deuceEnabled) || other.deuceEnabled == deuceEnabled)&&(identical(other.endedEarly, endedEarly) || other.endedEarly == endedEarly)&&(identical(other.serverTime, serverTime) || other.serverTime == serverTime)&&(identical(other.changed, changed) || other.changed == changed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,event,matchId,tournamentId,categoryId,status,version,teamOneId,teamTwoId,setsWonTeamOne,setsWonTeamTwo,liveScore,currentGameDisplay,winnerTeamId,lastPoint,serverTime,changed);
+int get hashCode => Object.hash(runtimeType,event,matchId,tournamentId,categoryId,status,version,teamOneId,teamTwoId,setsWonTeamOne,setsWonTeamTwo,liveScore,currentGameDisplay,winnerTeamId,lastPoint,deuceEnabled,endedEarly,serverTime,changed);
 
 @override
 String toString() {
-  return 'LivePayloadModel(event: $event, matchId: $matchId, tournamentId: $tournamentId, categoryId: $categoryId, status: $status, version: $version, teamOneId: $teamOneId, teamTwoId: $teamTwoId, setsWonTeamOne: $setsWonTeamOne, setsWonTeamTwo: $setsWonTeamTwo, liveScore: $liveScore, currentGameDisplay: $currentGameDisplay, winnerTeamId: $winnerTeamId, lastPoint: $lastPoint, serverTime: $serverTime, changed: $changed)';
+  return 'LivePayloadModel(event: $event, matchId: $matchId, tournamentId: $tournamentId, categoryId: $categoryId, status: $status, version: $version, teamOneId: $teamOneId, teamTwoId: $teamTwoId, setsWonTeamOne: $setsWonTeamOne, setsWonTeamTwo: $setsWonTeamTwo, liveScore: $liveScore, currentGameDisplay: $currentGameDisplay, winnerTeamId: $winnerTeamId, lastPoint: $lastPoint, deuceEnabled: $deuceEnabled, endedEarly: $endedEarly, serverTime: $serverTime, changed: $changed)';
 }
 
 
@@ -366,7 +366,7 @@ abstract mixin class $LivePayloadModelCopyWith<$Res>  {
   factory $LivePayloadModelCopyWith(LivePayloadModel value, $Res Function(LivePayloadModel) _then) = _$LivePayloadModelCopyWithImpl;
 @useResult
 $Res call({
- String? event,@JsonKey(name: 'match_id') int matchId,@JsonKey(name: 'tournament_id') int? tournamentId,@JsonKey(name: 'category_id') int? categoryId, String status, int version,@JsonKey(name: 'team_one_id') int? teamOneId,@JsonKey(name: 'team_two_id') int? teamTwoId,@JsonKey(name: 'sets_won_team_one') int setsWonTeamOne,@JsonKey(name: 'sets_won_team_two') int setsWonTeamTwo,@JsonKey(name: 'live_score') LiveScoreModel? liveScore,@JsonKey(name: 'current_game_display') PointDisplayModel? currentGameDisplay,@JsonKey(name: 'winner_team_id') int? winnerTeamId,@JsonKey(name: 'last_point') PointEventModel? lastPoint,@JsonKey(name: 'server_time') DateTime? serverTime, bool changed
+ String? event,@JsonKey(name: 'match_id') int matchId,@JsonKey(name: 'tournament_id') int? tournamentId,@JsonKey(name: 'category_id') int? categoryId, String status, int version,@JsonKey(name: 'team_one_id') int? teamOneId,@JsonKey(name: 'team_two_id') int? teamTwoId,@JsonKey(name: 'sets_won_team_one') int setsWonTeamOne,@JsonKey(name: 'sets_won_team_two') int setsWonTeamTwo,@JsonKey(name: 'live_score') LiveScoreModel? liveScore,@JsonKey(name: 'current_game_display') PointDisplayModel? currentGameDisplay,@JsonKey(name: 'winner_team_id') int? winnerTeamId,@JsonKey(name: 'last_point') PointEventModel? lastPoint,@JsonKey(name: 'deuce_enabled') bool deuceEnabled,@JsonKey(name: 'ended_early') bool endedEarly,@JsonKey(name: 'server_time') DateTime? serverTime, bool changed
 });
 
 
@@ -383,7 +383,7 @@ class _$LivePayloadModelCopyWithImpl<$Res>
 
 /// Create a copy of LivePayloadModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? event = freezed,Object? matchId = null,Object? tournamentId = freezed,Object? categoryId = freezed,Object? status = null,Object? version = null,Object? teamOneId = freezed,Object? teamTwoId = freezed,Object? setsWonTeamOne = null,Object? setsWonTeamTwo = null,Object? liveScore = freezed,Object? currentGameDisplay = freezed,Object? winnerTeamId = freezed,Object? lastPoint = freezed,Object? serverTime = freezed,Object? changed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? event = freezed,Object? matchId = null,Object? tournamentId = freezed,Object? categoryId = freezed,Object? status = null,Object? version = null,Object? teamOneId = freezed,Object? teamTwoId = freezed,Object? setsWonTeamOne = null,Object? setsWonTeamTwo = null,Object? liveScore = freezed,Object? currentGameDisplay = freezed,Object? winnerTeamId = freezed,Object? lastPoint = freezed,Object? deuceEnabled = null,Object? endedEarly = null,Object? serverTime = freezed,Object? changed = null,}) {
   return _then(_self.copyWith(
 event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
 as String?,matchId: null == matchId ? _self.matchId : matchId // ignore: cast_nullable_to_non_nullable
@@ -399,7 +399,9 @@ as int,liveScore: freezed == liveScore ? _self.liveScore : liveScore // ignore: 
 as LiveScoreModel?,currentGameDisplay: freezed == currentGameDisplay ? _self.currentGameDisplay : currentGameDisplay // ignore: cast_nullable_to_non_nullable
 as PointDisplayModel?,winnerTeamId: freezed == winnerTeamId ? _self.winnerTeamId : winnerTeamId // ignore: cast_nullable_to_non_nullable
 as int?,lastPoint: freezed == lastPoint ? _self.lastPoint : lastPoint // ignore: cast_nullable_to_non_nullable
-as PointEventModel?,serverTime: freezed == serverTime ? _self.serverTime : serverTime // ignore: cast_nullable_to_non_nullable
+as PointEventModel?,deuceEnabled: null == deuceEnabled ? _self.deuceEnabled : deuceEnabled // ignore: cast_nullable_to_non_nullable
+as bool,endedEarly: null == endedEarly ? _self.endedEarly : endedEarly // ignore: cast_nullable_to_non_nullable
+as bool,serverTime: freezed == serverTime ? _self.serverTime : serverTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,changed: null == changed ? _self.changed : changed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -522,10 +524,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'deuce_enabled')  bool deuceEnabled, @JsonKey(name: 'ended_early')  bool endedEarly, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LivePayloadModel() when $default != null:
-return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.serverTime,_that.changed);case _:
+return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.deuceEnabled,_that.endedEarly,_that.serverTime,_that.changed);case _:
   return orElse();
 
 }
@@ -543,10 +545,10 @@ return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'deuce_enabled')  bool deuceEnabled, @JsonKey(name: 'ended_early')  bool endedEarly, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)  $default,) {final _that = this;
 switch (_that) {
 case _LivePayloadModel():
-return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.serverTime,_that.changed);case _:
+return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.deuceEnabled,_that.endedEarly,_that.serverTime,_that.changed);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -563,10 +565,10 @@ return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? event, @JsonKey(name: 'match_id')  int matchId, @JsonKey(name: 'tournament_id')  int? tournamentId, @JsonKey(name: 'category_id')  int? categoryId,  String status,  int version, @JsonKey(name: 'team_one_id')  int? teamOneId, @JsonKey(name: 'team_two_id')  int? teamTwoId, @JsonKey(name: 'sets_won_team_one')  int setsWonTeamOne, @JsonKey(name: 'sets_won_team_two')  int setsWonTeamTwo, @JsonKey(name: 'live_score')  LiveScoreModel? liveScore, @JsonKey(name: 'current_game_display')  PointDisplayModel? currentGameDisplay, @JsonKey(name: 'winner_team_id')  int? winnerTeamId, @JsonKey(name: 'last_point')  PointEventModel? lastPoint, @JsonKey(name: 'deuce_enabled')  bool deuceEnabled, @JsonKey(name: 'ended_early')  bool endedEarly, @JsonKey(name: 'server_time')  DateTime? serverTime,  bool changed)?  $default,) {final _that = this;
 switch (_that) {
 case _LivePayloadModel() when $default != null:
-return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.serverTime,_that.changed);case _:
+return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_that.status,_that.version,_that.teamOneId,_that.teamTwoId,_that.setsWonTeamOne,_that.setsWonTeamTwo,_that.liveScore,_that.currentGameDisplay,_that.winnerTeamId,_that.lastPoint,_that.deuceEnabled,_that.endedEarly,_that.serverTime,_that.changed);case _:
   return null;
 
 }
@@ -578,7 +580,7 @@ return $default(_that.event,_that.matchId,_that.tournamentId,_that.categoryId,_t
 @JsonSerializable()
 
 class _LivePayloadModel implements LivePayloadModel {
-  const _LivePayloadModel({this.event, @JsonKey(name: 'match_id') required this.matchId, @JsonKey(name: 'tournament_id') this.tournamentId, @JsonKey(name: 'category_id') this.categoryId, this.status = 'scheduled', this.version = 0, @JsonKey(name: 'team_one_id') this.teamOneId, @JsonKey(name: 'team_two_id') this.teamTwoId, @JsonKey(name: 'sets_won_team_one') this.setsWonTeamOne = 0, @JsonKey(name: 'sets_won_team_two') this.setsWonTeamTwo = 0, @JsonKey(name: 'live_score') this.liveScore, @JsonKey(name: 'current_game_display') this.currentGameDisplay, @JsonKey(name: 'winner_team_id') this.winnerTeamId, @JsonKey(name: 'last_point') this.lastPoint, @JsonKey(name: 'server_time') this.serverTime, this.changed = true});
+  const _LivePayloadModel({this.event, @JsonKey(name: 'match_id') required this.matchId, @JsonKey(name: 'tournament_id') this.tournamentId, @JsonKey(name: 'category_id') this.categoryId, this.status = 'scheduled', this.version = 0, @JsonKey(name: 'team_one_id') this.teamOneId, @JsonKey(name: 'team_two_id') this.teamTwoId, @JsonKey(name: 'sets_won_team_one') this.setsWonTeamOne = 0, @JsonKey(name: 'sets_won_team_two') this.setsWonTeamTwo = 0, @JsonKey(name: 'live_score') this.liveScore, @JsonKey(name: 'current_game_display') this.currentGameDisplay, @JsonKey(name: 'winner_team_id') this.winnerTeamId, @JsonKey(name: 'last_point') this.lastPoint, @JsonKey(name: 'deuce_enabled') this.deuceEnabled = true, @JsonKey(name: 'ended_early') this.endedEarly = false, @JsonKey(name: 'server_time') this.serverTime, this.changed = true});
   factory _LivePayloadModel.fromJson(Map<String, dynamic> json) => _$LivePayloadModelFromJson(json);
 
 @override final  String? event;
@@ -595,6 +597,8 @@ class _LivePayloadModel implements LivePayloadModel {
 @override@JsonKey(name: 'current_game_display') final  PointDisplayModel? currentGameDisplay;
 @override@JsonKey(name: 'winner_team_id') final  int? winnerTeamId;
 @override@JsonKey(name: 'last_point') final  PointEventModel? lastPoint;
+@override@JsonKey(name: 'deuce_enabled') final  bool deuceEnabled;
+@override@JsonKey(name: 'ended_early') final  bool endedEarly;
 @override@JsonKey(name: 'server_time') final  DateTime? serverTime;
 @override@JsonKey() final  bool changed;
 
@@ -611,16 +615,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LivePayloadModel&&(identical(other.event, event) || other.event == event)&&(identical(other.matchId, matchId) || other.matchId == matchId)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status)&&(identical(other.version, version) || other.version == version)&&(identical(other.teamOneId, teamOneId) || other.teamOneId == teamOneId)&&(identical(other.teamTwoId, teamTwoId) || other.teamTwoId == teamTwoId)&&(identical(other.setsWonTeamOne, setsWonTeamOne) || other.setsWonTeamOne == setsWonTeamOne)&&(identical(other.setsWonTeamTwo, setsWonTeamTwo) || other.setsWonTeamTwo == setsWonTeamTwo)&&(identical(other.liveScore, liveScore) || other.liveScore == liveScore)&&(identical(other.currentGameDisplay, currentGameDisplay) || other.currentGameDisplay == currentGameDisplay)&&(identical(other.winnerTeamId, winnerTeamId) || other.winnerTeamId == winnerTeamId)&&(identical(other.lastPoint, lastPoint) || other.lastPoint == lastPoint)&&(identical(other.serverTime, serverTime) || other.serverTime == serverTime)&&(identical(other.changed, changed) || other.changed == changed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LivePayloadModel&&(identical(other.event, event) || other.event == event)&&(identical(other.matchId, matchId) || other.matchId == matchId)&&(identical(other.tournamentId, tournamentId) || other.tournamentId == tournamentId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status)&&(identical(other.version, version) || other.version == version)&&(identical(other.teamOneId, teamOneId) || other.teamOneId == teamOneId)&&(identical(other.teamTwoId, teamTwoId) || other.teamTwoId == teamTwoId)&&(identical(other.setsWonTeamOne, setsWonTeamOne) || other.setsWonTeamOne == setsWonTeamOne)&&(identical(other.setsWonTeamTwo, setsWonTeamTwo) || other.setsWonTeamTwo == setsWonTeamTwo)&&(identical(other.liveScore, liveScore) || other.liveScore == liveScore)&&(identical(other.currentGameDisplay, currentGameDisplay) || other.currentGameDisplay == currentGameDisplay)&&(identical(other.winnerTeamId, winnerTeamId) || other.winnerTeamId == winnerTeamId)&&(identical(other.lastPoint, lastPoint) || other.lastPoint == lastPoint)&&(identical(other.deuceEnabled, deuceEnabled) || other.deuceEnabled == deuceEnabled)&&(identical(other.endedEarly, endedEarly) || other.endedEarly == endedEarly)&&(identical(other.serverTime, serverTime) || other.serverTime == serverTime)&&(identical(other.changed, changed) || other.changed == changed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,event,matchId,tournamentId,categoryId,status,version,teamOneId,teamTwoId,setsWonTeamOne,setsWonTeamTwo,liveScore,currentGameDisplay,winnerTeamId,lastPoint,serverTime,changed);
+int get hashCode => Object.hash(runtimeType,event,matchId,tournamentId,categoryId,status,version,teamOneId,teamTwoId,setsWonTeamOne,setsWonTeamTwo,liveScore,currentGameDisplay,winnerTeamId,lastPoint,deuceEnabled,endedEarly,serverTime,changed);
 
 @override
 String toString() {
-  return 'LivePayloadModel(event: $event, matchId: $matchId, tournamentId: $tournamentId, categoryId: $categoryId, status: $status, version: $version, teamOneId: $teamOneId, teamTwoId: $teamTwoId, setsWonTeamOne: $setsWonTeamOne, setsWonTeamTwo: $setsWonTeamTwo, liveScore: $liveScore, currentGameDisplay: $currentGameDisplay, winnerTeamId: $winnerTeamId, lastPoint: $lastPoint, serverTime: $serverTime, changed: $changed)';
+  return 'LivePayloadModel(event: $event, matchId: $matchId, tournamentId: $tournamentId, categoryId: $categoryId, status: $status, version: $version, teamOneId: $teamOneId, teamTwoId: $teamTwoId, setsWonTeamOne: $setsWonTeamOne, setsWonTeamTwo: $setsWonTeamTwo, liveScore: $liveScore, currentGameDisplay: $currentGameDisplay, winnerTeamId: $winnerTeamId, lastPoint: $lastPoint, deuceEnabled: $deuceEnabled, endedEarly: $endedEarly, serverTime: $serverTime, changed: $changed)';
 }
 
 
@@ -631,7 +635,7 @@ abstract mixin class _$LivePayloadModelCopyWith<$Res> implements $LivePayloadMod
   factory _$LivePayloadModelCopyWith(_LivePayloadModel value, $Res Function(_LivePayloadModel) _then) = __$LivePayloadModelCopyWithImpl;
 @override @useResult
 $Res call({
- String? event,@JsonKey(name: 'match_id') int matchId,@JsonKey(name: 'tournament_id') int? tournamentId,@JsonKey(name: 'category_id') int? categoryId, String status, int version,@JsonKey(name: 'team_one_id') int? teamOneId,@JsonKey(name: 'team_two_id') int? teamTwoId,@JsonKey(name: 'sets_won_team_one') int setsWonTeamOne,@JsonKey(name: 'sets_won_team_two') int setsWonTeamTwo,@JsonKey(name: 'live_score') LiveScoreModel? liveScore,@JsonKey(name: 'current_game_display') PointDisplayModel? currentGameDisplay,@JsonKey(name: 'winner_team_id') int? winnerTeamId,@JsonKey(name: 'last_point') PointEventModel? lastPoint,@JsonKey(name: 'server_time') DateTime? serverTime, bool changed
+ String? event,@JsonKey(name: 'match_id') int matchId,@JsonKey(name: 'tournament_id') int? tournamentId,@JsonKey(name: 'category_id') int? categoryId, String status, int version,@JsonKey(name: 'team_one_id') int? teamOneId,@JsonKey(name: 'team_two_id') int? teamTwoId,@JsonKey(name: 'sets_won_team_one') int setsWonTeamOne,@JsonKey(name: 'sets_won_team_two') int setsWonTeamTwo,@JsonKey(name: 'live_score') LiveScoreModel? liveScore,@JsonKey(name: 'current_game_display') PointDisplayModel? currentGameDisplay,@JsonKey(name: 'winner_team_id') int? winnerTeamId,@JsonKey(name: 'last_point') PointEventModel? lastPoint,@JsonKey(name: 'deuce_enabled') bool deuceEnabled,@JsonKey(name: 'ended_early') bool endedEarly,@JsonKey(name: 'server_time') DateTime? serverTime, bool changed
 });
 
 
@@ -648,7 +652,7 @@ class __$LivePayloadModelCopyWithImpl<$Res>
 
 /// Create a copy of LivePayloadModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? event = freezed,Object? matchId = null,Object? tournamentId = freezed,Object? categoryId = freezed,Object? status = null,Object? version = null,Object? teamOneId = freezed,Object? teamTwoId = freezed,Object? setsWonTeamOne = null,Object? setsWonTeamTwo = null,Object? liveScore = freezed,Object? currentGameDisplay = freezed,Object? winnerTeamId = freezed,Object? lastPoint = freezed,Object? serverTime = freezed,Object? changed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? event = freezed,Object? matchId = null,Object? tournamentId = freezed,Object? categoryId = freezed,Object? status = null,Object? version = null,Object? teamOneId = freezed,Object? teamTwoId = freezed,Object? setsWonTeamOne = null,Object? setsWonTeamTwo = null,Object? liveScore = freezed,Object? currentGameDisplay = freezed,Object? winnerTeamId = freezed,Object? lastPoint = freezed,Object? deuceEnabled = null,Object? endedEarly = null,Object? serverTime = freezed,Object? changed = null,}) {
   return _then(_LivePayloadModel(
 event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
 as String?,matchId: null == matchId ? _self.matchId : matchId // ignore: cast_nullable_to_non_nullable
@@ -664,7 +668,9 @@ as int,liveScore: freezed == liveScore ? _self.liveScore : liveScore // ignore: 
 as LiveScoreModel?,currentGameDisplay: freezed == currentGameDisplay ? _self.currentGameDisplay : currentGameDisplay // ignore: cast_nullable_to_non_nullable
 as PointDisplayModel?,winnerTeamId: freezed == winnerTeamId ? _self.winnerTeamId : winnerTeamId // ignore: cast_nullable_to_non_nullable
 as int?,lastPoint: freezed == lastPoint ? _self.lastPoint : lastPoint // ignore: cast_nullable_to_non_nullable
-as PointEventModel?,serverTime: freezed == serverTime ? _self.serverTime : serverTime // ignore: cast_nullable_to_non_nullable
+as PointEventModel?,deuceEnabled: null == deuceEnabled ? _self.deuceEnabled : deuceEnabled // ignore: cast_nullable_to_non_nullable
+as bool,endedEarly: null == endedEarly ? _self.endedEarly : endedEarly // ignore: cast_nullable_to_non_nullable
+as bool,serverTime: freezed == serverTime ? _self.serverTime : serverTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,changed: null == changed ? _self.changed : changed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
