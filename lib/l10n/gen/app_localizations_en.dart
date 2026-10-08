@@ -1470,6 +1470,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentOpenCheckout => 'Open checkout';
 
   @override
+  String get paymentSecureTitle => 'Secure payment';
+
+  @override
   String get paymentSucceeded => 'Payment confirmed';
 
   @override

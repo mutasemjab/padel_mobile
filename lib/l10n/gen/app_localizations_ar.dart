@@ -1486,6 +1486,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentOpenCheckout => 'فتح صفحة الدفع';
 
   @override
+  String get paymentSecureTitle => 'دفع آمن';
+
+  @override
   String get paymentSucceeded => 'تم تأكيد الدفع';
 
   @override

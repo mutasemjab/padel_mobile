@@ -421,6 +421,7 @@
   "paymentStatusTitle": "حالة الدفع",
   "paymentWaiting": "بانتظار تأكيد مزود الدفع…",
   "paymentOpenCheckout": "فتح صفحة الدفع",
+  "paymentSecureTitle": "دفع آمن",
   "paymentSucceeded": "تم تأكيد الدفع",
   "paymentFailedTitle": "لم تتم عملية الدفع",
   "paymentReference": "المرجع {ref}",

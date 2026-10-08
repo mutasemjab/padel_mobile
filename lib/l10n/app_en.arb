@@ -899,6 +899,7 @@
   "paymentStatusTitle": "Payment status",
   "paymentWaiting": "Waiting for confirmation from the payment provider…",
   "paymentOpenCheckout": "Open checkout",
+  "paymentSecureTitle": "Secure payment",
   "paymentSucceeded": "Payment confirmed",
   "paymentFailedTitle": "Payment didn't go through",
   "paymentReference": "Reference {ref}",

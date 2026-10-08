@@ -2624,6 +2624,12 @@ abstract class AppLocalizations {
   /// **'Open checkout'**
   String get paymentOpenCheckout;
 
+  /// No description provided for @paymentSecureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure payment'**
+  String get paymentSecureTitle;
+
   /// No description provided for @paymentSucceeded.
   ///
   /// In en, this message translates to:

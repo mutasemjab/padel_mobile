@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/error/failure.dart';
@@ -15,6 +14,7 @@ import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/feedback.dart';
+import '../../../../core/widgets/payment_webview.dart';
 import '../../../../core/widgets/player_card.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../../../l10n/gen/app_localizations.dart';
@@ -69,9 +69,7 @@ Future<void> startRegistrationPayment(BuildContext context, Registration registr
     }
     return;
   }
-  if (payment.checkoutUrl != null) {
-    await launchUrl(Uri.parse(payment.checkoutUrl!), mode: LaunchMode.externalApplication);
-  }
+  if (payment.checkoutUrl != null) await openPaymentPage(context, payment.checkoutUrl!);
   if (context.mounted) context.push(AppRoutes.payment(payment.reference));
 }
 

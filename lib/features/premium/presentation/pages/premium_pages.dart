@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/error/failure.dart';
@@ -20,6 +19,7 @@ import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/badges.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/feedback.dart';
+import '../../../../core/widgets/payment_webview.dart';
 import '../../../../core/widgets/state_builders.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../../../l10n/gen/app_localizations.dart';
@@ -279,9 +279,7 @@ class _PlanCard extends StatelessWidget {
     final cubit = context.read<CheckoutCubit>();
     if (await cubit.checkout(plan.key)) {
       final payment = (cubit.state as ActionSuccess).result as Payment;
-      if (payment.checkoutUrl != null) {
-        await launchUrl(Uri.parse(payment.checkoutUrl!), mode: LaunchMode.externalApplication);
-      }
+      if (payment.checkoutUrl != null && context.mounted) await openPaymentPage(context, payment.checkoutUrl!);
       if (context.mounted) await context.push(AppRoutes.payment(payment.reference));
       if (context.mounted) {
         context.read<AuthBloc>().add(const AuthEvent.refreshRequested());
@@ -598,7 +596,10 @@ class PaymentStatusPage extends StatelessWidget {
                   Gap.xl,
                   if (!p.status.isTerminal && p.checkoutUrl != null)
                     FilledButton.icon(
-                      onPressed: () => launchUrl(Uri.parse(p.checkoutUrl!), mode: LaunchMode.externalApplication),
+                      onPressed: () async {
+                        await openPaymentPage(context, p.checkoutUrl!);
+                        if (context.mounted) context.read<PaymentStatusCubit>().refresh();
+                      },
                       icon: const Icon(Icons.open_in_new_rounded),
                       label: Text(l10n.paymentOpenCheckout),
                     ),
