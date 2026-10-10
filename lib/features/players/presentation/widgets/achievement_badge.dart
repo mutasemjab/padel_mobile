@@ -45,6 +45,7 @@ class TitleArt {
     'triple_champion': 'champion',
     'win_streak_5': 'win_run',
     'win_streak_10': 'win_run',
+    'giant_killer': 'giant_killer',
     'fastest_rising': 'fastest_rising',
     'perfect_duo': 'perfect_duo',
     'tournament_mvp': 'mvp',
