@@ -341,6 +341,12 @@ class _FactsCard extends StatelessWidget {
             ),
           if (tournament.format != null)
             fact(Icons.account_tree_rounded, context.enums.label(EnumGroup.tournamentFormats, tournament.format)),
+          fact(
+            Icons.payments_rounded,
+            tournament.isPaid
+                ? l10n.tournamentEntryFee(Formatters.money(tournament.entryFee, tournament.currency))
+                : l10n.tournamentFree,
+          ),
         ],
       ),
     );

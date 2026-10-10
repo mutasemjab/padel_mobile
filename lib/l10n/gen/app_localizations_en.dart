@@ -1868,6 +1868,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationCancel => 'Cancel registration';
 
   @override
+  String tournamentEntryFee(String amount) {
+    return 'Entry fee $amount per team';
+  }
+
+  @override
+  String get registerPaymentMethod => 'Payment';
+
+  @override
+  String get registerPayOnline => 'Pay online now';
+
+  @override
+  String get registerPayOnlineHint =>
+      'Card payment via MEPS — your registration is completed instantly';
+
+  @override
+  String get registerPayCash => 'Cash at the venue';
+
+  @override
+  String get registerPayCashHint =>
+      'Pay the organizer; they confirm your payment';
+
+  @override
+  String get registerSubmitAndPay => 'Register and pay';
+
+  @override
+  String registrationCashDue(String amount) {
+    return 'Pay $amount in cash to the organizer.';
+  }
+
+  @override
+  String get registrationPayOnlineInstead => 'Pay online instead';
+
+  @override
   String get scoreDeuce => 'Deuce';
 
   @override

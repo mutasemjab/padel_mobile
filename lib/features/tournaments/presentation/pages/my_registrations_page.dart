@@ -275,7 +275,11 @@ class _RegistrationCard extends StatelessWidget {
           ],
           Gap.sm,
           PaymentStatusChip(status: r.paymentStatus),
-          if (r.canCancel || r.canEdit || r.needsPayment || r.canRenameTeam) ...[
+          if (r.cashDue) ...[
+            Gap.xs,
+            Text(l10n.registrationCashDue(Formatters.money(r.category.registrationFee)), style: context.text.bodySmall),
+          ],
+          if (r.canCancel || r.canEdit || r.needsPayment || r.cashDue || r.canRenameTeam) ...[
             Gap.md,
             Wrap(
               spacing: AppSpacing.sm,
@@ -286,6 +290,12 @@ class _RegistrationCard extends StatelessWidget {
                     onPressed: () => startRegistrationPayment(context, r),
                     icon: const Icon(Icons.payments_rounded),
                     label: Text(l10n.registrationPay),
+                  ),
+                if (r.cashDue && r.canCancel)
+                  OutlinedButton.icon(
+                    onPressed: () => startRegistrationPayment(context, r),
+                    icon: const Icon(Icons.credit_card_rounded),
+                    label: Text(l10n.registrationPayOnlineInstead),
                   ),
                 if (r.canEdit) OutlinedButton(onPressed: () => _changePartner(context), child: Text(l10n.registerChangePartner)),
                 if (r.canRenameTeam) OutlinedButton(onPressed: () => _renameTeam(context), child: Text(l10n.registrationRenameTeam)),

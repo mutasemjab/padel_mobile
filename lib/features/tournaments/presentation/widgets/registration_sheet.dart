@@ -86,6 +86,9 @@ class _RegistrationSheet extends StatefulWidget {
 class _RegistrationSheetState extends State<_RegistrationSheet> {
   final _notes = TextEditingController();
   final _teamName = TextEditingController();
+  String? _paymentMethod;
+
+  bool get _paid => widget.category.registrationFee > 0;
   PlayerSummary? _partner;
   Registration? _result;
 
@@ -123,8 +126,15 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
           partnerPlayerId: _partner?.playerId,
           notes: _notes.text.trim(),
           teamName: _teamName.text.trim(),
+          paymentMethod: _paid ? _paymentMethod : null,
         );
-    if (registration != null && mounted) setState(() => _result = registration);
+    if (registration == null || !mounted) return;
+    // Online: straight to the MEPS payment page.
+    if (registration.needsPayment) {
+      Navigator.of(context).pop((registration: registration, payNow: true));
+      return;
+    }
+    setState(() => _result = registration);
   }
 
   @override
@@ -183,6 +193,32 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
                           prefixIcon: const Icon(Icons.groups_rounded),
                         ),
                       ),
+                      if (_paid) ...[
+                        Gap.sm,
+                        Text(l10n.registerPaymentMethod.toUpperCase(), style: AppTypography.eyebrow(context)),
+                        Gap.xs,
+                        Text(
+                          l10n.tournamentEntryFee(Formatters.money(widget.category.registrationFee, widget.category.currency)),
+                          style: context.text.bodySmall,
+                        ),
+                        Gap.sm,
+                        _PayOption(
+                          icon: Icons.credit_card_rounded,
+                          title: l10n.registerPayOnline,
+                          subtitle: l10n.registerPayOnlineHint,
+                          selected: _paymentMethod == 'online',
+                          onTap: () => setState(() => _paymentMethod = 'online'),
+                        ),
+                        Gap.sm,
+                        _PayOption(
+                          icon: Icons.payments_rounded,
+                          title: l10n.registerPayCash,
+                          subtitle: l10n.registerPayCashHint,
+                          selected: _paymentMethod == 'cash',
+                          onTap: () => setState(() => _paymentMethod = 'cash'),
+                        ),
+                        Gap.md,
+                      ],
                       Gap.sm,
                       TextField(
                         controller: _notes,
@@ -192,7 +228,9 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
                       Gap.xl,
                       FilledButton(
                         onPressed: busy || !_canSubmit(state.eligibility) ? null : _submit,
-                        child: busy ? const ButtonSpinner() : Text(l10n.registerSubmit),
+                        child: busy
+                            ? const ButtonSpinner()
+                            : Text(_paid && _paymentMethod == 'online' ? l10n.registerSubmitAndPay : l10n.registerSubmit),
                       ),
                     ],
                   ),
@@ -204,6 +242,7 @@ class _RegistrationSheetState extends State<_RegistrationSheet> {
 
   bool _canSubmit(ViewState<Eligibility> state) =>
       _teamName.text.trim().length >= 2 &&
+      (!_paid || _paymentMethod != null) &&
       switch (state) {
         ViewLoaded(:final data) => data.canRegister,
         _ => false,
@@ -320,6 +359,54 @@ class _Issues extends StatelessWidget {
   }
 }
 
+/// One payment choice (online card / cash at the venue).
+class _PayOption extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _PayOption({required this.icon, required this.title, required this.subtitle, required this.selected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    final color = selected ? t.highlight : t.textMuted;
+    return Material(
+      color: selected ? t.highlight.withValues(alpha: 0.10) : Colors.transparent,
+      borderRadius: AppRadius.mdAll,
+      child: InkWell(
+        borderRadius: AppRadius.mdAll,
+        onTap: onTap,
+        child: Container(
+          padding: AppSpacing.cardDense,
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.mdAll,
+            border: Border.all(color: selected ? t.highlight : t.outline, width: selected ? 2 : 1),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: color),
+              Gap.md,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: context.text.titleSmall),
+                    Text(subtitle, style: context.text.bodySmall),
+                  ],
+                ),
+              ),
+              Icon(selected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded, color: color),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _Done extends StatelessWidget {
   final Registration registration;
 
@@ -347,6 +434,14 @@ class _Done extends StatelessWidget {
         if (waitlisted) ...[
           Gap.sm,
           Text(l10n.registerFullWaitlist, style: context.text.bodySmall, textAlign: TextAlign.center),
+        ],
+        if (registration.cashDue) ...[
+          Gap.sm,
+          Text(
+            l10n.registrationCashDue(Formatters.money(registration.category.registrationFee)),
+            style: context.text.bodySmall,
+            textAlign: TextAlign.center,
+          ),
         ],
         Gap.xl,
         if (registration.needsPayment) ...[

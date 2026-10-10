@@ -118,8 +118,8 @@ class RegistrationCubit extends Cubit<RegistrationFlowState> {
     );
   }
 
-  Future<Registration?> submit(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) =>
-      _run(() => register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName));
+  Future<Registration?> submit(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod}) =>
+      _run(() => register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName, paymentMethod: paymentMethod));
 
   Future<bool> changeTeamName(int registrationId, String teamName) async {
     final rename = renameTeam;

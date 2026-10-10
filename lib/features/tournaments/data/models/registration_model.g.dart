@@ -74,6 +74,7 @@ _RegistrationModel _$RegistrationModelFromJson(Map<String, dynamic> json) =>
       partnerConfirmed: json['partner_confirmed'] as bool? ?? true,
       teamName: json['team_name'] as String?,
       canRenameTeam: json['can_rename_team'] as bool? ?? false,
+      paymentMethod: json['payment_method'] as String?,
     );
 
 Map<String, dynamic> _$RegistrationModelToJson(_RegistrationModel instance) =>
@@ -94,4 +95,5 @@ Map<String, dynamic> _$RegistrationModelToJson(_RegistrationModel instance) =>
       'partner_confirmed': instance.partnerConfirmed,
       'team_name': instance.teamName,
       'can_rename_team': instance.canRenameTeam,
+      'payment_method': instance.paymentMethod,
     };

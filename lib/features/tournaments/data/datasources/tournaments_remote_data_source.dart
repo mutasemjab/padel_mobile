@@ -63,7 +63,7 @@ abstract class TournamentsRemoteDataSource {
   Future<LivePayload> getMatchLive(int matchId, {int? sinceVersion});
   Future<List<PointEvent>> getMatchPoints(int matchId, {bool includeVoided = false});
   Future<Eligibility> getEligibility(int tournamentId, int categoryId, {String? partnerPlayerId});
-  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName});
+  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod});
   Future<Registration?> renameTeam(int registrationId, String teamName);
   Future<Paginated<Registration>> getMyRegistrations({String? status, int page = 1});
   Future<Registration?> cancelRegistration(int registrationId);
@@ -163,10 +163,11 @@ class TournamentsRemoteDataSourceImpl implements TournamentsRemoteDataSource {
   }
 
   @override
-  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) async {
+  Future<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod}) async {
     final response = await dio.post(ApiEndpoints.categoryRegistrations(tournamentId, categoryId), data: {
       'partner_player_id': ?partnerPlayerId,
       'team_name': ?teamName,
+      'payment_method': ?paymentMethod,
       if (notes != null && notes.isNotEmpty) 'notes': notes,
     });
     return registrationFromJson(ApiEnvelope.map(response));

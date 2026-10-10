@@ -27,7 +27,7 @@ abstract class TournamentsRepository {
   ApiResult<LivePayload> getMatchLive(int matchId, {int? sinceVersion});
   ApiResult<List<PointEvent>> getMatchPoints(int matchId, {bool includeVoided = false});
   ApiResult<Eligibility> getEligibility(int tournamentId, int categoryId, {String? partnerPlayerId});
-  ApiResult<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName});
+  ApiResult<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod});
 
   /// The pair's team name; changeable until the tournament starts.
   ApiResult<Registration?> renameTeam(int registrationId, String teamName);

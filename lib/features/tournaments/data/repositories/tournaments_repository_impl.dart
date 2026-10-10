@@ -84,8 +84,8 @@ class TournamentsRepositoryImpl implements TournamentsRepository {
       guard(() => remote.getEligibility(tournamentId, categoryId, partnerPlayerId: partnerPlayerId));
 
   @override
-  ApiResult<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) =>
-      guard(() => remote.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName));
+  ApiResult<Registration> register(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod}) =>
+      guard(() => remote.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName, paymentMethod: paymentMethod));
 
   @override
   ApiResult<Registration?> renameTeam(int registrationId, String teamName) =>

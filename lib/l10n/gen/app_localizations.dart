@@ -3350,6 +3350,60 @@ abstract class AppLocalizations {
   /// **'Cancel registration'**
   String get registrationCancel;
 
+  /// No description provided for @tournamentEntryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry fee {amount} per team'**
+  String tournamentEntryFee(String amount);
+
+  /// No description provided for @registerPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get registerPaymentMethod;
+
+  /// No description provided for @registerPayOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online now'**
+  String get registerPayOnline;
+
+  /// No description provided for @registerPayOnlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Card payment via MEPS — your registration is completed instantly'**
+  String get registerPayOnlineHint;
+
+  /// No description provided for @registerPayCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash at the venue'**
+  String get registerPayCash;
+
+  /// No description provided for @registerPayCashHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the organizer; they confirm your payment'**
+  String get registerPayCashHint;
+
+  /// No description provided for @registerSubmitAndPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Register and pay'**
+  String get registerSubmitAndPay;
+
+  /// No description provided for @registrationCashDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} in cash to the organizer.'**
+  String registrationCashDue(String amount);
+
+  /// No description provided for @registrationPayOnlineInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online instead'**
+  String get registrationPayOnlineInstead;
+
   /// No description provided for @scoreDeuce.
   ///
   /// In en, this message translates to:

@@ -1107,6 +1107,25 @@
   "myRegistrationsTitle": "My registrations",
   "myRegistrationsEmpty": "You haven't registered for a tournament yet",
   "registrationCancel": "Cancel registration",
+  "tournamentEntryFee": "Entry fee {amount} per team",
+  "@tournamentEntryFee": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "registerPaymentMethod": "Payment",
+  "registerPayOnline": "Pay online now",
+  "registerPayOnlineHint": "Card payment via MEPS — your registration is completed instantly",
+  "registerPayCash": "Cash at the venue",
+  "registerPayCashHint": "Pay the organizer; they confirm your payment",
+  "registerSubmitAndPay": "Register and pay",
+  "registrationCashDue": "Pay {amount} in cash to the organizer.",
+  "@registrationCashDue": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "registrationPayOnlineInstead": "Pay online instead",
   "scoreDeuce": "Deuce",
   "scoreAdvantage": "ADV",
   "scoreGoldenPoint": "Golden point",

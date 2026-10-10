@@ -85,6 +85,9 @@ _TournamentModel _$TournamentModelFromJson(Map<String, dynamic> json) =>
       certificationStatus: json['certification_status'] as String?,
       isRankingEligible: json['is_ranking_eligible'] as bool? ?? false,
       registrationOpen: json['registration_open'] as bool? ?? false,
+      isPaid: json['is_paid'] as bool? ?? false,
+      entryFee: json['entry_fee'] as num? ?? 0,
+      currency: json['currency'] as String? ?? 'JOD',
       liveMatchesCount: (json['live_matches_count'] as num?)?.toInt() ?? 0,
       categories:
           (json['categories'] as List<dynamic>?)
@@ -116,6 +119,9 @@ Map<String, dynamic> _$TournamentModelToJson(
   'certification_status': instance.certificationStatus,
   'is_ranking_eligible': instance.isRankingEligible,
   'registration_open': instance.registrationOpen,
+  'is_paid': instance.isPaid,
+  'entry_fee': instance.entryFee,
+  'currency': instance.currency,
   'live_matches_count': instance.liveMatchesCount,
   'categories': instance.categories.map((e) => e.toJson()).toList(),
 };

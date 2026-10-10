@@ -1881,6 +1881,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get registrationCancel => 'إلغاء التسجيل';
 
   @override
+  String tournamentEntryFee(String amount) {
+    return 'رسوم المشاركة $amount لكل فريق';
+  }
+
+  @override
+  String get registerPaymentMethod => 'الدفع';
+
+  @override
+  String get registerPayOnline => 'ادفع أونلاين الآن';
+
+  @override
+  String get registerPayOnlineHint =>
+      'دفع بالبطاقة عبر ميبس — يكتمل تسجيلك فوراً';
+
+  @override
+  String get registerPayCash => 'كاش في الملعب';
+
+  @override
+  String get registerPayCashHint => 'ادفع للمنظم وهو يؤكد استلام المبلغ';
+
+  @override
+  String get registerSubmitAndPay => 'سجّل وادفع';
+
+  @override
+  String registrationCashDue(String amount) {
+    return 'ادفع $amount كاش للمنظم.';
+  }
+
+  @override
+  String get registrationPayOnlineInstead => 'ادفع أونلاين بدلاً من ذلك';
+
+  @override
   String get scoreDeuce => 'Deuce';
 
   @override

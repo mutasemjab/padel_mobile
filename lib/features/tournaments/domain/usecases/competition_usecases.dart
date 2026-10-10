@@ -63,8 +63,8 @@ class CheckEligibilityUseCase {
 class RegisterForCategoryUseCase {
   final TournamentsRepository repository;
   RegisterForCategoryUseCase(this.repository);
-  ApiResult<Registration> call(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName}) =>
-      repository.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName);
+  ApiResult<Registration> call(int tournamentId, int categoryId, {String? partnerPlayerId, String? notes, String? teamName, String? paymentMethod}) =>
+      repository.register(tournamentId, categoryId, partnerPlayerId: partnerPlayerId, notes: notes, teamName: teamName, paymentMethod: paymentMethod);
 }
 
 class GetMyRegistrationsUseCase {

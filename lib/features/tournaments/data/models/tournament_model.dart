@@ -78,6 +78,9 @@ abstract class TournamentModel with _$TournamentModel {
     @JsonKey(name: 'certification_status') String? certificationStatus,
     @JsonKey(name: 'is_ranking_eligible') @Default(false) bool isRankingEligible,
     @JsonKey(name: 'registration_open') @Default(false) bool registrationOpen,
+    @JsonKey(name: 'is_paid') @Default(false) bool isPaid,
+    @JsonKey(name: 'entry_fee') @Default(0) num entryFee,
+    @Default('JOD') String currency,
     @JsonKey(name: 'live_matches_count') @Default(0) int liveMatchesCount,
     @Default([]) List<TournamentCategoryModel> categories,
   }) = _TournamentModel;
@@ -105,6 +108,9 @@ extension TournamentModelX on TournamentModel {
         certificationStatus: certificationStatus,
         isRankingEligible: isRankingEligible,
         registrationOpen: registrationOpen,
+        isPaid: isPaid,
+        entryFee: entryFee,
+        currency: currency,
         liveMatchesCount: liveMatchesCount,
         categories: categories.map((c) => c.toEntity()).toList(),
       );

@@ -160,6 +160,11 @@ class Tournament extends Equatable {
   final int liveMatchesCount;
   final List<TournamentCategory> categories;
 
+  /// Paid tournament: every team pays [entryFee] (cash at the venue or online).
+  final bool isPaid;
+  final num entryFee;
+  final String currency;
+
   const Tournament({
     required this.id,
     required this.name,
@@ -180,6 +185,9 @@ class Tournament extends Equatable {
     this.registrationOpen = false,
     this.liveMatchesCount = 0,
     this.categories = const [],
+    this.isPaid = false,
+    this.entryFee = 0,
+    this.currency = 'JOD',
   });
 
   bool get isRanked => competitionType == CompetitionType.ranked;
@@ -205,5 +213,8 @@ class Tournament extends Equatable {
         registrationOpen,
         liveMatchesCount,
         categories,
+        isPaid,
+        entryFee,
+        currency,
       ];
 }

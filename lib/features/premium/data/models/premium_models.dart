@@ -105,7 +105,8 @@ abstract class PaymentModel with _$PaymentModel {
     String? provider,
     @Default('pending') String status,
     @JsonKey(name: 'checkout_url') String? checkoutUrl,
-    @JsonKey(name: 'client_data') Map<String, dynamic>? clientData,
+    // Object, not Map: older servers sent an empty list ([]) here.
+    @JsonKey(name: 'client_data') Object? clientData,
     @JsonKey(name: 'failure_reason') String? failureReason,
     @JsonKey(name: 'paid_at') DateTime? paidAt,
     @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -123,7 +124,7 @@ extension PaymentModelX on PaymentModel {
         provider: provider,
         status: PaymentTransactionStatus.fromApi(status),
         checkoutUrl: checkoutUrl,
-        clientData: clientData,
+        clientData: clientData is Map ? Map<String, dynamic>.from(clientData! as Map) : null,
         failureReason: failureReason,
         paidAt: paidAt,
         createdAt: createdAt,

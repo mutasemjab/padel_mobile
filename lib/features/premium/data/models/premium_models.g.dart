@@ -120,7 +120,7 @@ _PaymentModel _$PaymentModelFromJson(Map<String, dynamic> json) =>
       provider: json['provider'] as String?,
       status: json['status'] as String? ?? 'pending',
       checkoutUrl: json['checkout_url'] as String?,
-      clientData: json['client_data'] as Map<String, dynamic>?,
+      clientData: json['client_data'],
       failureReason: json['failure_reason'] as String?,
       paidAt: json['paid_at'] == null
           ? null

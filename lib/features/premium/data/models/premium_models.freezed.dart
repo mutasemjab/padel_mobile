@@ -1175,7 +1175,8 @@ $SubscriptionModelCopyWith<$Res>? get subscription {
 /// @nodoc
 mixin _$PaymentModel {
 
- String get reference; String? get type; num get amount; String? get currency; String? get provider; String get status;@JsonKey(name: 'checkout_url') String? get checkoutUrl;@JsonKey(name: 'client_data') Map<String, dynamic>? get clientData;@JsonKey(name: 'failure_reason') String? get failureReason;@JsonKey(name: 'paid_at') DateTime? get paidAt;@JsonKey(name: 'created_at') DateTime? get createdAt;
+ String get reference; String? get type; num get amount; String? get currency; String? get provider; String get status;@JsonKey(name: 'checkout_url') String? get checkoutUrl;// Object, not Map: older servers sent an empty list ([]) here.
+@JsonKey(name: 'client_data') Object? get clientData;@JsonKey(name: 'failure_reason') String? get failureReason;@JsonKey(name: 'paid_at') DateTime? get paidAt;@JsonKey(name: 'created_at') DateTime? get createdAt;
 /// Create a copy of PaymentModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1208,7 +1209,7 @@ abstract mixin class $PaymentModelCopyWith<$Res>  {
   factory $PaymentModelCopyWith(PaymentModel value, $Res Function(PaymentModel) _then) = _$PaymentModelCopyWithImpl;
 @useResult
 $Res call({
- String reference, String? type, num amount, String? currency, String? provider, String status,@JsonKey(name: 'checkout_url') String? checkoutUrl,@JsonKey(name: 'client_data') Map<String, dynamic>? clientData,@JsonKey(name: 'failure_reason') String? failureReason,@JsonKey(name: 'paid_at') DateTime? paidAt,@JsonKey(name: 'created_at') DateTime? createdAt
+ String reference, String? type, num amount, String? currency, String? provider, String status,@JsonKey(name: 'checkout_url') String? checkoutUrl,@JsonKey(name: 'client_data') Object? clientData,@JsonKey(name: 'failure_reason') String? failureReason,@JsonKey(name: 'paid_at') DateTime? paidAt,@JsonKey(name: 'created_at') DateTime? createdAt
 });
 
 
@@ -1234,8 +1235,7 @@ as num,currency: freezed == currency ? _self.currency : currency // ignore: cast
 as String?,provider: freezed == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,checkoutUrl: freezed == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
-as String?,clientData: freezed == clientData ? _self.clientData : clientData // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>?,failureReason: freezed == failureReason ? _self.failureReason : failureReason // ignore: cast_nullable_to_non_nullable
+as String?,clientData: freezed == clientData ? _self.clientData : clientData ,failureReason: freezed == failureReason ? _self.failureReason : failureReason // ignore: cast_nullable_to_non_nullable
 as String?,paidAt: freezed == paidAt ? _self.paidAt : paidAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -1323,7 +1323,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Map<String, dynamic>? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Object? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentModel() when $default != null:
 return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.provider,_that.status,_that.checkoutUrl,_that.clientData,_that.failureReason,_that.paidAt,_that.createdAt);case _:
@@ -1344,7 +1344,7 @@ return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.pro
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Map<String, dynamic>? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Object? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentModel():
 return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.provider,_that.status,_that.checkoutUrl,_that.clientData,_that.failureReason,_that.paidAt,_that.createdAt);case _:
@@ -1364,7 +1364,7 @@ return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.pro
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Map<String, dynamic>? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String reference,  String? type,  num amount,  String? currency,  String? provider,  String status, @JsonKey(name: 'checkout_url')  String? checkoutUrl, @JsonKey(name: 'client_data')  Object? clientData, @JsonKey(name: 'failure_reason')  String? failureReason, @JsonKey(name: 'paid_at')  DateTime? paidAt, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentModel() when $default != null:
 return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.provider,_that.status,_that.checkoutUrl,_that.clientData,_that.failureReason,_that.paidAt,_that.createdAt);case _:
@@ -1379,7 +1379,7 @@ return $default(_that.reference,_that.type,_that.amount,_that.currency,_that.pro
 @JsonSerializable()
 
 class _PaymentModel implements PaymentModel {
-  const _PaymentModel({required this.reference, this.type, this.amount = 0, this.currency, this.provider, this.status = 'pending', @JsonKey(name: 'checkout_url') this.checkoutUrl, @JsonKey(name: 'client_data') final  Map<String, dynamic>? clientData, @JsonKey(name: 'failure_reason') this.failureReason, @JsonKey(name: 'paid_at') this.paidAt, @JsonKey(name: 'created_at') this.createdAt}): _clientData = clientData;
+  const _PaymentModel({required this.reference, this.type, this.amount = 0, this.currency, this.provider, this.status = 'pending', @JsonKey(name: 'checkout_url') this.checkoutUrl, @JsonKey(name: 'client_data') this.clientData, @JsonKey(name: 'failure_reason') this.failureReason, @JsonKey(name: 'paid_at') this.paidAt, @JsonKey(name: 'created_at') this.createdAt});
   factory _PaymentModel.fromJson(Map<String, dynamic> json) => _$PaymentModelFromJson(json);
 
 @override final  String reference;
@@ -1389,15 +1389,8 @@ class _PaymentModel implements PaymentModel {
 @override final  String? provider;
 @override@JsonKey() final  String status;
 @override@JsonKey(name: 'checkout_url') final  String? checkoutUrl;
- final  Map<String, dynamic>? _clientData;
-@override@JsonKey(name: 'client_data') Map<String, dynamic>? get clientData {
-  final value = _clientData;
-  if (value == null) return null;
-  if (_clientData is EqualUnmodifiableMapView) return _clientData;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(value);
-}
-
+// Object, not Map: older servers sent an empty list ([]) here.
+@override@JsonKey(name: 'client_data') final  Object? clientData;
 @override@JsonKey(name: 'failure_reason') final  String? failureReason;
 @override@JsonKey(name: 'paid_at') final  DateTime? paidAt;
 @override@JsonKey(name: 'created_at') final  DateTime? createdAt;
@@ -1415,12 +1408,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentModel&&(identical(other.reference, reference) || other.reference == reference)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.status, status) || other.status == status)&&(identical(other.checkoutUrl, checkoutUrl) || other.checkoutUrl == checkoutUrl)&&const DeepCollectionEquality().equals(other._clientData, _clientData)&&(identical(other.failureReason, failureReason) || other.failureReason == failureReason)&&(identical(other.paidAt, paidAt) || other.paidAt == paidAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentModel&&(identical(other.reference, reference) || other.reference == reference)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.status, status) || other.status == status)&&(identical(other.checkoutUrl, checkoutUrl) || other.checkoutUrl == checkoutUrl)&&const DeepCollectionEquality().equals(other.clientData, clientData)&&(identical(other.failureReason, failureReason) || other.failureReason == failureReason)&&(identical(other.paidAt, paidAt) || other.paidAt == paidAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reference,type,amount,currency,provider,status,checkoutUrl,const DeepCollectionEquality().hash(_clientData),failureReason,paidAt,createdAt);
+int get hashCode => Object.hash(runtimeType,reference,type,amount,currency,provider,status,checkoutUrl,const DeepCollectionEquality().hash(clientData),failureReason,paidAt,createdAt);
 
 @override
 String toString() {
@@ -1435,7 +1428,7 @@ abstract mixin class _$PaymentModelCopyWith<$Res> implements $PaymentModelCopyWi
   factory _$PaymentModelCopyWith(_PaymentModel value, $Res Function(_PaymentModel) _then) = __$PaymentModelCopyWithImpl;
 @override @useResult
 $Res call({
- String reference, String? type, num amount, String? currency, String? provider, String status,@JsonKey(name: 'checkout_url') String? checkoutUrl,@JsonKey(name: 'client_data') Map<String, dynamic>? clientData,@JsonKey(name: 'failure_reason') String? failureReason,@JsonKey(name: 'paid_at') DateTime? paidAt,@JsonKey(name: 'created_at') DateTime? createdAt
+ String reference, String? type, num amount, String? currency, String? provider, String status,@JsonKey(name: 'checkout_url') String? checkoutUrl,@JsonKey(name: 'client_data') Object? clientData,@JsonKey(name: 'failure_reason') String? failureReason,@JsonKey(name: 'paid_at') DateTime? paidAt,@JsonKey(name: 'created_at') DateTime? createdAt
 });
 
 
@@ -1461,8 +1454,7 @@ as num,currency: freezed == currency ? _self.currency : currency // ignore: cast
 as String?,provider: freezed == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,checkoutUrl: freezed == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
-as String?,clientData: freezed == clientData ? _self._clientData : clientData // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>?,failureReason: freezed == failureReason ? _self.failureReason : failureReason // ignore: cast_nullable_to_non_nullable
+as String?,clientData: freezed == clientData ? _self.clientData : clientData ,failureReason: freezed == failureReason ? _self.failureReason : failureReason // ignore: cast_nullable_to_non_nullable
 as String?,paidAt: freezed == paidAt ? _self.paidAt : paidAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,

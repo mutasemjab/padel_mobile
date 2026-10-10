@@ -91,6 +91,9 @@ class Registration extends Equatable {
   /// The pair may still change the partner / notes (pending, waitlisted, changes requested).
   final bool canEdit;
 
+  /// Paid tournaments: 'cash' (pay the organizer at the venue) or 'online' (MEPS).
+  final String? paymentMethod;
+
   /// The pair's team name (required when registering from the app).
   final String? teamName;
 
@@ -120,9 +123,14 @@ class Registration extends Equatable {
     this.partnerConfirmed = true,
     this.teamName,
     this.canRenameTeam = false,
+    this.paymentMethod,
   });
 
-  bool get needsPayment => paymentStatus == PaymentStatus.pending;
+  /// Online and still unpaid: offer "Pay now" (cash is paid at the venue).
+  bool get needsPayment => paymentStatus == PaymentStatus.pending && paymentMethod != 'cash';
+
+  /// Chose cash and the organizer hasn't recorded it yet.
+  bool get cashDue => paymentStatus == PaymentStatus.pending && paymentMethod == 'cash';
 
   @override
   List<Object?> get props => [
@@ -142,5 +150,6 @@ class Registration extends Equatable {
         partnerConfirmed,
         teamName,
         canRenameTeam,
+        paymentMethod,
       ];
 }
