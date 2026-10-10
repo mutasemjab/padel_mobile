@@ -98,3 +98,5 @@ flutter:
      # Playmaker login fonts, bundled so the first screen never waits on
      # a download (google_fonts picks these up by file name).
      - assets/fonts/
+     # Title artwork and the bronze / silver / gold frames.
+     - assets/titles/

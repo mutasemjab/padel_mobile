@@ -141,7 +141,7 @@ class _BadgeGrid extends StatelessWidget {
       });
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = (constraints.maxWidth / 104).floor().clamp(3, 8);
+        final columns = (constraints.maxWidth / 110).floor().clamp(3, 8);
         const gap = AppSpacing.sm;
         final width = (constraints.maxWidth - gap * (columns - 1)) / columns;
         return Wrap(
@@ -167,7 +167,7 @@ class _TitleTile extends StatelessWidget {
     final metal = TitleGrade.of(achievement.rarity).metal[1];
     final on = achievement.isUnlocked;
     return Container(
-      height: 128,
+      height: 146,
       alignment: Alignment.topCenter,
       padding: const EdgeInsetsDirectional.fromSTEB(4, 10, 4, 8),
       decoration: BoxDecoration(
@@ -178,7 +178,7 @@ class _TitleTile extends StatelessWidget {
         color: on ? null : (t.isDark ? const Color(0x0AF3EEDF) : AppColors.ivory),
         border: Border.all(color: on ? metal.withValues(alpha: .4) : (t.isDark ? AppColors.cream08 : AppColors.lightOutline)),
       ),
-      child: AchievementBadge(achievement: achievement, size: 58, onTap: () => showAchievementDetail(context, achievement)),
+      child: AchievementBadge(achievement: achievement, size: 76, onTap: () => showAchievementDetail(context, achievement)),
     );
   }
 }

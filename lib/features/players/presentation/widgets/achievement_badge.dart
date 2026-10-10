@@ -32,18 +32,31 @@ enum TitleGrade {
   };
 }
 
-/// Bundled title artwork (one illustration per achievement `code`, framed by
-/// the grade's ring). A code joins [codes] once its art is in
-/// `assets/titles/`; until then the badge draws its own frame and glyph.
+/// Bundled title artwork: one illustration per title, framed by its grade's
+/// ring (`assets/titles/`). [art] maps a backend achievement `code` to its
+/// illustration; codes without one keep the drawn glyph inside the frame.
 class TitleArt {
   const TitleArt._();
 
-  static const Set<String> codes = {};
-  static const bool frames = false;
+  static const Map<String, String> art = {
+    'first_official_match': 'matches',
+    'matches_25': 'matches',
+    'win_streak_5': 'win_run',
+    'win_streak_10': 'win_run',
+  };
 
-  static String art(String code) => 'assets/titles/$code.webp';
+  static const bool frames = true;
+
+  static String? artFor(String code) => art[code] == null ? null : 'assets/titles/${art[code]}.webp';
   static String frame(TitleGrade grade) => 'assets/titles/frame-${grade.name}.webp';
-  static const premiumFrame = 'assets/titles/frame-premium.webp';
+
+  /// Where each frame's hole sits, as fractions of the square image
+  /// (centre x, centre y, radius) — measured when the frame was cut.
+  static ({double x, double y, double r}) hole(TitleGrade grade) => switch (grade) {
+    TitleGrade.bronze => (x: .4995, y: .4449, r: .3374),
+    TitleGrade.silver => (x: .4983, y: .5127, r: .3177),
+    TitleGrade.gold => (x: .4993, y: .4879, r: .2819),
+  };
 }
 
 /// Collectible title badge. A server icon wins, then bundled art, then the
@@ -144,8 +157,8 @@ class AchievementBadge extends StatelessWidget {
   ]);
 }
 
-/// A title in its grade's frame: bundled art when we have it, otherwise the
-/// drawn medal (metal ring, court-green well, the title's glyph).
+/// A title in its grade's frame: court-green well, the title's art (or a
+/// server icon, or its drawn glyph) in the hole, and the metal frame on top.
 class _TitleMedal extends StatelessWidget {
   final Achievement achievement;
   final double size;
@@ -156,49 +169,64 @@ class _TitleMedal extends StatelessWidget {
   Widget build(BuildContext context) {
     final grade = TitleGrade.of(achievement.rarity);
     final glow = achievement.isUnlocked
-        ? [BoxShadow(color: grade.metal[1].withValues(alpha: grade == TitleGrade.gold ? .5 : .32), blurRadius: size * .4, spreadRadius: -size * .08)]
+        ? [BoxShadow(color: grade.metal[1].withValues(alpha: grade == TitleGrade.gold ? .45 : .28), blurRadius: size * .4, spreadRadius: -size * .12)]
         : null;
     final drawn = CustomPaint(
       painter: _MedalPainter(grade),
       child: Center(child: _Glyph(achievement: achievement, grade: grade, size: size)),
     );
-    final hasArt = TitleArt.codes.contains(achievement.code);
-
-    Widget inner;
-    if (achievement.iconUrl != null) {
-      inner = Stack(
-        fit: StackFit.expand,
-        children: [
-          CustomPaint(painter: _MedalPainter(grade)),
-          Padding(
-            padding: EdgeInsets.all(size * .19),
-            child: ClipOval(child: AppNetworkImage(url: achievement.iconUrl, fallback: _Glyph(achievement: achievement, grade: grade, size: size))),
-          ),
-        ],
-      );
-    } else if (hasArt) {
-      inner = Stack(
-        fit: StackFit.expand,
-        children: [
-          if (TitleArt.frames)
-            Image.asset(TitleArt.frame(grade), fit: BoxFit.contain, errorBuilder: (_, _, _) => CustomPaint(painter: _MedalPainter(grade)))
-          else
-            CustomPaint(painter: _MedalPainter(grade)),
-          Padding(
-            padding: EdgeInsets.all(size * .2),
-            child: Image.asset(TitleArt.art(achievement.code), fit: BoxFit.contain, errorBuilder: (_, _, _) => const SizedBox.shrink()),
-          ),
-        ],
-      );
-    } else {
-      inner = drawn;
+    if (!TitleArt.frames) {
+      return Container(width: size, height: size, decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: glow), child: drawn);
     }
 
-    return Container(
+    final h = TitleArt.hole(grade);
+    final d = h.r * 2 * size;
+    final art = TitleArt.artFor(achievement.code);
+    final Widget center = achievement.iconUrl != null
+        ? ClipOval(child: AppNetworkImage(url: achievement.iconUrl, fallback: _Glyph(achievement: achievement, grade: grade, size: size * .8)))
+        : art != null
+        ? OverflowBox(
+            maxWidth: d * 1.18,
+            maxHeight: d * 1.18,
+            child: Image.asset(art, width: d * 1.18, height: d * 1.18, fit: BoxFit.contain, filterQuality: FilterQuality.medium),
+          )
+        : Center(child: _Glyph(achievement: achievement, grade: grade, size: size * .78));
+
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: glow),
-      child: inner,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // the well inside the hole
+          Positioned(
+            left: h.x * size - d / 2,
+            top: h.y * size - d / 2,
+            width: d,
+            height: d,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: glow,
+                gradient: const RadialGradient(
+                  center: Alignment(0, -.5),
+                  colors: [AppColors.green600, AppColors.green800, AppColors.green950],
+                  stops: [0, .6, 1],
+                ),
+              ),
+              child: center,
+            ),
+          ),
+          Positioned.fill(
+            child: Image.asset(
+              TitleArt.frame(grade),
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.medium,
+              errorBuilder: (_, _, _) => drawn,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -393,8 +421,8 @@ class _PremiumDiamond extends StatelessWidget {
               angle: -math.pi / 4,
               child: Center(
                 child: achievement.iconUrl == null
-                    ? (TitleArt.codes.contains(achievement.code)
-                          ? Image.asset(TitleArt.art(achievement.code), width: inner * .78, errorBuilder: (_, _, _) => _diamond(inner))
+                    ? (TitleArt.artFor(achievement.code) != null
+                          ? Image.asset(TitleArt.artFor(achievement.code)!, width: inner * .78, errorBuilder: (_, _, _) => _diamond(inner))
                           : _diamond(inner))
                     : ClipOval(
                         child: SizedBox(
