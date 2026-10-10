@@ -3359,7 +3359,7 @@ abstract class AppLocalizations {
   /// No description provided for @scoreAdvantage.
   ///
   /// In en, this message translates to:
-  /// **'Advantage'**
+  /// **'ADV'**
   String get scoreAdvantage;
 
   /// No description provided for @scoreGoldenPoint.

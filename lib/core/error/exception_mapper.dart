@@ -66,6 +66,8 @@ class ExceptionMapper {
     }
 
     if (statusCode == 400) return BusinessFailure(message ?? 'Request failed.', code);
+    // The payment gateway refused (wrong credentials, declined...): show its reason, not "unexpected error".
+    if (code == ApiErrorCodes.paymentGatewayError && message != null) return BusinessFailure(message, code);
     if (statusCode >= 500) return const ServerFailure();
     if (message != null) return BusinessFailure(message, code);
     return const UnknownFailure();

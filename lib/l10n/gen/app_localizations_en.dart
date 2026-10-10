@@ -1871,7 +1871,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scoreDeuce => 'Deuce';
 
   @override
-  String get scoreAdvantage => 'Advantage';
+  String get scoreAdvantage => 'ADV';
 
   @override
   String get scoreGoldenPoint => 'Golden point';

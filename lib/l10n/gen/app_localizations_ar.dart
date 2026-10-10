@@ -1881,10 +1881,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get registrationCancel => 'إلغاء التسجيل';
 
   @override
-  String get scoreDeuce => 'ديوس';
+  String get scoreDeuce => 'Deuce';
 
   @override
-  String get scoreAdvantage => 'أدفانتج';
+  String get scoreAdvantage => 'ADV';
 
   @override
   String get scoreGoldenPoint => 'النقطة الذهبية';

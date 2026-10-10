@@ -14,6 +14,7 @@ class ApiErrorCodes {
   static const String notFound = 'NOT_FOUND';
   static const String rateLimited = 'RATE_LIMITED';
   static const String paymentProviderNotConfigured = 'PAYMENT_PROVIDER_NOT_CONFIGURED';
+  static const String paymentGatewayError = 'PAYMENT_GATEWAY_ERROR';
   static const String threeDProviderNotConfigured = 'THREE_D_PROVIDER_NOT_CONFIGURED';
 
   // Phone + OTP sign-in
