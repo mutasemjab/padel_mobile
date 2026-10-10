@@ -41,8 +41,21 @@ class TitleArt {
   static const Map<String, String> art = {
     'first_official_match': 'matches',
     'matches_25': 'matches',
+    'tournament_champion': 'champion',
+    'triple_champion': 'champion',
     'win_streak_5': 'win_run',
     'win_streak_10': 'win_run',
+    'fastest_rising': 'fastest_rising',
+    'perfect_duo': 'perfect_duo',
+    'tournament_mvp': 'mvp',
+    'number_one_c': 'number_one',
+    'number_one_c_plus': 'number_one',
+    'number_one_b': 'number_one',
+    'number_one_b_plus': 'number_one',
+    'number_one_a': 'number_one',
+    'number_one_a_plus': 'number_one',
+    'elite_member': 'elite',
+    'premium_identity': 'identity',
   };
 
   static const bool frames = true;
@@ -225,6 +238,24 @@ class _TitleMedal extends StatelessWidget {
               errorBuilder: (_, _, _) => drawn,
             ),
           ),
+          // "First in level" titles share one illustration — the level rides on a plate.
+          if ((art: art, level: _Glyph.levelOf(achievement.code)) case (art: String _, level: final String level))
+            Positioned(
+              left: 0,
+              right: 0,
+              top: (h.y + h.r * .62) * size,
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: size * .07, vertical: size * .012),
+                  decoration: BoxDecoration(
+                    gradient: AppMetals.fill(grade.metal),
+                    borderRadius: BorderRadius.circular(size),
+                    boxShadow: const [BoxShadow(color: Color(0x80000000), blurRadius: 6)],
+                  ),
+                  child: Text(level, style: AppFonts.numeral(size: size * .14, weight: FontWeight.w700, height: 1.1, color: AppColors.green950)),
+                ),
+              ),
+            ),
         ],
       ),
     );
