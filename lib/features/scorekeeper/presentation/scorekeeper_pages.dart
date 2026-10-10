@@ -9,11 +9,15 @@ import '../../../core/meta/enums_service.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/state/view_state.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_effects.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/theme/app_tokens.dart';
+import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/feedback.dart';
+import '../../../core/widgets/player_avatar.dart';
+import '../../../core/widgets/pm_art.dart';
 import '../../../core/widgets/state_builders.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../auth/presentation/widgets/auth_text_field.dart';
@@ -58,7 +62,35 @@ class _ScorekeeperLoginPageState extends State<ScorekeeperLoginPage> {
           builder: (context, state) => ListView(
             padding: AppSpacing.page,
             children: [
-              const Icon(Icons.scoreboard_rounded, size: 64, color: AppColors.accent),
+              // The login's court scene, handed to the officials: emblem,
+              // staff seal and the flying ball.
+              PmHeroPanel(
+                ball: true,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 40),
+                    Container(
+                      width: 92,
+                      height: 92,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [AppColors.green600, AppColors.green900],
+                        ),
+                        border: Border.all(color: AppGlass.hairlineStrong),
+                        boxShadow: const [BoxShadow(color: Color(0x8C000000), blurRadius: 30, offset: Offset(0, 16), spreadRadius: -10)],
+                      ),
+                      child: const Icon(Icons.scoreboard_rounded, size: 44, color: AppColors.goldSoft),
+                    ),
+                    Gap.lg,
+                    const PmSeal('Playmaker Staff'),
+                    Gap.md,
+                    Text(l10n.scorekeeperLogin, style: context.text.headlineLarge?.copyWith(color: AppColors.cream)),
+                  ],
+                ),
+              ),
               Gap.xl,
               AuthTextField(controller: _login, label: l10n.scorekeeperLoginField),
               Gap.md,
@@ -109,9 +141,12 @@ class ScorekeeperMatchesPage extends StatelessWidget {
               onRefresh: () => context.read<ScorekeeperMatchesCubit>().refresh(),
               child: ListView.separated(
                 padding: AppSpacing.page,
-                itemCount: matches.length,
+                itemCount: matches.length + 1,
                 separatorBuilder: (_, _) => Gap.md,
-                itemBuilder: (context, i) => LiveMatchCard(
+                itemBuilder: (context, index) {
+                  if (index == 0) return _DeskSummary(matches: matches);
+                  final i = index - 1;
+                  return LiveMatchCard(
                   match: matches[i],
                   showTournament: true,
                   onTap: () async {
@@ -120,7 +155,8 @@ class ScorekeeperMatchesPage extends StatelessWidget {
                     );
                     if (context.mounted) context.read<ScorekeeperMatchesCubit>().refresh();
                   },
-                ),
+                );
+                },
               ),
             ),
           ),
@@ -162,14 +198,19 @@ class ScoringPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    LiveScoreboard(match: m),
+                    // The scoreboard gives way on short phones so the two point
+                    // pads always keep their thumb-sized share of the screen.
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * .46),
+                      child: FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.topCenter, child: SizedBox(width: MediaQuery.sizeOf(context).width - AppSpacing.gutter * 2, child: LiveScoreboard(match: m))),
+                    ),
                     Gap.lg,
                     Expanded(
                       child: Row(
                         children: [
-                          Expanded(child: _PointButton(team: m.teamOne, color: AppColors.primary, busy: state.sending || finished, onTap: recordFor)),
+                          Expanded(child: _PointButton(team: m.teamOne, gold: true, busy: state.sending || finished, onTap: recordFor)),
                           Gap.md,
-                          Expanded(child: _PointButton(team: m.teamTwo, color: AppColors.info, busy: state.sending || finished, onTap: recordFor)),
+                          Expanded(child: _PointButton(team: m.teamTwo, gold: false, busy: state.sending || finished, onTap: recordFor)),
                         ],
                       ),
                     ),
@@ -177,15 +218,19 @@ class ScoringPage extends StatelessWidget {
                       Gap.md,
                       Container(
                         padding: AppSpacing.cardDense,
-                        decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.14), borderRadius: AppRadius.mdAll),
+                        decoration: BoxDecoration(
+                          gradient: AppGradients.goldButton,
+                          borderRadius: AppRadius.controlAll,
+                          boxShadow: AppShadows.goldButton,
+                        ),
                         child: Row(
                           children: [
-                            const Icon(Icons.emoji_events_rounded, color: AppColors.success),
+                            const Icon(Icons.emoji_events_rounded, color: AppColors.green900),
                             Gap.sm,
                             Expanded(
                               child: Text(
                                 '${l10n.scorekeeperMatchEnded} — ${m.winner?.label ?? ''}',
-                                style: context.text.titleSmall,
+                                style: context.text.titleSmall?.copyWith(color: AppColors.green900),
                               ),
                             ),
                           ],
@@ -266,26 +311,39 @@ class ScoringPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n.scorekeeperEndMatchTitle, style: sheet.text.titleLarge),
+                Text(l10n.scorekeeperEndMatchTitle, style: sheet.text.headlineMedium),
                 Gap.xs,
                 Text(l10n.scorekeeperEndMatchHelp, style: sheet.text.bodySmall),
                 Gap.md,
-                for (final team in [m.teamOne!, m.teamTwo!])
-                  Card(
-                    child: ListTile(
-                      leading: Icon(
-                        winner == team.id ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
-                        color: winner == team.id ? AppColors.success : null,
-                      ),
-                      title: Text(team.label),
-                      onTap: () => setState(() => winner = team.id),
+                for (final team in [m.teamOne!, m.teamTwo!]) ...[
+                  AppCard(
+                    onTap: () => setState(() => winner = team.id),
+                    padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.md),
+                    borderColor: winner == team.id ? AppColors.goldSoft.withValues(alpha: .7) : null,
+                    shadows: winner == team.id ? AppShadows.glow(AppColors.gold, strength: .22) : null,
+                    child: Row(
+                      children: [
+                        AvatarPair(players: team.players, size: 32),
+                        Gap.md,
+                        Expanded(child: Text(team.label, style: sheet.text.titleSmall)),
+                        Icon(
+                          winner == team.id ? Icons.check_circle_rounded : Icons.radio_button_off_rounded,
+                          color: winner == team.id ? AppColors.goldSoft : sheet.tokens.textMuted,
+                        ),
+                      ],
                     ),
                   ),
+                  Gap.sm,
+                ],
                 Gap.sm,
                 TextField(controller: reason, maxLength: 255, decoration: InputDecoration(labelText: l10n.scorekeeperEndReason)),
                 Gap.md,
-                FilledButton.icon(
-                  style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
+                OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.danger,
+                    side: BorderSide(color: AppColors.danger.withValues(alpha: .55)),
+                    backgroundColor: AppColors.danger.withValues(alpha: .08),
+                  ),
                   onPressed: () => Navigator.of(sheet).pop((winnerId: winner, reason: reason.text.trim())),
                   icon: const Icon(Icons.flag_rounded),
                   label: Text(l10n.scorekeeperEndMatch),
@@ -308,43 +366,116 @@ class ScoringPage extends StatelessWidget {
   }
 }
 
+/// A thumb-sized point pad: team one in gold leaf, team two on night court
+/// with a gold edge — told apart at a glance from the umpire's chair.
 class _PointButton extends StatelessWidget {
   final MatchTeam? team;
-  final Color color;
+  final bool gold;
   final bool busy;
   final ValueChanged<int> onTap;
 
-  const _PointButton({required this.team, required this.color, required this.busy, required this.onTap});
+  const _PointButton({required this.team, required this.gold, required this.busy, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Material(
-      color: color,
-      borderRadius: AppRadius.xlAll,
-      child: InkWell(
-        borderRadius: AppRadius.xlAll,
-        onTap: team == null || busy
-            ? null
-            : () {
-                HapticFeedback.mediumImpact();
-                onTap(team!.id);
-              },
-        child: Padding(
-          padding: AppSpacing.card,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(l10n.scorekeeperPointTo.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.white)),
-              Gap.sm,
-              Text(
-                team?.label ?? l10n.matchTbd,
-                textAlign: TextAlign.center,
-                style: context.text.titleLarge?.copyWith(color: AppColors.white),
+    final ink = gold ? AppColors.green900 : AppColors.cream;
+    const radius = BorderRadius.all(Radius.circular(26));
+    return AnimatedOpacity(
+      duration: AppMotion.of(context, const Duration(milliseconds: 200)),
+      opacity: busy ? .55 : 1,
+      child: DecoratedBox(
+        decoration: gold
+            ? const BoxDecoration(
+                borderRadius: radius,
+                gradient: CssLinearGradient(150, colors: [Color(0xFFF1E3BC), AppColors.goldSoft, AppColors.gold]),
+                boxShadow: AppShadows.goldButton,
+              )
+            : AppGlass.hero(radius: radius, border: AppColors.goldSoft.withValues(alpha: .45)),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            borderRadius: radius,
+            onTap: team == null || busy
+                ? null
+                : () {
+                    HapticFeedback.mediumImpact();
+                    onTap(team!.id);
+                  },
+            child: Padding(
+              padding: AppSpacing.card,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (team != null && team!.players.isNotEmpty) ...[
+                    PmNightCourt(child: AvatarPair(players: team!.players, size: 34)),
+                    Gap.sm,
+                  ],
+                  Text(
+                    l10n.scorekeeperPointTo.toUpperCase(),
+                    style: AppTypography.eyebrow(context, color: gold ? AppColors.green900.withValues(alpha: .7) : AppColors.goldSoft),
+                  ),
+                  Gap.xs,
+                  Text(
+                    team?.label ?? l10n.matchTbd,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.text.headlineMedium?.copyWith(color: ink, fontSize: 23, height: 1.2),
+                  ),
+                  Gap.sm,
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: gold ? AppColors.green900 : AppColors.ball,
+                      boxShadow: [BoxShadow(color: (gold ? AppColors.green900 : AppColors.ball).withValues(alpha: .4), blurRadius: 14)],
+                    ),
+                    child: Icon(Icons.add_rounded, color: gold ? AppColors.goldSoft : AppColors.green900, size: 24),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Head of the officials' desk: how many matches are assigned and how many
+/// are live right now, on the home hero's court panel.
+class _DeskSummary extends StatelessWidget {
+  final List<Match> matches;
+
+  const _DeskSummary({required this.matches});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final live = matches.where((m) => m.isInProgress).length;
+    return PmHeroPanel(
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 16, 18, 18),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const PmSeal('Playmaker Staff'),
+                const SizedBox(height: 46),
+                Text(l10n.scorekeeperMatches, style: context.text.headlineMedium?.copyWith(color: AppColors.cream)),
+                if (live > 0) ...[
+                  Gap.xs,
+                  PmChip('${l10n.liveBadge} · $live', tone: PmChipTone.live, dot: true),
+                ],
+              ],
+            ),
+          ),
+          PmGoldText('${matches.length}', style: AppFonts.numeral(size: 64, height: 1)),
+        ],
       ),
     );
   }
@@ -416,7 +547,7 @@ class _PointReasonSheetState extends State<_PointReasonSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gap.md,
-            Text(title, style: context.text.titleSmall),
+            Text(title.toUpperCase(), style: AppTypography.eyebrow(context)),
             Gap.sm,
             Wrap(
               spacing: AppSpacing.sm,
@@ -448,10 +579,10 @@ class _PointReasonSheetState extends State<_PointReasonSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('${l10n.scorekeeperPointTo}: ${_winning?.label ?? ''}', style: context.text.titleLarge),
+            Text('${l10n.scorekeeperPointTo}: ${_winning?.label ?? ''}', style: context.text.headlineMedium),
             Text(l10n.scorekeeperReasonHelp, style: context.text.bodySmall),
             Gap.md,
-            Text(l10n.scorekeeperEndingType, style: context.text.titleSmall),
+            Text(l10n.scorekeeperEndingType.toUpperCase(), style: AppTypography.eyebrow(context)),
             Gap.sm,
             Wrap(
               spacing: AppSpacing.sm,

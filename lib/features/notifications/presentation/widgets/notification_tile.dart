@@ -4,6 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
+import '../../../../core/widgets/app_card.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/notification_item.dart';
 
@@ -72,18 +74,25 @@ class NotificationTile extends StatelessWidget {
     final message = notification.message(lang);
     final read = notification.isRead;
 
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        color: read ? null : t.highlight.withValues(alpha: 0.05),
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.gutter, vertical: AppSpacing.md),
+    // A glass card per notification; unread ones carry a gold edge and glow.
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.gutter, vertical: AppSpacing.xs),
+      child: AppCard(
+        onTap: onTap,
+        padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.md, AppSpacing.md, AppSpacing.md, AppSpacing.md),
+        borderColor: read ? null : (t.isDark ? AppColors.goldSoft.withValues(alpha: .4) : AppColors.green700.withValues(alpha: .35)),
+        color: read ? null : (t.isDark ? const Color(0x14E3CC97) : AppColors.ivory),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(color: color.withValues(alpha: 0.14), shape: BoxShape.circle),
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(colors: [color.withValues(alpha: .26), color.withValues(alpha: .06)]),
+                border: Border.all(color: color.withValues(alpha: .4)),
+              ),
               child: Icon(icon, color: color, size: AppSizes.iconMd),
             ),
             Gap.md,
@@ -106,16 +115,17 @@ class NotificationTile extends StatelessWidget {
                     ),
                   ],
                   Gap.xs,
-                  Text(DateFormatter.relative(context, notification.createdAt), style: context.text.labelSmall),
+                  Text(
+                    DateFormatter.relative(context, notification.createdAt),
+                    style: context.text.labelSmall?.copyWith(color: t.isDark ? AppColors.goldSoft.withValues(alpha: .75) : AppColors.green700),
+                  ),
                 ],
               ),
             ),
             if (!read)
-              Container(
-                width: AppSizes.dot,
-                height: AppSizes.dot,
-                margin: const EdgeInsetsDirectional.only(top: AppSpacing.sm, start: AppSpacing.sm),
-                decoration: BoxDecoration(color: t.highlight, shape: BoxShape.circle),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: AppSpacing.sm, start: AppSpacing.sm),
+                child: PmPulseDot(color: t.isDark ? AppColors.ball : AppColors.green600, size: 8),
               ),
           ],
         ),

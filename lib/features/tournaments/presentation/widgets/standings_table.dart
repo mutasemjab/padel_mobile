@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/badges.dart';
+import '../../../../core/widgets/metric_widgets.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/category_detail.dart';
 import '../../domain/entities/match.dart';
@@ -28,7 +30,7 @@ class StandingsTable extends StatelessWidget {
           child: Text(
             v,
             textAlign: TextAlign.center,
-            style: AppTypography.number(context, size: 15, color: color, weight: bold ? FontWeight.w800 : FontWeight.w600),
+            style: AppTypography.number(context, size: 15, color: color, weight: bold ? FontWeight.w700 : FontWeight.w500),
           ),
         );
 
@@ -39,29 +41,31 @@ class StandingsTable extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(group.name, style: context.text.titleMedium)),
+              Expanded(child: Text(group.name, style: context.text.headlineMedium?.copyWith(fontSize: 21))),
               if (group.finished) StatusChip(label: l10n.groupFinished, color: t.textMuted),
             ],
           ),
           Gap.md,
-          Row(
+          Container(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.xs, vertical: AppSpacing.sm),
+            decoration: AppGlass.well(t.isDark, radius: AppRadius.mdAll),
+            child: Row(
             children: [
-              SizedBox(width: 24, child: Text('#', style: headStyle)),
+              SizedBox(width: 30, child: Text('#', style: headStyle, textAlign: TextAlign.center)),
               Expanded(child: Text(l10n.standingsTeam, style: headStyle)),
               for (final h in [l10n.standingsPlayed, l10n.standingsWins, l10n.standingsLosses, l10n.standingsSetDiff, l10n.standingsGameDiff, l10n.standingsPoints])
                 SizedBox(width: 34, child: Text(h, textAlign: TextAlign.center, style: headStyle)),
             ],
           ),
-          const Divider(height: AppSpacing.lg),
+          ),
+          Gap.xs,
           for (final row in group.standings)
             Padding(
-              padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs + 2),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs + 2, horizontal: AppSpacing.xs),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 24,
-                    child: Text('${row.position}', style: AppTypography.number(context, size: 15, color: t.textMuted)),
-                  ),
+                  // Medal coins for the top three, like the rankings podium.
+                  PlayerRankBadge(position: row.position, size: 30),
                   Expanded(
                     child: Text(
                       row.team.label,
@@ -78,7 +82,7 @@ class StandingsTable extends StatelessWidget {
                   num('${row.losses}'),
                   num(Formatters.signed(row.setDifference)),
                   num(Formatters.signed(row.gameDifference)),
-                  num('${row.points}', color: t.highlight, bold: true),
+                  num('${row.points}', color: t.isDark ? AppColors.goldSoft : AppColors.green800, bold: true),
                 ],
               ),
             ),

@@ -11,12 +11,13 @@ import '../../../core/routing/app_routes.dart';
 import '../../../core/routing/open_route.dart';
 import '../../../core/state/base_cubits.dart';
 import '../../../core/state/view_state.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_effects.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_network_image.dart';
-import '../../../core/widgets/court_lines.dart';
+import '../../../core/widgets/pm_art.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/state_builders.dart';
@@ -91,13 +92,22 @@ class _VenuesPageState extends State<VenuesPage> {
                     child: Row(
                       children: [
                         ClipRRect(
-                          borderRadius: AppRadius.mdAll,
+                          borderRadius: BorderRadius.circular(16),
                           child: SizedBox(
-                            width: 64,
-                            height: 64,
+                            width: 78,
+                            height: 78,
                             child: AppNetworkImage(
                               url: v.imageUrl,
-                              fallback: const DecoratedBox(decoration: BoxDecoration(gradient: AppGradients.court)),
+                              fallback: const DecoratedBox(
+                                decoration: BoxDecoration(gradient: AppGradients.training),
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    PmCourtArt(opacity: .9),
+                                    Center(child: Icon(Icons.stadium_rounded, color: AppColors.goldSoft, size: 26)),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -106,9 +116,11 @@ class _VenuesPageState extends State<VenuesPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(v.name, style: context.text.titleSmall),
+                              Text(v.name, style: context.text.headlineMedium?.copyWith(fontSize: 20)),
+                              Gap.xxs,
                               Text([v.city, if (v.address != null) v.address!].join(' · '), style: context.text.bodySmall),
-                              Text(l10n.venueCourts(v.courtsCount ?? v.courts.length), style: context.text.labelSmall),
+                              Gap.xs,
+                              PmChip(l10n.venueCourts(v.courtsCount ?? v.courts.length), icon: Icons.grid_view_rounded),
                             ],
                           ),
                         ),
@@ -146,15 +158,33 @@ class VenueDetailPage extends StatelessWidget {
                 slivers: [
                   SliverAppBar(
                     pinned: true,
-                    expandedHeight: 200,
+                    expandedHeight: 280,
+                    backgroundColor: AppColors.green900,
+                    foregroundColor: AppColors.cream,
                     flexibleSpace: FlexibleSpaceBar(
-                      title: Text(v.name),
-                      background: AppNetworkImage(
-                        url: v.imageUrl,
-                        fallback: const DecoratedBox(
-                          decoration: BoxDecoration(gradient: AppGradients.court),
-                          child: CourtLinesBackground(),
-                        ),
+                      titlePadding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.gutter, 0, AppSpacing.gutter, AppSpacing.lg),
+                      title: Text(v.name, style: context.text.headlineMedium?.copyWith(color: AppColors.cream)),
+                      background: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          const DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0xFF0F4B3D), AppColors.green800, AppColors.green900],
+                              ),
+                            ),
+                          ),
+                          AppNetworkImage(
+                            url: v.imageUrl,
+                            fallback: const DecoratedBox(
+                              decoration: BoxDecoration(gradient: AppGlass.aura),
+                              child: Stack(fit: StackFit.expand, children: [PmCourtArt(), PmFlyingBall()]),
+                            ),
+                          ),
+                          const DecoratedBox(decoration: BoxDecoration(gradient: AppGradients.imageScrim)),
+                        ],
                       ),
                     ),
                   ),
@@ -190,7 +220,7 @@ class VenueDetailPage extends StatelessWidget {
                             spacing: AppSpacing.sm,
                             runSpacing: AppSpacing.sm,
                             children: [
-                              for (final c in v.courts) Chip(label: Text(c.type == null ? c.name : '${c.name} · ${c.type}')),
+                              for (final c in v.courts) PmChip(c.type == null ? c.name : '${c.name} · ${c.type}', icon: Icons.sports_tennis_rounded),
                             ],
                           ),
                         ],

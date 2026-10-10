@@ -8,13 +8,12 @@ import '../../../../core/meta/enums_service.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/widgets/app_card.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/feedback.dart';
 import '../../../../core/widgets/player_avatar.dart';
@@ -149,31 +148,42 @@ class _CoachHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(gradient: AppGradients.training, borderRadius: AppRadius.xlAll),
-      clipBehavior: Clip.antiAlias,
-      child: CourtLinesBackground(
-        child: Padding(
-          padding: AppSpacing.card,
-          child: Row(
+    // The coach's stage: court panel with the flying ball, haloed portrait,
+    // name in Amiri and the rating.
+    return PmHeroPanel(
+      ball: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const PmSeal('Playmaker Coach'),
+          const SizedBox(height: 56),
+          Row(
             children: [
-              PlayerAvatar(name: coach.name, photoUrl: coach.photoUrl, size: AppSizes.avatarLg, showRing: false),
+              DecoratedBox(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [BoxShadow(color: Color(0x80C9A86A), blurRadius: 30)],
+                ),
+                child: PlayerAvatar(name: coach.name, photoUrl: coach.photoUrl, size: AppSizes.avatarLg, isPremium: true),
+              ),
               Gap.lg,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(coach.name, style: context.text.headlineMedium?.copyWith(color: AppColors.white)),
+                    Text(coach.name, style: context.text.headlineLarge?.copyWith(color: AppColors.cream, fontSize: 26)),
                     Gap.xs,
                     CoachRatingBadge(rating: coach.rating),
-                    if (coach.location != null)
-                      Text(coach.location!, style: context.text.bodySmall?.copyWith(color: AppColors.white)),
+                    if (coach.location != null) ...[
+                      Gap.xxs,
+                      Text(coach.location!, style: context.text.bodySmall?.copyWith(color: AppColors.cream70)),
+                    ],
                   ],
                 ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
