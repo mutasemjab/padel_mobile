@@ -4,6 +4,7 @@ import '../models/player_summary.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_effects.dart';
 import '../theme/app_spacing.dart';
+import '../theme/app_text_styles.dart';
 import '../theme/app_tokens.dart';
 import 'app_network_image.dart';
 import 'level_badge.dart';
@@ -59,22 +60,36 @@ class PlayerAvatar extends StatelessWidget {
       padding: EdgeInsets.all(showRing ? ringWidth : 0),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: isPremium ? AppGradients.premium : null,
-        color: isPremium ? null : ringColor,
+        gradient: isPremium
+            ? AppGradients.premium
+            : LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color.lerp(ringColor, AppColors.white, .25)!, ringColor],
+              ),
         boxShadow: isPremium && size >= AppSizes.avatarLg ? AppShadows.gold : null,
       ),
       child: Container(
-        padding: EdgeInsets.all(isPremium && showRing ? ringWidth / 1.5 : 0),
-        decoration: BoxDecoration(shape: BoxShape.circle, color: t.background),
+        // the court-green gap between ring and face (`0 0 0 2px var(--green-800)`)
+        padding: EdgeInsets.all(showRing ? (size >= AppSizes.avatarLg ? 2.5 : 1.5) : 0),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: t.isDark ? AppColors.green800 : AppColors.ivory),
         child: ClipOval(
           child: AppNetworkImage(
             url: photoUrl,
-            fallback: ColoredBox(
-              color: t.surface2,
+            fallback: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: t.isDark
+                    ? const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [AppColors.green600, AppColors.green700],
+                      )
+                    : const LinearGradient(colors: [AppColors.lightSurface2, AppColors.lightSurface2]),
+              ),
               child: Center(
                 child: Text(
                   _initials,
-                  style: TextStyle(color: t.textPrimary, fontSize: size * 0.34, fontWeight: FontWeight.w700),
+                  style: AppFonts.display(size: size * 0.36, height: 1, color: t.isDark ? AppColors.cream : AppColors.green800),
                 ),
               ),
             ),
@@ -101,7 +116,10 @@ class AvatarPair extends StatelessWidget {
       return SizedBox(
         width: size,
         height: size,
-        child: CircleAvatar(backgroundColor: context.tokens.surface2, child: const Icon(Icons.groups_rounded)),
+        child: CircleAvatar(
+          backgroundColor: context.tokens.isDark ? AppColors.cream08 : context.tokens.surface2,
+          child: Icon(Icons.groups_rounded, size: size * .5, color: context.tokens.textMuted),
+        ),
       );
     }
     final shown = players.take(2).toList();

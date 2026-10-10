@@ -25,16 +25,16 @@ class SetChip extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(vertical: compact ? AppSpacing.xxs : AppSpacing.xs),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: won ? t.highlight.withValues(alpha: 0.16) : t.surface2,
+        color: won ? (t.isDark ? AppColors.cream08 : t.surface2) : AppColors.transparent,
         borderRadius: AppRadius.smAll,
       ),
       child: Text(
         '$own',
         style: AppTypography.number(
           context,
-          size: compact ? 15 : 19,
-          weight: won ? FontWeight.w800 : FontWeight.w600,
-          color: won ? t.highlight : t.textMuted,
+          size: compact ? 17 : 21,
+          weight: FontWeight.w500,
+          color: won ? t.textPrimary : t.textMuted.withValues(alpha: t.isDark ? .55 : .8),
         ),
       ),
     );

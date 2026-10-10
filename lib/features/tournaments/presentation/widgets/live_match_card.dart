@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
@@ -37,18 +38,35 @@ class LiveMatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.tokens;
     final live = match.isInProgress;
+    // The home design's `.score` board: header strip, two team rows split by
+    // a hairline, Playfair set digits and the cream point tab.
     return AppCard(
       onTap: onTap,
-      padding: AppSpacing.cardDense,
-      borderColor: live ? AppColors.live.withValues(alpha: 0.45) : (highlightMine ? t.highlight : null),
+      padding: EdgeInsets.zero,
+      borderColor: live
+          ? AppColors.live.withValues(alpha: 0.4)
+          : (highlightMine ? (t.isDark ? AppColors.goldSoft.withValues(alpha: .55) : AppColors.green700) : null),
+      shadows: live ? AppShadows.glow(AppColors.live, strength: .16) : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Header(match: match, showTournament: showTournament),
-          Gap.md,
-          _TeamLine(match: match, isTeamOne: true),
-          Gap.sm,
-          _TeamLine(match: match, isTeamOne: false),
+          Container(
+            padding: const EdgeInsetsDirectional.fromSTEB(14, 10, 14, 9),
+            decoration: BoxDecoration(
+              color: live ? AppColors.live.withValues(alpha: .07) : (t.isDark ? AppColors.cream08.withValues(alpha: .05) : t.surface2.withValues(alpha: .5)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.card)),
+            ),
+            child: _Header(match: match, showTournament: showTournament),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 14, 10),
+            child: _TeamLine(match: match, isTeamOne: true),
+          ),
+          Divider(height: 1, indent: 14, endIndent: 14, color: t.isDark ? AppColors.cream08 : t.outline),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(14, 10, 14, 12),
+            child: _TeamLine(match: match, isTeamOne: false),
+          ),
         ],
       ),
     );
@@ -78,7 +96,7 @@ class _Header extends StatelessWidget {
         Expanded(
           child: Text(
             parts.join(' · '),
-            style: AppTypography.eyebrow(context),
+            style: AppTypography.eyebrow(context).copyWith(letterSpacing: 0, fontSize: 11.5),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -118,13 +136,14 @@ class _TeamLine extends StatelessWidget {
 
     final label = team?.label ?? (match.isBye && !isTeamOne ? l10n.matchBye : l10n.matchTbd);
     final nameStyle = context.text.titleSmall?.copyWith(
+      fontSize: 14,
       color: dimmed ? t.textMuted : t.textPrimary,
-      fontWeight: isWinner ? FontWeight.w800 : FontWeight.w600,
+      fontWeight: isWinner ? FontWeight.w700 : FontWeight.w600,
     );
 
     return Row(
       children: [
-        AvatarPair(players: team?.players ?? const [], size: AppSizes.avatarXs),
+        AvatarPair(players: team?.players ?? const [], size: 30),
         Gap.sm,
         Expanded(
           child: Row(
@@ -136,7 +155,7 @@ class _TeamLine extends StatelessWidget {
               Flexible(child: Text(label, style: nameStyle, maxLines: 1, overflow: TextOverflow.ellipsis)),
               if (isWinner) ...[
                 Gap.xs,
-                Icon(Icons.emoji_events_rounded, size: AppSizes.iconSm, color: t.highlight),
+                Icon(Icons.emoji_events_rounded, size: AppSizes.iconSm, color: t.isDark ? AppColors.goldSoft : AppColors.green700),
               ],
             ],
           ),
@@ -149,24 +168,29 @@ class _TeamLine extends StatelessWidget {
           Gap.sm,
           Text(
             '${isTeamOne ? live.currentSetGames.teamOne : live.currentSetGames.teamTwo}',
-            style: AppTypography.number(context, size: 18, color: t.textPrimary),
+            style: AppTypography.number(context, size: 20, weight: FontWeight.w500, color: t.textPrimary),
           ),
           Gap.sm,
+          // `.pt` — the cream point tab with green ink.
           Container(
-            constraints: const BoxConstraints(minWidth: 34),
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.xs, vertical: AppSpacing.xxs),
-            decoration: BoxDecoration(color: t.highlight.withValues(alpha: 0.14), borderRadius: AppRadius.smAll),
+            constraints: const BoxConstraints(minWidth: 42),
+            height: 32,
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: t.isDark ? AppColors.cream : AppColors.green800,
+              borderRadius: BorderRadius.circular(9),
+            ),
             alignment: Alignment.center,
             child: FlipDigit(
               value: _point(context, match, isTeamOne),
-              style: AppTypography.number(context, size: 18, color: t.highlight),
+              style: AppTypography.number(context, size: 18, weight: FontWeight.w500, color: t.isDark ? AppColors.green900 : AppColors.cream),
             ),
           ),
         ] else if (sets.isEmpty && finished) ...[
           Gap.sm,
           Text(
             '${isTeamOne ? match.setsWonTeamOne : match.setsWonTeamTwo}',
-            style: AppTypography.number(context, size: 20, color: isWinner ? t.highlight : t.textMuted),
+            style: AppTypography.number(context, size: 22, weight: FontWeight.w500, color: isWinner ? t.textPrimary : t.textMuted),
           ),
         ],
       ],

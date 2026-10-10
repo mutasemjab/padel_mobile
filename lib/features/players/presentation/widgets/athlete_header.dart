@@ -13,7 +13,9 @@ import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/animated_counter.dart';
 import '../../../../core/widgets/badges.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/app_logo.dart';
+import '../../../../core/widgets/level_badge.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/metric_widgets.dart';
 import '../../../../core/widgets/player_avatar.dart';
 import '../../../../l10n/gen/app_localizations.dart';
@@ -35,94 +37,120 @@ class AthleteHeader extends StatelessWidget {
     final flag = Formatters.flag(player.country);
     final rankings = profile.rankings;
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(gradient: AppGradients.court),
-      child: CourtLinesBackground(
-        child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.gutter, AppSpacing.sm, AppSpacing.gutter, AppSpacing.xl),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    PlayerAvatar(
-                      name: player.name,
-                      photoUrl: player.photoUrl,
-                      level: player.level?.label,
-                      isPremium: player.isPremium,
-                      size: AppSizes.avatarXl,
-                      heroTag: 'player-avatar-${player.playerId}',
-                    ),
-                    Gap.lg,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (player.isPremium) ...[const PremiumBadge(), Gap.sm],
-                          Text(
-                            player.name,
-                            style: context.text.displaySmall?.copyWith(color: AppColors.white, height: 1.05),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Gap.xs,
-                          Wrap(
-                            spacing: AppSpacing.sm,
-                            runSpacing: AppSpacing.xxs,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Text(
-                                player.playerId,
-                                style: AppTypography.number(context, size: 15, color: AppColors.accent),
-                                textDirection: TextDirection.ltr,
-                              ),
-                              if (flag.isNotEmpty) Text(flag, style: context.text.titleMedium),
-                              if (player.side != null)
-                                Text(
-                                  context.enums.label(EnumGroup.playerSides, player.side!.name),
-                                  style: context.text.labelMedium?.copyWith(color: AppColors.textPrimary),
-                                ),
-                            ],
-                          ),
-                          if (player.memberSince != null) ...[
-                            Gap.xxs,
-                            Text(
-                              l10n.profileMemberSince(DateFormatter.monthYear(player.memberSince!)),
-                              style: context.text.labelSmall?.copyWith(color: AppColors.textMuted),
-                            ),
-                          ],
-                        ],
-                      ),
+    final level = rankings?.skill.level ?? player.level?.label;
+    // The login's emblem moment for the athlete: court art and the flying
+    // ball behind a haloed portrait, name in Amiri, ID in gold leaf, then
+    // the social strip, actions, metrics and the level ladder.
+    final dark = context.tokens.isDark;
+    return PmNightCourt(
+      child: DecoratedBox(
+        // On light the athlete keeps the night-court stage, rounded into the page.
+        decoration: dark
+            ? const BoxDecoration()
+            : const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF0F4B3D), AppColors.green800, AppColors.green900],
+                ),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+        child: Stack(
+      children: [
+        const Positioned.fill(child: DecoratedBox(decoration: BoxDecoration(gradient: AppGlass.aura))),
+        const Positioned(top: 0, left: 0, right: 0, height: 360, child: PmCourtArt(opacity: .8)),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.gutter, AppSpacing.xl, AppSpacing.gutter, AppSpacing.xl),
+          child: Column(
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: (player.isPremium ? AppColors.gold : AppColors.greenGlow).withValues(alpha: .55),
+                      blurRadius: 50,
+                      spreadRadius: 2,
                     ),
                   ],
                 ),
-                if (player.bio != null && player.bio!.isNotEmpty) ...[
-                  Gap.md,
-                  Text(
-                    player.bio!,
-                    style: context.text.bodySmall?.copyWith(color: AppColors.textPrimary),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+                child: PlayerAvatar(
+                  name: player.name,
+                  photoUrl: player.photoUrl,
+                  level: player.level?.label,
+                  isPremium: player.isPremium,
+                  size: AppSizes.avatarXl,
+                  heroTag: 'player-avatar-${player.playerId}',
+                ),
+              ),
+              Gap.md,
+              if (player.isPremium) ...[const PremiumBadge(), Gap.sm],
+              Text(
+                player.name,
+                textAlign: TextAlign.center,
+                style: context.text.displaySmall?.copyWith(color: AppColors.cream, height: 1.15),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Gap.xs,
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.xs,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    textDirection: TextDirection.ltr,
+                    children: [
+                      const AppLogo(height: 12, colors: [AppColors.goldSoft, AppColors.goldSoft]),
+                      const SizedBox(width: 6),
+                      Text(player.playerId, style: AppFonts.numeral(size: 13, color: AppColors.goldSoft, letterSpacing: 1.4)),
+                    ],
                   ),
+                  if (level != null) LevelBadge(level: level),
+                  if (player.side != null)
+                    PmChip(context.enums.label(EnumGroup.playerSides, player.side!.name), tone: PmChipTone.muted),
+                  if (flag.isNotEmpty) Text(flag, style: context.text.titleMedium),
                 ],
-                Gap.lg,
-                _SocialCounts(profile: profile),
-                Gap.lg,
-                actions,
-                Gap.lg,
-                _MetricRow(
-                  skill: rankings?.skill.rating ?? player.skillRating,
-                  level: rankings?.skill.level ?? player.level?.label,
-                  skillMovement: rankings?.skill.movement,
-                  season: rankings?.season.points ?? player.seasonRankingPoints,
-                  seasonPosition: rankings?.season.position,
-                  seasonMovement: rankings?.season.movement,
-                  xp: rankings?.xp ?? player.xp,
+              ),
+              if (player.memberSince != null) ...[
+                Gap.xs,
+                Text(
+                  l10n.profileMemberSince(DateFormatter.monthYear(player.memberSince!)),
+                  style: context.text.labelSmall?.copyWith(color: AppColors.cream40),
                 ),
               ],
-            ),
+              if (player.bio != null && player.bio!.isNotEmpty) ...[
+                Gap.md,
+                Text(
+                  player.bio!,
+                  textAlign: TextAlign.center,
+                  style: context.text.bodySmall?.copyWith(color: AppColors.cream70),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+              Gap.lg,
+              _SocialCounts(profile: profile),
+              Gap.lg,
+              actions,
+              Gap.lg,
+              _MetricRow(
+                skill: rankings?.skill.rating ?? player.skillRating,
+                level: level,
+                skillMovement: rankings?.skill.movement,
+                season: rankings?.season.points ?? player.seasonRankingPoints,
+                seasonPosition: rankings?.season.position,
+                seasonMovement: rankings?.season.movement,
+                xp: rankings?.xp ?? player.xp,
+              ),
+              if (level != null) ...[Gap.lg, PmLevelLadder(level: level)],
+            ],
           ),
+        ),
+      ],
+        ),
       ),
     );
   }
@@ -138,28 +166,34 @@ class _SocialCounts extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final id = profile.player.playerId;
     final social = profile.social;
-    Widget count(String label, int value, VoidCallback? onTap) => InkWell(
-          onTap: onTap,
-          borderRadius: AppRadius.smAll,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs, horizontal: AppSpacing.xxs),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AnimatedCounter(value: value, style: AppTypography.number(context, size: 20, color: AppColors.white)),
-                Text(label, style: context.text.labelSmall?.copyWith(color: AppColors.textMuted)),
-              ],
+    Widget count(String label, int value, VoidCallback? onTap) => Expanded(
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: AppRadius.mdAll,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.sm),
+              child: Column(
+                children: [
+                  AnimatedCounter(value: value, style: AppTypography.number(context, size: 21, weight: FontWeight.w500, color: AppColors.cream)),
+                  Gap.xxs,
+                  Text(label, style: context.text.labelSmall?.copyWith(color: AppColors.cream40, letterSpacing: 0)),
+                ],
+              ),
             ),
           ),
         );
-    return Row(
-      children: [
-        count(l10n.profileFollowers, social.followers, () => context.push(AppRoutes.playerFollowers(id))),
-        Gap.xl,
-        count(l10n.profileFollowing, social.following, () => context.push(AppRoutes.playerFollowing(id))),
-        Gap.xl,
-        count(l10n.profileRespects, social.respects, null),
-      ],
+    Widget rule() => Container(width: 1, height: 28, color: AppColors.cream08);
+    return Container(
+      decoration: AppGlass.well(true, radius: AppRadius.controlAll),
+      child: Row(
+        children: [
+          count(l10n.profileFollowers, social.followers, () => context.push(AppRoutes.playerFollowers(id))),
+          rule(),
+          count(l10n.profileFollowing, social.following, () => context.push(AppRoutes.playerFollowing(id))),
+          rule(),
+          count(l10n.profileRespects, social.respects, null),
+        ],
+      ),
     );
   }
 }

@@ -11,6 +11,7 @@ import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_network_image.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/coach.dart';
 
@@ -35,15 +36,26 @@ class CoachCard extends StatelessWidget {
           Hero(
             tag: 'coach-image-${coach.id}',
             child: ClipRRect(
-              borderRadius: AppRadius.mdAll,
+              borderRadius: BorderRadius.circular(16),
               child: SizedBox(
-                width: 84,
-                height: 104,
+                width: 86,
+                height: 108,
                 child: AppNetworkImage(
                   url: coach.photoUrl,
-                  fallback: const DecoratedBox(
-                    decoration: BoxDecoration(gradient: AppGradients.training),
-                    child: Icon(Icons.sports_rounded, color: AppColors.white, size: AppSizes.iconXl),
+                  fallback: DecoratedBox(
+                    decoration: const BoxDecoration(gradient: AppGradients.training),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        const PmCourtArt(opacity: .8),
+                        Center(
+                          child: Text(
+                            coach.name.trim().isEmpty ? '' : coach.name.trim().split(RegExp(r'\s+')).last.characters.first,
+                            style: AppFonts.display(size: 34, color: AppColors.goldSoft),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -57,7 +69,7 @@ class CoachCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(coach.name, style: context.text.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      child: Text(coach.name, style: context.text.headlineMedium?.copyWith(fontSize: 19), maxLines: 1, overflow: TextOverflow.ellipsis),
                     ),
                     CoachRatingBadge(rating: coach.rating),
                   ],
@@ -88,7 +100,7 @@ class CoachCard extends StatelessWidget {
                   children: [
                     Text(
                       l10n.coachPerHour(Formatters.money(coach.pricePerHour, coach.currency)),
-                      style: AppTypography.number(context, size: 17, color: AppColors.info),
+                      style: AppTypography.number(context, size: 17, weight: FontWeight.w500, color: t.highlight),
                     ),
                     const Spacer(),
                     if (coach.nextAvailableAt != null)
@@ -120,8 +132,12 @@ class CoachRatingBadge extends StatelessWidget {
     if (!rating.hasReviews) {
       return Container(
         padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
-        decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.14), borderRadius: AppRadius.pillAll),
-        child: Text(l10n.newCoach, style: context.text.labelMedium?.copyWith(color: AppColors.info)),
+        decoration: BoxDecoration(
+          color: const Color(0x1FDFF05A),
+          borderRadius: AppRadius.pillAll,
+          border: Border.all(color: const Color(0x47DFF05A)),
+        ),
+        child: Text(l10n.newCoach, style: context.text.labelMedium?.copyWith(color: AppColors.ball)),
       );
     }
     return Row(

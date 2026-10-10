@@ -11,12 +11,11 @@ import '../../../../core/state/view_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/badges.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/feedback.dart';
 import '../../../../core/widgets/level_badge.dart';
 import '../../../../core/widgets/player_card.dart';
@@ -92,10 +91,10 @@ class _Content extends StatelessWidget {
           Gap.md,
           Container(
             padding: AppSpacing.cardDense,
-            decoration: BoxDecoration(color: AppColors.clay.withValues(alpha: 0.1), borderRadius: AppRadius.mdAll),
+            decoration: AppGlass.well(context.tokens.isDark, radius: AppRadius.controlAll),
             child: Row(
               children: [
-                const Icon(Icons.info_outline_rounded, color: AppColors.clay),
+                Icon(Icons.info_outline_rounded, color: context.tokens.isDark ? AppColors.goldSoft : AppColors.green700),
                 Gap.md,
                 Expanded(child: Text(l10n.casualNote, style: context.text.bodySmall)),
               ],
@@ -108,7 +107,7 @@ class _Content extends StatelessWidget {
             player: match.creator,
             dense: true,
             onTap: () => context.push(AppRoutes.player(match.creator.playerId)),
-            trailing: StatusChip(label: l10n.casualYourGame, color: AppColors.clay),
+            trailing: PmChip(l10n.casualYourGame, icon: Icons.star_rounded),
           ),
           for (final p in accepted)
             if (p.player != null) ...[
@@ -185,28 +184,27 @@ class _Header extends StatelessWidget {
       if (match.venue != null) match.venue!.displayName,
       if (match.courtName != null) match.courtName!,
     ].join(' · ');
-    return Container(
-      decoration: const BoxDecoration(gradient: AppGradients.clay, borderRadius: AppRadius.xlAll),
-      clipBehavior: Clip.antiAlias,
-      child: CourtLinesBackground(
-        child: Padding(
-          padding: AppSpacing.card,
-          child: Column(
+    return PmDashedBorder(
+      radius: const BorderRadius.all(Radius.circular(30)),
+      child: PmHeroPanel(
+        borderColor: AppColors.transparent,
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                context.enums.label(EnumGroup.casualMatchTypes, match.matchType.apiValue).toUpperCase(),
-                style: AppTypography.eyebrow(context, color: AppColors.white),
+              PmChip(
+                context.enums.label(EnumGroup.casualMatchTypes, match.matchType.apiValue),
+                tone: PmChipTone.muted,
+                icon: Icons.groups_rounded,
               ),
+              const SizedBox(height: 70),
               if (match.title != null) ...[
-                Gap.sm,
-                Text(match.title!, style: context.text.titleLarge?.copyWith(color: AppColors.white)),
+                Text(match.title!, style: context.text.headlineLarge?.copyWith(color: AppColors.cream)),
+                Gap.xxs,
               ],
-              Gap.sm,
-              Text(DateFormatter.weekdayDay(match.scheduledAt), style: AppTypography.number(context, size: 34, color: AppColors.white)),
+              PmGoldText(DateFormatter.weekdayDay(match.scheduledAt), style: context.text.headlineLarge!.copyWith(fontSize: 34)),
               Text(
                 '${DateFormatter.time(match.scheduledAt)} · ${DateFormatter.relative(context, match.scheduledAt)}',
-                style: context.text.bodyMedium?.copyWith(color: AppColors.white),
+                style: context.text.bodyMedium?.copyWith(color: AppColors.cream70),
               ),
               if (location.isNotEmpty) ...[
                 Gap.sm,
@@ -215,10 +213,10 @@ class _Header extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.place_rounded, size: 16, color: AppColors.white),
+                      const Icon(Icons.place_rounded, size: 16, color: AppColors.goldSoft),
                       Gap.xxs,
-                      Flexible(child: Text(location, style: context.text.bodySmall?.copyWith(color: AppColors.white, decoration: match.venue?.mapUri == null ? null : TextDecoration.underline))),
-                      if (match.venue?.mapUri != null) ...[Gap.xxs, const Icon(Icons.open_in_new_rounded, size: 14, color: AppColors.white)],
+                      Flexible(child: Text(location, style: context.text.bodySmall?.copyWith(color: AppColors.cream70, decoration: match.venue?.mapUri == null ? null : TextDecoration.underline))),
+                      if (match.venue?.mapUri != null) ...[Gap.xxs, const Icon(Icons.open_in_new_rounded, size: 14, color: AppColors.goldSoft)],
                     ],
                   ),
                 ),
@@ -229,17 +227,16 @@ class _Header extends StatelessWidget {
                 children: [
                   if (match.requiredLevel != null) LevelBadge(level: match.requiredLevel),
                   if (match.preferredSide != null)
-                    StatusChip(label: context.enums.label(EnumGroup.playerSides, match.preferredSide), color: AppColors.white),
-                  if (match.spotsLeft != null) StatusChip(label: l10n.casualSpotsLeft(match.spotsLeft!), color: AppColors.white),
+                    PmChip(context.enums.label(EnumGroup.playerSides, match.preferredSide), tone: PmChipTone.muted),
+                  if (match.spotsLeft != null) PmChip(l10n.casualSpotsLeft(match.spotsLeft!), tone: PmChipTone.ball),
                 ],
               ),
               if (match.notes != null && match.notes!.isNotEmpty) ...[
                 Gap.md,
-                Text(match.notes!, style: context.text.bodyMedium?.copyWith(color: AppColors.white)),
+                Text(match.notes!, style: context.text.bodyMedium?.copyWith(color: AppColors.cream70)),
               ],
             ],
           ),
-        ),
       ),
     );
   }
@@ -337,7 +334,6 @@ class _Actions extends StatelessWidget {
         }
         if (!match.isOpen) return const SizedBox.shrink();
         return FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: AppColors.clay, foregroundColor: AppColors.white),
           onPressed: busy
               ? null
               : () async {

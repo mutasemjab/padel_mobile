@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/gen/app_localizations.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_effects.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import '../theme/app_tokens.dart';
@@ -23,8 +24,8 @@ class _MetricStyle {
   const _MetricStyle(this.color, this.icon);
 
   static _MetricStyle of(BuildContext context, MetricKind kind) => switch (kind) {
-    MetricKind.skill => _MetricStyle(context.tokens.highlight, Icons.shield_rounded),
-    MetricKind.season => const _MetricStyle(AppColors.primary, Icons.emoji_events_rounded),
+    MetricKind.skill => _MetricStyle(context.tokens.isDark ? AppColors.goldSoft : AppColors.green800, Icons.shield_rounded),
+    MetricKind.season => _MetricStyle(context.tokens.isDark ? AppColors.ball : AppColors.green600, Icons.emoji_events_rounded),
     MetricKind.xp => _MetricStyle(context.tokens.textMuted, Icons.bolt_rounded),
   };
 }
@@ -62,11 +63,19 @@ class MetricTile extends StatelessWidget {
 
     return Container(
       padding: EdgeInsetsDirectional.all(compact ? AppSpacing.md : AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: isXp ? t.surface : style.color.withValues(alpha: t.isDark ? 0.10 : 0.08),
-        borderRadius: AppRadius.lgAll,
-        border: Border.all(color: isXp ? t.outline : style.color.withValues(alpha: 0.45)),
-      ),
+      // Glass tile; the two ranking metrics carry a tinted edge and wash,
+      // XP stays quiet glass.
+      decoration: isXp
+          ? AppGlass.card(t.isDark, radius: AppRadius.controlAll)
+          : BoxDecoration(
+              borderRadius: AppRadius.controlAll,
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [style.color.withValues(alpha: t.isDark ? .13 : .1), style.color.withValues(alpha: .03)],
+              ),
+              border: Border.all(color: style.color.withValues(alpha: 0.38)),
+            ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -100,7 +109,7 @@ class MetricTile extends StatelessWidget {
                           style: AppTypography.number(
                             context,
                             size: compact ? 28 : (isXp ? 30 : 38),
-                            weight: isXp ? FontWeight.w600 : FontWeight.w800,
+                            weight: FontWeight.w500,
                             color: isXp ? t.textPrimary : style.color,
                           ),
                         ),
@@ -216,24 +225,36 @@ class PlayerRankBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = position;
-    final medal = switch (p) {
-      1 => AppColors.medalGold,
-      2 => AppColors.medalSilver,
-      3 => AppColors.medalBronze,
-      _ => null,
-    };
+    final metal = AppMetals.forPlace(p);
+    final text = Text(
+      p == null ? AppLocalizations.of(context).valueDash : '$p',
+      textAlign: TextAlign.center,
+      style: AppTypography.number(
+        context,
+        size: metal != null ? 15 : 17,
+        weight: FontWeight.w700,
+        color: metal != null ? const Color(0xFF2A1E08) : context.tokens.textMuted,
+      ),
+    );
+    // Top three sit in a brushed-metal coin; everyone else is a quiet numeral.
     return SizedBox(
       width: size,
-      child: Text(
-        p == null ? AppLocalizations.of(context).valueDash : '$p',
-        textAlign: TextAlign.center,
-        style: AppTypography.number(
-          context,
-          size: medal != null ? 22 : 18,
-          weight: FontWeight.w800,
-          color: medal ?? context.tokens.textMuted,
-        ),
-      ),
+      child: metal == null
+          ? text
+          : Center(
+              child: Container(
+                width: 28,
+                height: 28,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: AppMetals.fill(metal),
+                  boxShadow: [BoxShadow(color: metal[1].withValues(alpha: .45), blurRadius: 12, spreadRadius: -2)],
+                ),
+                child: text,
+              ),
+            ),
     );
   }
 }
+

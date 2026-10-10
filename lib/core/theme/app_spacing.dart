@@ -52,6 +52,12 @@ class AppRadius {
 
   /// Buttons and input fields (the design's 18px controls).
   static const double control = 18;
+
+  /// Glass cards and dialogs (the home hero's softer 22px corner).
+  static const double card = 22;
+
+  /// Bottom sheets (the login sheet's 34px top corners, tightened).
+  static const double sheet = 30;
   static const double pill = 999;
 
   static const BorderRadius smAll = BorderRadius.all(Radius.circular(sm));
@@ -59,6 +65,7 @@ class AppRadius {
   static const BorderRadius lgAll = BorderRadius.all(Radius.circular(lg));
   static const BorderRadius xlAll = BorderRadius.all(Radius.circular(xl));
   static const BorderRadius controlAll = BorderRadius.all(Radius.circular(control));
+  static const BorderRadius cardAll = BorderRadius.all(Radius.circular(card));
   static const BorderRadius pillAll = BorderRadius.all(Radius.circular(pill));
 }
 

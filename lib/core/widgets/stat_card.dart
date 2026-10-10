@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/gen/app_localizations.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_effects.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import '../theme/app_tokens.dart';
@@ -18,28 +20,37 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.tokens;
+    final ink = accent ?? (t.isDark ? AppColors.cream : t.textPrimary);
     return Container(
-      padding: AppSpacing.cardDense,
-      decoration: BoxDecoration(
-        color: t.surface,
-        borderRadius: AppRadius.mdAll,
-        border: Border.all(color: t.outline),
-      ),
+      padding: const EdgeInsetsDirectional.fromSTEB(14, 14, 14, 12),
+      decoration: AppGlass.card(t.isDark, radius: AppRadius.controlAll),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[Icon(icon, size: AppSizes.iconSm, color: accent ?? t.textMuted), Gap.sm],
+          if (icon != null) ...[
+            Container(
+              width: 26,
+              height: 26,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: (accent ?? (t.isDark ? AppColors.goldSoft : AppColors.green700)).withValues(alpha: .12),
+                border: Border.all(color: (accent ?? (t.isDark ? AppColors.goldSoft : AppColors.green700)).withValues(alpha: .28)),
+              ),
+              child: Icon(icon, size: 14, color: accent ?? (t.isDark ? AppColors.goldSoft : AppColors.green700)),
+            ),
+            Gap.sm,
+          ],
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerStart,
             child: Text(
               value ?? AppLocalizations.of(context).valueDash,
-              style: AppTypography.number(context, size: 26, color: accent ?? t.textPrimary),
+              style: AppTypography.number(context, size: 26, weight: FontWeight.w500, color: ink),
             ),
           ),
           Gap.xxs,
-          Text(label, style: context.text.labelSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
+          Text(label, style: context.text.labelSmall?.copyWith(letterSpacing: 0), maxLines: 2, overflow: TextOverflow.ellipsis),
           if (caption != null) ...[
             Gap.xxs,
             Text(caption!, style: context.text.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),

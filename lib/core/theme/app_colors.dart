@@ -64,7 +64,7 @@ class AppColors {
   static const Color live = Color(0xFFFF5A5F);
   static const Color success = Color(0xFF5FCB8F);
   static const Color danger = Color(0xFFE8907A);
-  static const Color info = Color(0xFF6FB3E8); // training
+  static const Color info = Color(0xFF7FC8B4); // training · sea glass
   static const Color warning = Color(0xFFE8B45A);
 
   // Achievement rarity frames
@@ -78,6 +78,9 @@ class AppColors {
   static const Color medalBronze = Color(0xFFC0865A);
 
   static const Color scrim = Color(0xB3000000);
+
+  /// Modal barrier: night court, not flat black.
+  static const Color barrier = Color(0x99020F0C);
   static const Color white = Color(0xFFFFFFFF);
   static const Color transparent = Color(0x00000000);
 

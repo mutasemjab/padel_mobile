@@ -5,15 +5,17 @@ import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import '../theme/app_tokens.dart';
 
-/// Level → accent color, used by avatar rings and level chips.
+/// Level → metal, used by avatar rings and level chips: bronze for C,
+/// silver for B, gold for A and the ball's lime for Elite — the same three
+/// grades as the titles.
 class LevelColors {
   const LevelColors._();
 
   static Color of(String level) => switch (level) {
     'Elite' => AppColors.accent,
-    'A+' || 'A' => AppColors.primary,
-    'B+' || 'B' => AppColors.info,
-    'C+' => AppColors.clay,
+    'A+' || 'A' => AppColors.gold,
+    'B+' || 'B' => AppColors.medalSilver,
+    'C+' || 'C' => AppColors.medalBronze,
     _ => AppColors.textMuted,
   };
 }
@@ -35,17 +37,21 @@ class LevelBadge extends StatelessWidget {
         vertical: large ? AppSpacing.xs : AppSpacing.xxs,
       ),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadius.pillAll,
-        border: Border.all(color: color.withValues(alpha: 0.55)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [color.withValues(alpha: 0.22), color.withValues(alpha: 0.08)],
+        ),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text(
         level!,
         style: AppTypography.number(
           context,
           size: large ? 18 : 13,
-          weight: FontWeight.w800,
-          color: context.tokens.isDark ? color : Color.lerp(color, AppColors.lightTextPrimary, 0.35),
+          weight: FontWeight.w700,
+          color: context.tokens.isDark ? Color.lerp(color, AppColors.white, .15) : Color.lerp(color, AppColors.lightTextPrimary, 0.45),
         ),
       ),
     );

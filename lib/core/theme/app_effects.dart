@@ -25,6 +25,11 @@ class AppShadows {
   static const List<BoxShadow> goldButton = [
     BoxShadow(color: Color(0xB3C9A86A), offset: Offset(0, 14), blurRadius: 30, spreadRadius: -12),
   ];
+
+  /// The light theme's court-green CTA glow.
+  static const List<BoxShadow> greenButton = [
+    BoxShadow(color: Color(0x660A3A2F), offset: Offset(0, 12), blurRadius: 24, spreadRadius: -12),
+  ];
 }
 
 /// Motion language of the design.
@@ -101,7 +106,7 @@ class AppGradients {
   static const LinearGradient training = LinearGradient(
     begin: AlignmentDirectional.topStart,
     end: AlignmentDirectional.bottomEnd,
-    colors: [Color(0xFF6FB3E8), Color(0xFF2E6A99)],
+    colors: [AppColors.green600, AppColors.green900],
   );
 
   /// Bottom fade so text over hero images stays readable.
@@ -125,6 +130,101 @@ class CssLinearGradient extends LinearGradient {
     final r = angle * math.pi / 180;
     final d = Offset(math.sin(r), -math.cos(r));
     final half = (rect.width * d.dx.abs() + rect.height * d.dy.abs()) / 2;
-    return ui.Gradient.linear(rect.center - d * half, rect.center + d * half, colors, stops);
+    // CSS spreads stop-less colors evenly; dart:ui only accepts that for two.
+    final even = stops ?? (colors.length > 2 ? [for (var i = 0; i < colors.length; i++) i / (colors.length - 1)] : null);
+    return ui.Gradient.linear(rect.center - d * half, rect.center + d * half, colors, even);
   }
+}
+
+/// Glass surfaces from the login sheet and the home hero: a faint cream
+/// wash, a gold hairline and a deep soft shadow on dark; ivory paper with a
+/// sand hairline on light.
+class AppGlass {
+  const AppGlass._();
+
+  /// Gold hairline used around glass on dark (`rgba(227,204,151,.16)`).
+  static const Color hairline = Color(0x29E3CC97);
+
+  /// Stronger gold edge for sheets, dialogs and heroes (`rgba(227,204,151,.22)`).
+  static const Color hairlineStrong = Color(0x38E3CC97);
+
+  static BoxDecoration card(
+    bool dark, {
+    BorderRadius radius = const BorderRadius.all(Radius.circular(22)),
+    Color? border,
+    bool raised = false,
+  }) => BoxDecoration(
+    borderRadius: radius,
+    gradient: dark
+        ? const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0x14F3EEDF), Color(0x08F3EEDF)],
+          )
+        : const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppColors.ivory, Color(0xFFFBF6E8)],
+          ),
+    border: Border.all(color: border ?? (dark ? hairline : AppColors.lightOutline)),
+    boxShadow: raised || !dark
+        ? [
+            BoxShadow(
+              color: dark ? const Color(0x99000000) : const Color(0x1F3A3320),
+              blurRadius: dark ? 40 : 24,
+              offset: Offset(0, dark ? 20 : 10),
+              spreadRadius: dark ? -20 : -12,
+            ),
+          ]
+        : null,
+  );
+
+  /// The home hero's deep court panel (`linear-gradient(180deg,#0f4b3d,#0a3a2f 55%,#072c24)`).
+  static BoxDecoration hero({BorderRadius radius = const BorderRadius.all(Radius.circular(30)), Color? border}) =>
+      BoxDecoration(
+        borderRadius: radius,
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF0F4B3D), AppColors.green800, Color(0xFF072C24)],
+          stops: [0, .55, 1],
+        ),
+        border: Border.all(color: border ?? const Color(0x2EE3CC97)),
+        boxShadow: const [BoxShadow(color: Color(0xB3000000), blurRadius: 60, offset: Offset(0, 30), spreadRadius: -25)],
+      );
+
+  /// Sunken well inside a panel (`rgba(4,28,22,.5)` + cream-08 hairline).
+  static BoxDecoration well(bool dark, {BorderRadius radius = const BorderRadius.all(Radius.circular(16))}) =>
+      BoxDecoration(
+        borderRadius: radius,
+        color: dark ? const Color(0x80041C16) : AppColors.lightSurface2.withValues(alpha: .6),
+        border: Border.all(color: dark ? AppColors.cream08 : AppColors.lightOutline.withValues(alpha: .7)),
+      );
+
+  /// Green aura glowing down from the top edge of a hero panel.
+  static const RadialGradient aura = RadialGradient(
+    center: Alignment(0, -1.1),
+    radius: 1.1,
+    colors: [Color(0xE61A6B56), Color(0x001A6B56)],
+    stops: [0, .55],
+  );
+}
+
+/// Brushed-metal fills for places and title grades (bronze · silver · gold).
+class AppMetals {
+  const AppMetals._();
+
+  static const List<Color> gold = [Color(0xFFFFF6CF), Color(0xFFE9C46A), Color(0xFF94681C)];
+  static const List<Color> silver = [Color(0xFFFFFFFF), Color(0xFFCFD6DD), Color(0xFF6F7B85)];
+  static const List<Color> bronze = [Color(0xFFFFD9B3), Color(0xFFC7804A), Color(0xFF6E3B1C)];
+
+  static List<Color>? forPlace(int? place) => switch (place) {
+    1 => gold,
+    2 => silver,
+    3 => bronze,
+    _ => null,
+  };
+
+  static LinearGradient fill(List<Color> c) =>
+      LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: c, stops: const [0, .5, 1]);
 }

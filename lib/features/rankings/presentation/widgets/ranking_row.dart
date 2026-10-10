@@ -12,6 +12,7 @@ import '../../../../core/widgets/level_badge.dart';
 import '../../../../core/widgets/metric_widgets.dart';
 import '../../../../core/widgets/movement_indicator.dart';
 import '../../../../core/widgets/player_avatar.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/trend_sparkline.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/ranking_entry.dart';
@@ -105,12 +106,13 @@ class RankingPodium extends StatelessWidget {
     if (top.length < 3) return const SizedBox.shrink();
     // Visual order: 2nd, 1st, 3rd (Row mirrors itself in RTL).
     final order = [top[1], top[0], top[2]];
-    const heights = [96.0, 128.0, 80.0];
-    const medals = [AppColors.medalSilver, AppColors.medalGold, AppColors.medalBronze];
+    const heights = [92.0, 124.0, 76.0];
+    const metals = [AppMetals.silver, AppMetals.gold, AppMetals.bronze];
     const places = [2, 1, 3];
-    return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.md, AppSpacing.lg, AppSpacing.md, 0),
-      decoration: const BoxDecoration(gradient: AppGradients.court, borderRadius: AppRadius.xlAll),
+    // The home hero court with the ball flying over three brushed-metal plinths.
+    return PmHeroPanel(
+      ball: true,
+      padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.md, AppSpacing.xl, AppSpacing.md, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -120,29 +122,49 @@ class RankingPodium extends StatelessWidget {
                 onTap: () => onTap(order[i]),
                 child: Column(
                   children: [
-                    PlayerAvatar.fromSummary(order[i].toSummary(), size: i == 1 ? AppSizes.avatarLg : AppSizes.avatarMd),
-                    Gap.xs,
+                    if (i == 1) const Icon(Icons.workspace_premium_rounded, color: AppColors.goldSoft, size: 26) else const SizedBox(height: 26),
+                    Gap.xxs,
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [BoxShadow(color: metals[i][1].withValues(alpha: .5), blurRadius: i == 1 ? 30 : 18)],
+                      ),
+                      child: PlayerAvatar.fromSummary(order[i].toSummary(), size: i == 1 ? AppSizes.avatarLg : AppSizes.avatarMd),
+                    ),
+                    Gap.sm,
                     Text(
                       order[i].name.split(' ').first,
-                      style: context.text.labelLarge?.copyWith(color: AppColors.white),
+                      style: context.text.labelLarge?.copyWith(color: AppColors.cream),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       '${order[i].valueFor(type)}',
-                      style: AppTypography.number(context, size: 18, color: type == RankingType.skill ? AppColors.accent : AppColors.white),
+                      style: AppTypography.number(context, size: 18, weight: FontWeight.w500, color: i == 1 ? AppColors.goldSoft : AppColors.cream70),
                     ),
-                    Gap.xs,
+                    Gap.sm,
                     Container(
                       height: heights[i],
                       margin: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.xs),
                       decoration: BoxDecoration(
-                        color: medals[i].withValues(alpha: 0.22),
-                        border: Border(top: BorderSide(color: medals[i], width: 3)),
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.md)),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [metals[i][1].withValues(alpha: .42), metals[i][2].withValues(alpha: .12)],
+                        ),
+                        border: Border(top: BorderSide(color: metals[i][0], width: 2)),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.control)),
                       ),
                       alignment: Alignment.center,
-                      child: Text('${places[i]}', style: AppTypography.number(context, size: 36, color: medals[i])),
+                      child: ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (r) => LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: metals[i],
+                        ).createShader(r),
+                        child: Text('${places[i]}', style: AppFonts.numeral(size: i == 1 ? 46 : 36, height: 1, color: AppColors.white)),
+                      ),
                     ),
                   ],
                 ),
@@ -167,16 +189,24 @@ class MyRankingBar extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final t = context.tokens;
     final position = me.positionFor(type);
-    return Material(
-      color: t.surface,
-      elevation: 0,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(border: Border(top: BorderSide(color: t.highlight, width: 2))),
-          padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.md),
-          child: SafeArea(
-            top: false,
+    // Floating gold-edged glass pill above the dock, like the home hero edge.
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.md, AppSpacing.xs, AppSpacing.md, AppSpacing.sm),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadius.cardAll,
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: AppRadius.cardAll,
+              gradient: t.isDark
+                  ? const LinearGradient(colors: [AppColors.green700, AppColors.green900])
+                  : const LinearGradient(colors: [AppColors.ivory, AppColors.lightSurface2]),
+              border: Border.all(color: t.isDark ? AppColors.goldSoft.withValues(alpha: .45) : AppColors.green700.withValues(alpha: .4)),
+              boxShadow: const [BoxShadow(color: Color(0x80000000), blurRadius: 30, offset: Offset(0, 14), spreadRadius: -14)],
+            ),
+            padding: const EdgeInsetsDirectional.fromSTEB(AppSpacing.md, AppSpacing.md, AppSpacing.lg, AppSpacing.md),
             child: Row(
               children: [
                 PlayerRankBadge(position: position),
@@ -186,7 +216,7 @@ class MyRankingBar extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.rankingsYou.toUpperCase(), style: AppTypography.eyebrow(context, color: t.highlight)),
+                      Text(l10n.rankingsYou.toUpperCase(), style: AppTypography.eyebrow(context, color: t.isDark ? AppColors.goldSoft : AppColors.green700)),
                       if (type == RankingType.skill && me.levelPosition != null && me.level != null)
                         Text(l10n.rankingsLevelPosition(me.levelPosition!, me.level!), style: context.text.bodySmall)
                       else if (position == null)
@@ -194,10 +224,13 @@ class MyRankingBar extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  '${me.valueFor(type)}',
-                  style: AppTypography.number(context, size: 24, color: boardColor(context, type)),
-                ),
+                if (t.isDark)
+                  PmGoldText('${me.valueFor(type)}', style: AppTypography.number(context, size: 26, weight: FontWeight.w500))
+                else
+                  Text(
+                    '${me.valueFor(type)}',
+                    style: AppTypography.number(context, size: 26, weight: FontWeight.w500, color: AppColors.green800),
+                  ),
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/widgets/app_card.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/section_header.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/achievement.dart';
@@ -30,7 +31,7 @@ class AchievementsCollection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _ProgressHeader(unlocked: unlocked, total: achievements.length),
+        _ProgressHeader(unlocked: unlocked, total: achievements.length, achievements: achievements),
         if (competitive.isNotEmpty) ...[
           Gap.xl,
           SectionHeader(title: l10n.achievementsCompetitive),
@@ -69,41 +70,64 @@ class AchievementsCollection extends StatelessWidget {
   }
 }
 
+/// The title cabinet's plate: count in gold leaf, the bar, and how many
+/// titles sit at each grade (bronze · silver · gold dots).
 class _ProgressHeader extends StatelessWidget {
   final int unlocked;
   final int total;
+  final List<Achievement> achievements;
 
-  const _ProgressHeader({required this.unlocked, required this.total});
+  const _ProgressHeader({required this.unlocked, required this.total, required this.achievements});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return AppCard(
+    final earned = achievements.where((a) => a.isUnlocked && !a.isPremium).toList();
+    return PmHeroPanel(
+      court: false,
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 16, 18, 16),
       child: Row(
         children: [
-          Icon(Icons.emoji_events_rounded, color: context.tokens.highlight, size: AppSizes.iconXl),
-          Gap.md,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.achievementsProgress(unlocked, total), style: context.text.titleSmall),
+                Text(l10n.achievementsProgress(unlocked, total), style: context.text.titleSmall?.copyWith(color: AppColors.cream)),
                 Gap.sm,
                 ClipRRect(
                   borderRadius: AppRadius.pillAll,
-                  child: LinearProgressIndicator(value: total == 0 ? 0 : unlocked / total),
+                  child: LinearProgressIndicator(value: total == 0 ? 0 : unlocked / total, minHeight: 6),
+                ),
+                Gap.sm,
+                Row(
+                  children: [
+                    for (final g in TitleGrade.values.reversed) ...[
+                      Container(
+                        width: 9,
+                        height: 9,
+                        decoration: BoxDecoration(shape: BoxShape.circle, gradient: AppMetals.fill(g.metal)),
+                      ),
+                      Gap.xs,
+                      Text(
+                        '${earned.where((a) => TitleGrade.of(a.rarity) == g).length}',
+                        style: AppTypography.number(context, size: 13, weight: FontWeight.w500, color: AppColors.cream70),
+                      ),
+                      Gap.md,
+                    ],
+                  ],
                 ),
               ],
             ),
           ),
           Gap.md,
-          Text('$unlocked', style: AppTypography.number(context, size: 32, color: context.tokens.highlight)),
+          PmGoldText('$unlocked', style: AppFonts.numeral(size: 52, height: 1)),
         ],
       ),
     );
   }
 }
 
+/// Wrap of title tiles — each a glass slot washed in its grade's metal.
 class _BadgeGrid extends StatelessWidget {
   final List<Achievement> items;
 
@@ -111,21 +135,50 @@ class _BadgeGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sorted = [...items]..sort((a, b) {
+        if (a.isUnlocked != b.isUnlocked) return a.isUnlocked ? -1 : 1;
+        return b.rarity.index - a.rarity.index;
+      });
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = (constraints.maxWidth / 96).floor().clamp(3, 8);
-        final width = constraints.maxWidth / columns;
+        final columns = (constraints.maxWidth / 104).floor().clamp(3, 8);
+        const gap = AppSpacing.sm;
+        final width = (constraints.maxWidth - gap * (columns - 1)) / columns;
         return Wrap(
-          runSpacing: AppSpacing.md,
+          spacing: gap,
+          runSpacing: gap,
           children: [
-            for (final a in items)
-              SizedBox(
-                width: width,
-                child: AchievementBadge(achievement: a, onTap: () => showAchievementDetail(context, a)),
-              ),
+            for (final a in sorted) SizedBox(width: width, child: _TitleTile(achievement: a)),
           ],
         );
       },
+    );
+  }
+}
+
+class _TitleTile extends StatelessWidget {
+  final Achievement achievement;
+
+  const _TitleTile({required this.achievement});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    final metal = TitleGrade.of(achievement.rarity).metal[1];
+    final on = achievement.isUnlocked;
+    return Container(
+      height: 128,
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 10, 4, 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        gradient: on
+            ? LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [metal.withValues(alpha: .16), metal.withValues(alpha: 0)])
+            : null,
+        color: on ? null : (t.isDark ? const Color(0x0AF3EEDF) : AppColors.ivory),
+        border: Border.all(color: on ? metal.withValues(alpha: .4) : (t.isDark ? AppColors.cream08 : AppColors.lightOutline)),
+      ),
+      child: AchievementBadge(achievement: achievement, size: 58, onTap: () => showAchievementDetail(context, achievement)),
     );
   }
 }
@@ -147,11 +200,20 @@ Future<void> showAchievementDetail(BuildContext context, Achievement a) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AchievementBadge(achievement: a, size: 96, showLabel: false),
-            Gap.lg,
+            DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(colors: [color.withValues(alpha: .3), color.withValues(alpha: 0)]),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: AchievementBadge(achievement: a, size: 132, showLabel: false),
+              ),
+            ),
+            Gap.md,
             Text(rarity.toUpperCase(), style: AppTypography.eyebrow(sheetContext, color: color)),
             Gap.xs,
-            Text(a.name, style: sheetContext.text.headlineSmall, textAlign: TextAlign.center),
+            Text(a.name, style: sheetContext.text.headlineLarge?.copyWith(fontSize: 28), textAlign: TextAlign.center),
             Gap.sm,
             Text(a.description, style: sheetContext.text.bodyMedium, textAlign: TextAlign.center),
             Gap.lg,

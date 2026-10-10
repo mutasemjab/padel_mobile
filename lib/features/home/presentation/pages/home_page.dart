@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/state/view_state.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/feedback.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/player_avatar.dart';
 import '../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../core/widgets/state_views.dart';
@@ -157,51 +159,100 @@ class _HomeAppBar extends StatelessWidget {
     final name = (summary?.name.isNotEmpty ?? false) ? summary!.name : (authName ?? '');
     final firstName = name.split(' ').first;
 
+    final playerId = summary?.playerId ?? '';
+    final initials = name.trim().isEmpty ? '' : name.trim().split(RegExp(r'\s+')).take(2).map((w) => w.characters.first).join();
+
     return SliverAppBar(
       floating: true,
       snap: true,
-      toolbarHeight: 72,
-      backgroundColor: context.tokens.background,
+      toolbarHeight: 80,
       titleSpacing: AppSpacing.gutter,
       title: Row(
         children: [
-          const AppLogo(height: 34),
+          GestureDetector(
+            onTap: summary != null && playerId.isNotEmpty ? () => context.go(AppRoutes.profile) : null,
+            child: summary?.photoUrl != null
+                ? PlayerAvatar.fromSummary(summary!, size: 46)
+                : _GoldAvatar(initials: initials),
+          ),
           Gap.md,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  l10n.appTitle.toUpperCase(),
-                  style: AppTypography.eyebrow(context, color: context.tokens.highlight),
+                  l10n.appTitle,
+                  style: context.text.labelSmall?.copyWith(letterSpacing: 0, fontSize: 12),
                 ),
                 Text(
                   firstName.isEmpty ? l10n.navHome : l10n.homeGreeting(firstName),
-                  style: context.text.headlineMedium,
+                  style: context.text.headlineMedium?.copyWith(fontSize: 21, height: 1.25),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (playerId.isNotEmpty) _PlayerId(id: playerId),
               ],
             ),
           ),
         ],
       ),
       actions: [
-        IconButton(
+        PmIconSquare(
+          icon: Icons.search_rounded,
           tooltip: l10n.searchPlayersTitle,
-          icon: const Icon(Icons.search_rounded),
-          onPressed: () => context.push(AppRoutes.playerSearch),
+          onTap: () => context.push(AppRoutes.playerSearch),
         ),
         const NotificationBell(),
-        if (summary != null && summary.playerId.isNotEmpty)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: AppSpacing.gutter, start: AppSpacing.xs),
-            child: GestureDetector(
-              onTap: () => context.go(AppRoutes.profile),
-              child: PlayerAvatar.fromSummary(summary, size: AppSizes.avatarSm),
-            ),
-          ),
+        Gap.sm,
       ],
+    );
+  }
+}
+
+/// `.avatar` — gold disc with Amiri initials, ringed in court green and gold.
+class _GoldAvatar extends StatelessWidget {
+  final String initials;
+
+  const _GoldAvatar({required this.initials});
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 46,
+    height: 46,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppColors.goldSoft, AppColors.gold]),
+      boxShadow: [
+        BoxShadow(color: context.tokens.isDark ? AppColors.green800 : AppColors.ivory, spreadRadius: 2),
+        const BoxShadow(color: Color(0x99C9A86A), spreadRadius: 3.5),
+      ],
+    ),
+    child: Text(initials, style: AppFonts.display(size: 18, height: 1, color: AppColors.green900)),
+  );
+}
+
+/// `.pid` — the Player ID in gold Playfair, led by the P mark.
+class _PlayerId extends StatelessWidget {
+  final String id;
+
+  const _PlayerId({required this.id});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = context.tokens.isDark ? AppColors.goldSoft : AppColors.green700;
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        textDirection: TextDirection.ltr,
+        children: [
+          AppLogo(height: 11, colors: [color, color]),
+          const SizedBox(width: 5),
+          Text(id, style: AppFonts.numeral(size: 10.5, color: color, letterSpacing: 1.2)),
+        ],
+      ),
     );
   }
 }

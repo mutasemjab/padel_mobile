@@ -26,21 +26,27 @@ class AppCard extends StatelessWidget {
     this.color,
     this.borderColor,
     this.shadows,
-    this.borderRadius = AppRadius.lgAll,
+    this.borderRadius = AppRadius.cardAll,
     this.elevated = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final t = context.tokens;
+    // Plain cards are login-sheet glass; callers that bring their own fill
+    // (heroes, premium) keep it and gain the gold hairline.
+    final glass = AppGlass.card(t.isDark, radius: borderRadius, border: borderColor, raised: elevated);
+    final custom = gradient != null || color != null;
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: gradient == null ? (color ?? t.surface) : null,
-        gradient: gradient,
-        borderRadius: borderRadius,
-        border: Border.all(color: borderColor ?? t.outline),
-        boxShadow: shadows ?? (elevated ? AppShadows.soft : null),
-      ),
+      decoration: custom
+          ? BoxDecoration(
+              color: gradient == null ? color : null,
+              gradient: gradient,
+              borderRadius: borderRadius,
+              border: Border.all(color: borderColor ?? (t.isDark ? AppGlass.hairline : t.outline)),
+              boxShadow: shadows ?? glass.boxShadow,
+            )
+          : glass.copyWith(boxShadow: shadows ?? glass.boxShadow),
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(

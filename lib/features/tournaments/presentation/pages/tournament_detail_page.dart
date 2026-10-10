@@ -22,7 +22,7 @@ import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_network_image.dart';
 import '../../../../core/widgets/badges.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../core/widgets/state_builders.dart';
@@ -165,9 +165,9 @@ class _DetailContent extends StatelessWidget {
         headerSliverBuilder: (context, _) => [
           SliverAppBar(
             pinned: true,
-            expandedHeight: AppSizes.heroHeight,
-            backgroundColor: context.tokens.background,
-            foregroundColor: AppColors.white,
+            expandedHeight: 320,
+            backgroundColor: AppColors.green900,
+            foregroundColor: AppColors.cream,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
               background: _Hero(tournament: t),
@@ -199,16 +199,28 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The home hero court as a full-bleed poster: aura, perspective court and
+    // the flying ball (or the tournament's own image), seal and Amiri name.
+    final ranked = tournament.competitionType.apiValue == 'ranked';
     return Stack(
       fit: StackFit.expand,
       children: [
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF0F4B3D), AppColors.green800, AppColors.green900],
+            ),
+          ),
+        ),
         Hero(
           tag: 'tournament-image-${tournament.id}',
           child: AppNetworkImage(
             url: tournament.imageUrl,
             fallback: const DecoratedBox(
-              decoration: BoxDecoration(gradient: AppGradients.court),
-              child: CourtLinesBackground(),
+              decoration: BoxDecoration(gradient: AppGlass.aura),
+              child: Stack(fit: StackFit.expand, children: [PmCourtArt(), PmFlyingBall()]),
             ),
           ),
         ),
@@ -223,18 +235,39 @@ class _Hero extends StatelessWidget {
               Wrap(
                 spacing: AppSpacing.sm,
                 runSpacing: AppSpacing.xs,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  CompetitionBadge(competitionType: tournament.competitionType.apiValue, large: true),
+                  if (ranked)
+                    const PmSeal('Playmaker Ranked')
+                  else
+                    CompetitionBadge(competitionType: tournament.competitionType.apiValue, large: true),
                   TournamentStatusBadge(status: tournament.status),
                 ],
               ),
-              Gap.sm,
+              Gap.md,
               Text(
                 tournament.name,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: context.text.displaySmall?.copyWith(color: AppColors.white),
+                style: context.text.displaySmall?.copyWith(color: AppColors.cream, height: 1.15, fontSize: 36),
               ),
+              if (tournament.venue != null) ...[
+                Gap.xs,
+                Row(
+                  children: [
+                    const Icon(Icons.place_rounded, size: 14, color: AppColors.goldSoft),
+                    Gap.xs,
+                    Flexible(
+                      child: Text(
+                        tournament.venue!.displayName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.text.labelMedium?.copyWith(color: AppColors.cream70, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),
@@ -262,7 +295,7 @@ class _OverviewTab extends StatelessWidget {
           _NoteCard(ranked: t.isRanked),
           if (t.description != null && t.description!.isNotEmpty) ...[
             Gap.xl,
-            Text(l10n.tournamentAbout, style: context.text.titleLarge),
+            Text(l10n.tournamentAbout, style: context.text.headlineMedium?.copyWith(fontSize: 24)),
             Gap.sm,
             Text(t.description!, style: context.text.bodyMedium),
           ],
@@ -280,7 +313,7 @@ class _OverviewTab extends StatelessWidget {
             ),
           ],
           Gap.xl,
-          Text(l10n.categoriesSection, style: context.text.titleLarge),
+          Text(l10n.categoriesSection, style: context.text.headlineMedium?.copyWith(fontSize: 24)),
           Gap.md,
           for (final category in t.categories) ...[
             _CategoryCard(
@@ -314,7 +347,16 @@ class _FactsCard extends StatelessWidget {
             padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs),
             child: Row(
               children: [
-                Icon(icon, size: AppSizes.iconMd, color: context.tokens.textMuted),
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (context.tokens.isDark ? AppColors.goldSoft : AppColors.green700).withValues(alpha: .1),
+                    border: Border.all(color: (context.tokens.isDark ? AppColors.goldSoft : AppColors.green700).withValues(alpha: .25)),
+                  ),
+                  child: Icon(icon, size: 15, color: context.tokens.isDark ? AppColors.goldSoft : AppColors.green700),
+                ),
                 Gap.md,
                 Expanded(child: Text(text, style: context.text.bodyMedium)),
                 if (onTap != null) Icon(Icons.open_in_new_rounded, size: AppSizes.iconSm, color: context.tokens.highlight),
@@ -365,8 +407,9 @@ class _NoteCard extends StatelessWidget {
     return Container(
       padding: AppSpacing.cardDense,
       decoration: BoxDecoration(
-        color: (ranked ? t.highlight : AppColors.clay).withValues(alpha: 0.1),
-        borderRadius: AppRadius.mdAll,
+        color: (ranked ? t.highlight : AppColors.clay).withValues(alpha: 0.08),
+        borderRadius: AppRadius.controlAll,
+        border: Border.all(color: (ranked ? t.highlight : AppColors.clay).withValues(alpha: .28)),
       ),
       child: Row(
         children: [
@@ -401,11 +444,11 @@ class _CategoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(category.name, style: context.text.titleMedium)),
+              Expanded(child: Text(category.name, style: context.text.headlineMedium?.copyWith(fontSize: 21))),
               if (category.registrationFee > 0)
                 Text(
                   Formatters.money(category.registrationFee, category.currency),
-                  style: AppTypography.number(context, size: 17, color: t.highlight),
+                  style: AppTypography.number(context, size: 18, weight: FontWeight.w500, color: t.highlight),
                 )
               else
                 Text(l10n.tournamentFree, style: context.text.labelMedium),
@@ -442,8 +485,9 @@ class _CategoryCard extends StatelessWidget {
             Container(
               padding: AppSpacing.cardDense,
               decoration: BoxDecoration(
-                gradient: AppGradients.premium,
-                borderRadius: AppRadius.mdAll,
+                gradient: AppGradients.goldButton,
+                borderRadius: AppRadius.controlAll,
+                boxShadow: AppShadows.goldButton,
               ),
               child: Row(
                 children: [

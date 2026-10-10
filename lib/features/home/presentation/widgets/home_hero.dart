@@ -3,12 +3,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../../tournaments/domain/entities/match.dart';
 import '../../../tournaments/presentation/widgets/live_match_card.dart';
@@ -40,40 +39,35 @@ void openMatch(BuildContext context, Match match) {
 }
 
 class _HeroShell extends StatelessWidget {
-  final Gradient gradient;
   final String eyebrow;
-  final Color eyebrowColor;
+  final bool live;
   final Widget child;
-  final List<BoxShadow>? shadows;
 
-  const _HeroShell({
-    required this.gradient,
-    required this.eyebrow,
-    required this.eyebrowColor,
-    required this.child,
-    this.shadows,
-  });
+  const _HeroShell({required this.eyebrow, required this.child, this.live = false});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(gradient: gradient, borderRadius: AppRadius.xlAll, boxShadow: shadows),
-      clipBehavior: Clip.antiAlias,
-      child: CourtLinesBackground(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.all(AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(eyebrow.toUpperCase(), style: AppTypography.eyebrow(context, color: eyebrowColor)),
-              Gap.md,
-              child,
-            ],
-          ),
-        ),
+    return PmHeroPanel(
+      court: !live,
+      borderColor: live ? AppColors.live.withValues(alpha: .35) : null,
+      aura: live ? _liveAura : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PmChip(eyebrow, tone: live ? PmChipTone.live : PmChipTone.gold, dot: true),
+          Gap.lg,
+          child,
+        ],
       ),
     );
   }
+
+  static const _liveAura = RadialGradient(
+    center: Alignment(0, -1.1),
+    radius: 1.1,
+    colors: [Color(0x38FF6A5C), Color(0x00FF6A5C)],
+    stops: [0, .55],
+  );
 }
 
 class _LiveHero extends StatelessWidget {
@@ -84,10 +78,8 @@ class _LiveHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _HeroShell(
-      gradient: AppGradients.court,
       eyebrow: AppLocalizations.of(context).homeLiveYouAreIn,
-      eyebrowColor: AppColors.accent,
-      shadows: AppShadows.live,
+      live: true,
       child: LiveMatchCard(match: match, highlightMine: true, onTap: () => openMatch(context, match)),
     );
   }
@@ -103,19 +95,16 @@ class _NextMatchHero extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final when = match.scheduledAt;
     return _HeroShell(
-      gradient: AppGradients.court,
       eyebrow: l10n.homeNextMatch,
-      eyebrowColor: AppColors.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (when != null) ...[
-            Text(
-              DateFormatter.relative(context, when),
-              style: AppTypography.number(context, size: 40, color: AppColors.white),
-            ),
-            Text(DateFormatter.matchTime(when), style: context.text.bodySmall?.copyWith(color: AppColors.textMuted)),
-            Gap.md,
+            Gap.huge,
+            PmGoldText(DateFormatter.relative(context, when), style: AppTypography.number(context, size: 46, weight: FontWeight.w500)),
+            Gap.xs,
+            Text(DateFormatter.matchTime(when), style: context.text.bodySmall?.copyWith(color: AppColors.cream70)),
+            Gap.lg,
           ],
           LiveMatchCard(match: match, onTap: () => openMatch(context, match)),
         ],
@@ -133,20 +122,29 @@ class _RequestsHero extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return _HeroShell(
-      gradient: AppGradients.court,
       eyebrow: l10n.partnerRequestsTitle,
-      eyebrowColor: AppColors.accent,
       child: Row(
         children: [
-          const Icon(Icons.handshake_rounded, color: AppColors.accent, size: AppSizes.iconXl),
+          Container(
+            width: 58,
+            height: 58,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: const RadialGradient(center: Alignment(0, -.4), colors: [Color(0x4DDFF05A), Color(0x0FDFF05A)]),
+              border: Border.all(color: const Color(0x59DFF05A)),
+            ),
+            child: const Icon(Icons.handshake_rounded, color: AppColors.ball, size: 28),
+          ),
           Gap.md,
           Expanded(
             child: Text(
               l10n.homePendingRequests(count),
-              style: context.text.titleMedium?.copyWith(color: AppColors.white),
+              style: context.text.headlineMedium?.copyWith(fontSize: 20, color: AppColors.cream),
             ),
           ),
+          Gap.sm,
           FilledButton(
+            style: FilledButton.styleFrom(minimumSize: const Size(0, 46), padding: const EdgeInsetsDirectional.symmetric(horizontal: 18)),
             onPressed: () => context.push(AppRoutes.partnerRequests),
             child: Text(l10n.homeReviewRequests),
           ),
@@ -164,8 +162,11 @@ class HomeHeroSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.tokens;
     return Container(
-      height: 180,
-      decoration: BoxDecoration(color: t.surface2, borderRadius: AppRadius.xlAll),
+      height: 220,
+      decoration: BoxDecoration(
+        color: t.isDark ? AppColors.cream08 : t.surface2,
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
+      ),
     );
   }
 }

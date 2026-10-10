@@ -51,9 +51,9 @@ class PlayerCardSkeleton extends StatelessWidget {
     return Container(
       padding: AppSpacing.cardDense,
       decoration: BoxDecoration(
-        color: context.tokens.surface,
+        color: context.tokens.isDark ? const Color(0x0FF3EEDF) : AppColors.ivory,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: context.tokens.outline),
+        border: Border.all(color: context.tokens.isDark ? AppColors.cream08 : AppColors.lightOutline),
       ),
       child: const Row(
         children: [
@@ -83,9 +83,9 @@ class ImageCardSkeleton extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: context.tokens.surface,
+        color: context.tokens.isDark ? const Color(0x0FF3EEDF) : AppColors.ivory,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: context.tokens.outline),
+        border: Border.all(color: context.tokens.isDark ? AppColors.cream08 : AppColors.lightOutline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,9 +119,9 @@ class MatchCardSkeleton extends StatelessWidget {
     return Container(
       padding: AppSpacing.card,
       decoration: BoxDecoration(
-        color: context.tokens.surface,
+        color: context.tokens.isDark ? const Color(0x0FF3EEDF) : AppColors.ivory,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: context.tokens.outline),
+        border: Border.all(color: context.tokens.isDark ? AppColors.cream08 : AppColors.lightOutline),
       ),
       child: const Column(
         children: [

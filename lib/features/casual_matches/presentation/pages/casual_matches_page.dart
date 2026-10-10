@@ -84,8 +84,6 @@ class _CasualBoard extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'create-casual',
-        backgroundColor: AppColors.clay,
-        foregroundColor: AppColors.white,
         onPressed: () => showCreateCasualMatchSheet(context),
         icon: const Icon(Icons.add_rounded),
         label: Text(l10n.actionCreate),

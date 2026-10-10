@@ -6,7 +6,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../core/constants/app_durations.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_effects.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 /// Full-screen celebratory overlay for a newly-unlocked achievement: a
 /// scrim, a scaling-in trophy icon and a handful of staggered confetti
@@ -46,11 +48,11 @@ class _CelebrationOverlay extends StatelessWidget {
   const _CelebrationOverlay({required this.message, required this.onDismiss});
 
   static const _confettiColors = [
-    AppColors.premiumGold,
-    AppColors.clayOrange,
-    AppColors.courtGreen,
-    AppColors.live,
-    AppColors.accent,
+    AppColors.goldSoft,
+    AppColors.gold,
+    AppColors.ball,
+    AppColors.cream,
+    AppColors.green600,
   ];
 
   @override
@@ -62,7 +64,7 @@ class _CelebrationOverlay extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onDismiss,
       child: Material(
-        color: AppColors.scrim,
+        color: const Color(0xE6020F0C),
         child: Stack(
           children: [
             for (var i = 0; i < 12; i++)
@@ -91,7 +93,36 @@ class _CelebrationOverlay extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.emoji_events_rounded, size: 96, color: AppColors.premiumGold)
+                  // The new title rising out of a gold floodlight.
+                  Container(
+                        width: 190,
+                        height: 190,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(colors: [Color(0x66E3CC97), Color(0x00E3CC97)]),
+                        ),
+                        child: Container(
+                          width: 118,
+                          height: 118,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: AppMetals.fill(AppMetals.gold),
+                            boxShadow: AppShadows.gold,
+                          ),
+                          padding: const EdgeInsets.all(9),
+                          child: const DecoratedBox(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: RadialGradient(
+                                center: Alignment(0, -.5),
+                                colors: [AppColors.green600, AppColors.green800, AppColors.green950],
+                              ),
+                            ),
+                            child: Icon(Icons.emoji_events_rounded, size: 52, color: AppColors.goldSoft),
+                          ),
+                        ),
+                      )
                       .animate()
                       .scale(
                         begin: const Offset(0.2, 0.2),
@@ -106,7 +137,7 @@ class _CelebrationOverlay extends StatelessWidget {
                     child: Text(
                       message,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppColors.white),
+                      style: AppFonts.display(size: 26, color: AppColors.cream),
                     ),
                   ).animate().fadeIn(delay: 250.ms, duration: 300.ms),
                 ],

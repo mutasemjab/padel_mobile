@@ -21,11 +21,11 @@ class StatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final fg = filled ? (color.computeLuminance() > 0.45 ? AppColors.onAccent : AppColors.white) : color;
     return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs + 1),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.sm + 2, vertical: AppSpacing.xxs + 1),
       decoration: BoxDecoration(
-        color: filled ? color : color.withValues(alpha: 0.14),
+        color: filled ? color : color.withValues(alpha: 0.12),
         borderRadius: AppRadius.pillAll,
-        border: filled ? null : Border.all(color: color.withValues(alpha: 0.4)),
+        border: filled ? null : Border.all(color: color.withValues(alpha: 0.38)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ class StatusChip extends StatelessWidget {
           if (icon != null) ...[Icon(icon, size: AppSizes.iconXs, color: fg), Gap.xs],
           Text(
             label,
-            style: context.text.labelMedium?.copyWith(color: fg, fontWeight: FontWeight.w700),
+            style: context.text.labelMedium?.copyWith(color: fg, fontWeight: FontWeight.w600, fontSize: 11.5, letterSpacing: 0),
           ),
         ],
       ),
@@ -55,26 +55,23 @@ class CompetitionBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final t = context.tokens;
+    // ranked = the gold seal; certified = gold-outlined glass; social = clay glass.
     final (label, color, icon, filled) = switch (competitionType) {
-      'ranked' => (
-        l10n.competitionRanked,
-        t.isDark ? AppColors.accent : AppColors.primaryDeep,
-        Icons.verified_user_rounded,
-        true,
-      ),
-      'certified' => (l10n.competitionCertified, AppColors.primary, Icons.workspace_premium_outlined, false),
+      'ranked' => (l10n.competitionRanked, AppColors.gold, Icons.verified_rounded, true),
+      'certified' => (l10n.competitionCertified, AppColors.goldSoft, Icons.workspace_premium_outlined, false),
       _ => (l10n.competitionSocial, AppColors.clay, Icons.groups_rounded, false),
     };
-    final fg = filled ? (t.isDark ? AppColors.onAccent : AppColors.white) : color;
+    final fg = filled ? AppColors.green900 : (t.isDark ? color : Color.lerp(color, AppColors.green900, .45)!);
     return Container(
       padding: EdgeInsetsDirectional.symmetric(
         horizontal: large ? AppSpacing.md : AppSpacing.sm,
         vertical: large ? AppSpacing.xs + 1 : AppSpacing.xxs + 1,
       ),
       decoration: BoxDecoration(
-        color: filled ? color : color.withValues(alpha: 0.12),
-        borderRadius: AppRadius.pillAll,
-        border: Border.all(color: color, width: filled ? 0 : 1.2),
+        gradient: filled ? AppGradients.goldButton : null,
+        color: filled ? null : (t.isDark ? const Color(0x8C06261F) : color.withValues(alpha: .1)),
+        borderRadius: BorderRadius.circular(8),
+        border: filled ? null : Border.all(color: color.withValues(alpha: .45)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -83,7 +80,7 @@ class CompetitionBadge extends StatelessWidget {
           Gap.xs,
           Text(
             label,
-            style: AppTypography.eyebrow(context, color: fg).copyWith(fontSize: large ? 12 : 11),
+            style: AppTypography.eyebrow(context, color: fg).copyWith(fontSize: large ? 12 : 11, fontWeight: FontWeight.w700),
           ),
         ],
       ),

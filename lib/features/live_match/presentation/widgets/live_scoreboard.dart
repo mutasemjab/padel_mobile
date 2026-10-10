@@ -6,7 +6,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/point_label_formatter.dart';
-import '../../../../core/widgets/court_lines.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../core/widgets/player_avatar.dart';
 import '../../../../core/widgets/score_widgets.dart';
 import '../../../../l10n/gen/app_localizations.dart';
@@ -61,23 +61,32 @@ class LiveScoreboard extends StatelessWidget {
     final games = live?.currentSetGames ?? GameScore.zero;
     final sets = live?.sets ?? const <SetScore>[];
 
-    return Container(
-      decoration: BoxDecoration(
-        gradient: AppGradients.court,
-        borderRadius: AppRadius.xlAll,
-        boxShadow: inProgress ? AppShadows.soft : null,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: CourtLinesBackground(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.all(AppSpacing.lg),
-          child: Column(
+    // The home hero's court panel; red aura and edge while the match is live.
+    return PmHeroPanel(
+      borderColor: inProgress ? AppColors.live.withValues(alpha: .38) : null,
+      aura: inProgress
+          ? const RadialGradient(
+              center: Alignment(0, -1.1),
+              radius: 1.1,
+              colors: [Color(0x33FF6A5C), Color(0x00FF6A5C)],
+              stops: [0, .55],
+            )
+          : null,
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 18, 18, 20),
+      child: Column(
             children: [
+              if (inProgress) ...[
+                PmChip(l10n.liveBadge, tone: PmChipTone.live, dot: true),
+                Gap.lg,
+              ],
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(child: _TeamPanel(team: match.teamOne, winner: match.winnerTeamId, alignEnd: false)),
-                  Gap.md,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 14),
+                    child: Text('vs', style: AppFonts.numeral(size: 15, italic: true, color: AppColors.goldSoft)),
+                  ),
                   Expanded(child: _TeamPanel(team: match.teamTwo, winner: match.winnerTeamId, alignEnd: true)),
                 ],
               ),
@@ -85,10 +94,10 @@ class LiveScoreboard extends StatelessWidget {
               if (live?.isTiebreak ?? false) ...[
                 Container(
                   padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-                  decoration: BoxDecoration(color: AppColors.clay, borderRadius: AppRadius.pillAll),
+                  decoration: BoxDecoration(gradient: AppGradients.goldButton, borderRadius: AppRadius.pillAll),
                   child: Text(
                     l10n.liveTiebreak.toUpperCase(),
-                    style: AppTypography.eyebrow(context, color: AppColors.white),
+                    style: AppTypography.eyebrow(context, color: AppColors.green900),
                   ),
                 ),
                 Gap.sm,
@@ -98,35 +107,43 @@ class LiveScoreboard extends StatelessWidget {
               _SplitRow(
                 start: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: FlipDigit(value: _point(l10n, true), style: AppTypography.score(context, color: AppColors.white)),
+                  child: PmGoldDigit(value: _point(l10n, true)),
                 ),
                 end: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: FlipDigit(value: _point(l10n, false), style: AppTypography.score(context, color: AppColors.white)),
+                  child: PmGoldDigit(value: _point(l10n, false)),
                 ),
-                separator: Text('–', style: AppTypography.scoreSecondary(context, color: AppColors.textMuted)),
+                separator: Text('–', style: AppTypography.scoreSecondary(context, color: AppColors.cream40)),
               ),
               if (_situation(l10n) case final situation?)
                 Container(
                   padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xxs),
-                  decoration: BoxDecoration(color: AppColors.white.withValues(alpha: 0.16), borderRadius: AppRadius.pillAll),
-                  child: Text(situation.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.white)),
+                  decoration: BoxDecoration(
+                    color: const Color(0x1FDFF05A),
+                    borderRadius: AppRadius.pillAll,
+                    border: Border.all(color: const Color(0x47DFF05A)),
+                  ),
+                  child: Text(situation.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.ball)),
                 )
               else
-                Text(l10n.matchPoints.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.textMuted)),
+                Text(l10n.matchPoints.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.cream40)),
               Gap.md,
               PulseOnChange(
                 trigger: '${games.teamOne}-${games.teamTwo}',
                 child: _SplitRow(
-                  start: Text('${games.teamOne}', style: AppTypography.number(context, size: 36, color: AppColors.accent)),
-                  end: Text('${games.teamTwo}', style: AppTypography.number(context, size: 36, color: AppColors.accent)),
-                  separator: Text('–', style: AppTypography.number(context, size: 24, color: AppColors.textMuted)),
+                  start: Text('${games.teamOne}', style: AppTypography.number(context, size: 38, weight: FontWeight.w500, color: AppColors.ball)),
+                  end: Text('${games.teamTwo}', style: AppTypography.number(context, size: 38, weight: FontWeight.w500, color: AppColors.ball)),
+                  separator: Text('–', style: AppTypography.number(context, size: 24, color: AppColors.cream40)),
                 ),
               ),
-              Text(l10n.matchGames.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.textMuted)),
+              Text(l10n.matchGames.toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.cream40)),
               if (sets.isNotEmpty) ...[
                 Gap.lg,
-                Wrap(
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.md, horizontal: AppSpacing.sm),
+                  decoration: AppGlass.well(true),
+                  child: Wrap(
                   alignment: WrapAlignment.center,
                   spacing: AppSpacing.md,
                   runSpacing: AppSpacing.sm,
@@ -139,11 +156,10 @@ class LiveScoreboard extends StatelessWidget {
                       ),
                   ],
                 ),
+                ),
               ],
             ],
           ),
-        ),
-      ),
     );
   }
 }
@@ -184,15 +200,15 @@ class _TeamPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        AvatarPair(players: players, size: AppSizes.avatarSm),
+        AvatarPair(players: players, size: 44),
         Gap.sm,
         if (players.isEmpty)
-          Text(team?.label ?? l10n.matchTbd, style: context.text.titleSmall?.copyWith(color: AppColors.white))
+          Text(team?.label ?? l10n.matchTbd, style: context.text.titleSmall?.copyWith(color: AppColors.cream))
         else
           for (final p in players)
             Text(
               p.name,
-              style: context.text.titleSmall?.copyWith(color: AppColors.white),
+              style: context.text.titleSmall?.copyWith(color: AppColors.cream, fontSize: 13.5),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: alignEnd ? TextAlign.end : TextAlign.start,
@@ -202,9 +218,9 @@ class _TeamPanel extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.emoji_events_rounded, color: AppColors.accent, size: AppSizes.iconSm),
+              const Icon(Icons.emoji_events_rounded, color: AppColors.goldSoft, size: AppSizes.iconSm),
               Gap.xxs,
-              Text(l10n.matchWinner, style: AppTypography.eyebrow(context, color: AppColors.accent)),
+              Text(l10n.matchWinner, style: AppTypography.eyebrow(context, color: AppColors.goldSoft)),
             ],
           ),
         ],
@@ -225,7 +241,7 @@ class _SetColumn extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return Column(
       children: [
-        Text(l10n.matchSetLabel(index).toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.textMuted)),
+        Text(l10n.matchSetLabel(index).toUpperCase(), style: AppTypography.eyebrow(context, color: AppColors.cream40)),
         Gap.xs,
         Row(
           mainAxisSize: MainAxisSize.min,

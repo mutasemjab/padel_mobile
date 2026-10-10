@@ -13,6 +13,12 @@ class AppFonts {
   static TextStyle display({double size = 30, double height = 1.25, Color color = AppColors.cream}) =>
       GoogleFonts.amiri(fontSize: size, height: height, fontWeight: FontWeight.w700, color: color);
 
+  /// Arabic glyphs for Playfair (Latin-only): numbers stay Playfair, any
+  /// Arabic word inside the same string falls back to Plex instead of tofu.
+  static List<String> _arabicFallback(FontWeight weight) => [
+    GoogleFonts.ibmPlexSansArabic(fontWeight: weight).fontFamily!,
+  ];
+
   /// IBM Plex Sans Arabic — all UI text, Arabic and Latin (400–700).
   static TextStyle body({
     double size = 14,
@@ -46,7 +52,7 @@ class AppFonts {
     height: height,
     fontStyle: italic ? FontStyle.italic : FontStyle.normal,
     fontFeatures: fontFeatures,
-  );
+  ).copyWith(fontFamilyFallback: _arabicFallback(weight));
 }
 
 /// Type system:

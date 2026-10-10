@@ -5,7 +5,6 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/meta/enums_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -13,6 +12,7 @@ import '../../../../core/widgets/badges.dart';
 import '../../../../core/widgets/feedback.dart';
 import '../../../../core/widgets/level_badge.dart';
 import '../../../../core/widgets/player_avatar.dart';
+import '../../../../core/widgets/pm_art.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../domain/entities/casual_match.dart';
 import '../bloc/join_casual_match_cubit.dart';
@@ -54,17 +54,19 @@ class _CasualMatchCardContent extends StatelessWidget {
       if (match.courtName != null && match.courtName!.isNotEmpty) match.courtName!,
     ].join(' · ');
 
-    return AppCard(
+    return PmDashedBorder(
+      child: AppCard(
       onTap: onTap,
-      padding: AppSpacing.cardDense,
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 14, 16, 14),
+      borderColor: AppColors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              StatusChip(
-                label: enums.label(EnumGroup.casualMatchTypes, match.matchType.apiValue),
-                color: AppColors.clay,
+              PmChip(
+                enums.label(EnumGroup.casualMatchTypes, match.matchType.apiValue),
+                tone: PmChipTone.muted,
                 icon: Icons.groups_rounded,
               ),
               const Spacer(),
@@ -75,12 +77,12 @@ class _CasualMatchCardContent extends StatelessWidget {
           ),
           Gap.md,
           if (match.title != null) ...[
-            Text(match.title!, style: context.text.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(match.title!, style: context.text.headlineMedium?.copyWith(fontSize: 21), maxLines: 1, overflow: TextOverflow.ellipsis),
             Gap.xxs,
           ],
           Text(
             DateFormatter.weekdayDay(match.scheduledAt),
-            style: AppTypography.number(context, size: 22),
+            style: context.text.headlineMedium?.copyWith(fontSize: match.title == null ? 23 : 17, height: 1.3),
           ),
           Text(DateFormatter.time(match.scheduledAt), style: context.text.bodySmall),
           if (location.isNotEmpty) ...[
@@ -119,16 +121,16 @@ class _CasualMatchCardContent extends StatelessWidget {
           Row(
             children: [
               if (match.spotsLeft != null)
-                Text(
-                  l10n.casualSpotsLeft(match.spotsLeft!),
-                  style: context.text.labelMedium?.copyWith(color: match.spotsLeft == 0 ? t.textMuted : AppColors.clay),
-                ),
+                match.spotsLeft == 0
+                    ? Text(l10n.casualSpotsLeft(0), style: context.text.labelMedium?.copyWith(color: t.textMuted))
+                    : PmChip(l10n.casualSpotsLeft(match.spotsLeft!), tone: PmChipTone.ball),
               const Spacer(),
               _ParticipationAction(match: match, onJoined: onJoined),
             ],
           ),
         ],
       ),
+    ),
     );
   }
 }
@@ -142,7 +144,8 @@ class _ParticipationAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    if (match.isCreator) return StatusChip(label: l10n.casualYourGame, color: AppColors.clay, filled: true);
+    final t = context.tokens;
+    if (match.isCreator) return PmChip(l10n.casualYourGame, tone: PmChipTone.gold, icon: Icons.star_rounded);
     final participation = match.myParticipation;
     if (participation != null) {
       return switch (participation.status) {
@@ -166,11 +169,13 @@ class _ParticipationAction extends StatelessWidget {
       builder: (context, state) {
         final joining = state is JoinCasualMatchJoining;
         final joined = state is JoinCasualMatchJoined;
-        return FilledButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.clay,
-            foregroundColor: AppColors.white,
-            minimumSize: const Size(96, 40),
+        // `.btn.ghost` — social play asks, it doesn't compete for the gold CTA.
+        return OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(104, 42),
+            foregroundColor: t.isDark ? AppColors.goldSoft : AppColors.green800,
+            side: BorderSide(color: (t.isDark ? AppColors.goldSoft : AppColors.green700).withValues(alpha: .5)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           ),
           onPressed: joining || joined ? null : () => context.read<JoinCasualMatchCubit>().join(match.id),
           child: joining ? const ButtonSpinner() : Text(joined ? l10n.actionRequested : l10n.actionJoin),
